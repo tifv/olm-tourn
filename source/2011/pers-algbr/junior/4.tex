@@ -1,0 +1,36 @@
+Докажите, что для каждого натурального $m$ найдётся натуральное $k$ такое, что
+число $3^{k+1} - 2^k - k$ делится на $m$.
+
+%Prove that for each natural number $m$ there is a natural number $k$ for which
+%$m \mid 3^{k+1} - 2^k - k$.
+
+\solution
+Определим возрастающую последовательность $x_n$ следующим образом:
+\[
+    x_0 = 2
+,\qquad
+    x_{n+1} = 3^{x_n + 1} - 2^{x_n}
+,\quad
+    n \geq 1
+.\]
+Достаточно доказать, что для каждого $d$ сравнение
+$x_{n+1} \equiv x_n \pmod{d}$ выполнено для всех достаточно больших $n$:
+тогда можно взять $k = x_n$ для $d = m$.
+Докажем индукцией по $d$.
+Для $d = 1$ очевидно.
+По предположению индукции
+$x_n \equiv x_{n-1} \pmod{\varphi(d)}$
+для всех достаточно больших $n$.
+Тогда для достаточно больших $n$ выполнено
+$3^{x_n + 1} \equiv 3^{x_{n-1} + 1} \pmod d$ и
+$2^{x_n} \equiv 2^{x_{n-1}} \pmod d$,
+откуда следует переход индукции.
+
+%Define the sequence $(x_n)$ by $x_0 = 2$ and $x_{n+1} = 3^{x_n + 1} - 2^{x_n}$.
+%It suffices to show that, for each $d$, $x_{n+1} \equiv x_n \pmod d$ holds for all sufficiently large $n$, as taking $k = x_n$ for $d = m$ will work.
+%We prove this by induction on $d$.
+%For $d = 1$ it is trivial.
+%By the inductive hypothesis, $x_n \equiv x_{n-1} \pmod {\varphi(d)}$ for all sufficiently big $n$.
+%Then for $x_n$ big enough, $3^{x_n + 1} \equiv 3^{x_{n-1} + 1}$ and
+%$2^{x_n} \equiv 2^{x_{n-1}} \pmod d$, which also imply $x_{n+1} \equiv x_n \pmod d$, finishing the induction.
+

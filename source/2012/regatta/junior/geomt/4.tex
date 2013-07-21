@@ -1,0 +1,47 @@
+Четырехугольник $ABCD$ вписан в окружность.
+Известно, что $AB = AC$ и $BC = CD$.
+Диагонали четырехугольника $ABCD$ пересекаются в точке $O$, а точка $X$~---
+середина дуги $CD$, не содержащей точку $A$. Докажите, что $XO \perp AB$.
+
+\solution
+[{\begin{figure}
+\centering
+    \jeolmfigure[width=0.5\textwidth]{4-solution}
+\caption{к задаче \ref{solution:2012/regatta/junior/geomt/4}}
+\label{fig:solution:2012/regatta/junior/geomt/4}
+\end{figure}}]%
+\label{solution:2012/regatta/junior/geomt/4}%
+Докажем, что $O$~--- точка пересечения высот треугольника $ABX$
+(см. рис. \ref{fig:solution:2012/regatta/junior/geomt/4}).
+Для этого достаточно доказать, что $O$ лежит на высотах, проведённых из вершин
+$A$ и $B$.
+Обозначим половину угла $CAB$ через $\alpha$.
+Тогда
+$\angle CAB = \angle CDB = \angle DBC = \angle DAC = 2 \alpha$
+как углы опирающиеся на одну и ту же дугу, а
+$\angle BCA = \angle CBA = 90^\circ - \alpha$
+так как треугольник $ABC$ равнобедренный.
+Из определения точки $X$ следует, что
+$\angle DBX = \angle XBC = \angle XAC = \angle DAX = \alpha$.
+Так как
+\(
+    \angle ACB + \angle XBC
+=
+    90^\circ - \alpha + \alpha
+=
+    90^\circ
+\)
+и
+\(
+    \angle ADB + \angle DAX
+=
+    \angle ACB + \angle DAX
+=
+    90^\circ - \alpha + \alpha
+=
+    90^\circ
+\),
+то углы между парами хорд $AC$, $BX$ и $BD$, $AX$ прямые.
+Из того, что $O$~--- точка пересечения высот треугольника $ABX$ следуюет, что
+$XO$~--- высота, ч.\,т.\,д.
+

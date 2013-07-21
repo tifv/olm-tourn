@@ -1,0 +1,8 @@
+build/
+__pycache__/
+*.pdf
+*.tar.xz
+
+.vim*
+.*.sw[po]
+

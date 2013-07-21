@@ -1,0 +1,56 @@
+Внутри квадрата $ABCD$ выбрана точка $X$ и через неё проведены отрезки
+$PQ$ и $EF$, параллельные сторонам квадрата $AD$ и $AB$ соответственно,
+с концами, лежащими на сторонах квадрата ($P$ на $AB$, $F$ на $AD$).
+Оказалось, что $S_{ECQX} = 2 S_{PXFA}$.
+Чему равен $\angle EAQ$?
+
+\solution
+[{\begin{figure}
+\centering
+    \jeolmfigure[width=0.5\textwidth]{2-solution}
+\caption{к задаче \ref{solution:2012/regatta/senior/geomt/2}}
+\label{fig:solution:2012/regatta/senior/geomt/2}
+\end{figure}}]
+\label{solution:2012/regatta/senior/geomt/2}%
+См. рис. \ref{fig:solution:2012/regatta/senior/geomt/2}.
+Обозначим сторону квадрата через $a$, а длины отрезков $AF$ и $AP$ через
+$x$ и $y$ соответственно.
+Тогда длины отрезокв $EC$ и $CQ$ равны $a - x$ и $a - y$ соответственно.
+Условие на площади можно переформулировать так:
+$EC \cdot CQ = AF \cdot AP$ или $(a - x) (a - y) = 2 x y$.
+Запишем тангенсы углов $BAE$ и $QAD$:
+\[
+    \tg \angle BAE = \dfrac{BE}{AB} = \dfrac{x}{a}
+,\qquad
+    \tg \angle QAD = \dfrac{DQ}{AD} = \dfrac{y}{a}
+.\]
+Теперь найдем тангенс суммы этих углов:
+\[
+    \tg (\angle EAB + \angle QAD)
+=
+    \dfrac{
+        \tg \angle EAB + \tg \angle QAD
+    }{
+        1 - \tg \angle EAB \cdot \tg \angle QAD
+    }
+=
+    \dfrac{x / a + y / a}{1 - x / a \cdot y / a}
+=
+    \dfrac{a(x + y)}{a^2 - xy}
+.\]
+Но из уравнения на площади имеем
+\[
+    2 x y = (a - x) (a - y) = a^2 - a(x + y) + xy
+\quad\Leftrightarrow\quad
+    a (x + y) = a^2 - x y
+.\]
+То есть $\tg (\angle EAB + \angle QAD) = 1$.
+А значит, так как сумма этих углов очевидно меньше $90^\circ$,
+она равна $45^\circ$.
+Следовательно,
+\[
+    \angle EAQ = \angle BAD - \angle BAE - \angle QAD
+=
+    90^\circ - (\angle BAE + \angle QAD) = 45^\circ
+.\]
+

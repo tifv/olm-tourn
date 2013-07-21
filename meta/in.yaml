@@ -1,0 +1,450 @@
+!!omap
+- common.asy: {}
+- '2011': !!omap
+  - regatta: !!omap
+    - junior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex:
+            figures: !!omap
+            - 1-solution: !path '2011/regatta/junior/geomt/1-solution'
+        - 2.tex:
+            figures: !!omap
+            - 2-solution: !path '2011/regatta/junior/geomt/2-solution'
+        - 3.tex:
+            figures: !!omap
+            - 3-solution: !path '2011/regatta/junior/geomt/3-solution'
+        - 4.tex: {}
+        - 1-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 2-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 3-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+      - combi: !!omap
+        - 1.tex:
+            figures: !!omap
+            - 1-solution: !path '2011/regatta/junior/combi/1-solution'
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 1-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex:
+            figures: !!omap
+            - 1-solution: !path '2011/regatta/senior/geomt/1-solution'
+        - 2.tex:
+            figures: !!omap
+            - 2-solution: !path '2011/regatta/senior/geomt/2-solution'
+        - 3.tex:
+            figures: !!omap
+            - 3-solution: !path '2011/regatta/senior/geomt/3-solution'
+        - 4.tex:
+            figures: !!omap
+            - 4-solution: !path '2011/regatta/senior/geomt/4-solution'
+        - 1-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 2-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 3-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 4-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+  - pers-algbr: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+  - pers-geomt: !!omap
+    - junior: !!omap
+      - 1.tex:
+          figures: !!omap
+          - 1-solution: !path '2011/pers-geomt/junior/1-solution'
+      - 2.tex: {}
+      - 3.tex:
+          figures: !!omap
+          - 3-solution: !path '2011/pers-geomt/junior/3-solution'
+      - 4.tex:
+          figures: !!omap
+          - 4-solution: !path '2011/pers-geomt/junior/4-solution'
+      - 1-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 3-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 4-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - 1.tex:
+          figures: !!omap
+          - 1-solution: !path '2011/pers-geomt/senior/1-solution'
+      - 2.tex:
+          figures: !!omap
+          - 2-solution: !path '2011/pers-geomt/senior/2-solution'
+      - 3.tex:
+          figures: !!omap
+          - 3-solution: !path '2011/pers-geomt/senior/3-solution'
+      - 4.tex:
+          figures: !!omap
+          - 4-solution: !path '2011/pers-geomt/senior/4-solution'
+      - 1-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 2-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 3-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 4-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+  - pers-combi: !!omap
+    - junior: !!omap
+      - 1.tex:
+          figures: !!omap
+          - 1-solution: !path '2011/pers-combi/junior/1-solution'
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 1-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+  - team: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex:
+          figures: !!omap
+          - 2-solution: !path '2011/team/junior/2-solution'
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 6.tex: {}
+      - 7.tex:
+          figures: !!omap
+          - 7-solution: !path '2011/team/junior/7-solution'
+      - 8.tex:
+          figures: !!omap
+          - 8-problem: !path '2011/team/junior/8-problem'
+      - 2-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 7-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 8-problem.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex:
+          figures: !!omap
+          - 4-solution: !path '2011/team/senior/4-solution'
+      - 5.tex:
+          figures: !!omap
+          - 5-solution: !path '2011/team/senior/5-solution'
+      - 6.tex: {}
+      - 7.tex: {}
+      - 8.tex: {}
+      - 9.tex: {}
+      - 4-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 5-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+- '2012': !!omap
+  - regatta: !!omap
+    - junior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex:
+            figures: !!omap
+            - 1-solution: !path '2012/regatta/junior/geomt/1-solution'
+        - 2.tex:
+            figures: !!omap
+            - 2-solution: !path '2012/regatta/junior/geomt/2-solution'
+        - 3.tex:
+            figures: !!omap
+            - 3-solution: !path '2012/regatta/junior/geomt/3-solution'
+        - 4.tex:
+            figures: !!omap
+            - 4-solution: !path '2012/regatta/junior/geomt/4-solution'
+        - 1-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 2-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 3-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 4-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - senior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex: {}
+        - 2.tex:
+            figures: !!omap
+            - 2-solution: !path '2012/regatta/senior/geomt/2-solution'
+        - 3.tex: {}
+        - 4.tex:
+            figures: !!omap
+            - 4-solution: !path '2012/regatta/senior/geomt/4-solution'
+        - 2-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+        - 4-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex:
+            figures: !!omap
+            - 4-solution: !path '2012/regatta/senior/combi/4-solution'
+        - 4-solution.asy:
+            used: !!omap
+            - common.asy: !path 'common.asy'
+  - pers-algbr: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+  - pers-geomt: !!omap
+    - junior: !!omap
+      - 1.tex:
+          figures: !!omap
+          - 1-solution: !path '2012/pers-geomt/junior/1-solution'
+      - 2.tex:
+          figures: !!omap
+          - 2-solution: !path '2012/pers-geomt/junior/2-solution'
+      - 3.tex:
+          figures: !!omap
+          - 3-solution: !path '2012/pers-geomt/junior/3-solution'
+      - 4.tex: {}
+      - 1-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 2-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 3-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - 1.tex:
+          figures: !!omap
+          - 1-solution: !path '2012/pers-geomt/senior/1-solution'
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex:
+          figures: !!omap
+          - 4-solution: !path '2012/pers-geomt/senior/4-solution'
+      - 1-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+      - 4-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+  - pers-combi: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+  - team: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 6.tex: {}
+      - 7.tex: {}
+      - 8.tex: {}
+      - 9.tex: {}
+      - 10.tex:
+          figures: !!omap
+          - 10-solution: !path '2012/team/junior/10-solution'
+      - 10-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 6.tex: {}
+      - 7.tex: {}
+      - 8.tex:
+          figures: !!omap
+          - 8-solution: !path '2012/team/senior/8-solution'
+      - 9.tex: {}
+      - 10.tex: {}
+      - 8-solution.asy:
+          used: !!omap
+          - common.asy: !path 'common.asy'
+- '2013': !!omap
+  - pers-algbr: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+  - pers-combi: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+  - pers-geomt: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+  - regatta: !!omap
+    - junior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - senior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+  - team: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 10.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 6.tex: {}
+      - 7.tex: {}
+      - 8.tex: {}
+      - 9.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 10.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+      - 5.tex: {}
+      - 6.tex: {}
+      - 7.tex: {}
+      - 8.tex: {}
+      - 9.tex: {}

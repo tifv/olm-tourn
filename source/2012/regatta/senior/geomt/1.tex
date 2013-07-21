@@ -1,0 +1,29 @@
+На сторонах $AB$, $BC$ и $AC$ треугольника $ABC$ выбраны соответственно точки
+$K$, $L$ и $M$.
+Оказалось, что радиусы описанных окружностей треугольников
+$AKM$, $BKL$, $CLM$ и $KLM$ равны.
+Докажите, что треугольники $ABC$ и $KLM$ подобны.
+
+\solution
+\label{solution:2012/regatta/senior/geomt/1}%
+Пусть $R$~--- указанный радиус.
+По теореме синусов
+\[
+    KL = 2 R \cdot \sin \angle B = 2 R \cdot \sin \angle KML
+.\]
+Отсюда $\angle KML = \angle B$ или $\angle KML = 180^\circ - \angle B$
+(дополнителен к $\angle B$).
+Аналогично,
+$\angle KLM = \angle A$ или $\angle KLM = 180^\circ - \angle A$,
+$\angle LKM = \angle C$ или $\angle LKM = 180^\circ - \angle C$.
+Если дополнительных углов нет, то углы равны и треугольники подобны.
+Если дополнительный~--- один, скажем, $180^\circ - \angle A$, то,
+суммируя углы треугольников $ABC$ и $KLM$, получим
+$\angle A = 180^\circ - \angle A$~--- опять все углы равны.
+Если дополнительных два, то получим, например,
+$\angle B + \angle C = 360^\circ - \angle B - \angle C$,
+откуда $\angle B + \angle C = 180^\circ$, что невозможно.
+При трех дополнительных углах
+$\angle A + \angle B + \angle C = 540^\circ - \angle A - \angle B - \angle C$,
+противоречие.
+

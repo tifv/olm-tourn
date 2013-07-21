@@ -1,0 +1,63 @@
+Точки $A$, $B$, $C$, $D$ лежат на окружности в указанном порядке, причём $AB$ и
+$CD$ непараллельны.
+Длина дуги $AB$, содержащей точки $C$ и $D$, в два раза больше длины дуги $CD$,
+не содержащей точек $A$ и $B$.
+Точка $E$ задаётся условиями $AC = AE$ и $BD = BE$.
+Оказалось, что перпендикуляр из точки $E$ на прямую $AB$ проходит через
+середину дуги $CD$, не содержащей точек $A$ и $B$.
+Найдите $\angle ACB$.
+
+%Czech-Polish-Slovak Match, 2011
+
+%Points $A$, $B$, $C$, $D$ lie on a circle (in that order) where $AB$ and $CD$
+%are not parallel.
+%The length of arc $AB$ (which contains the points $D$ and $C$)
+%is twice the length of arc $CD$ (which does not contain the points $A$ and
+%$B$).
+%Let $E$ be a point where $AC = AE$ and $BD = BE$.
+%Prove that if the perpendicular line from point $E$ to the line $AB$ passes
+%through the center of the arc $CD$
+%(which does not contain the points $A$ and $B$), then
+%$\angle ACB = 108^\circ$.
+
+\solution
+[{\begin{figure}
+\centering
+    \jeolmfigure[width=0.5\textwidth]{3-solution}
+\caption{к задаче \ref{solution:2011/pers-geomt/senior/3}.}
+\label{fig:solution:2011/pers-geomt/senior/3}
+\end{figure}}]%
+\label{solution:2011/pers-geomt/senior/3}%
+См. рис. \ref{fig:solution:2011/pers-geomt/senior/3}.
+Как известно, для точек $X$, $Y$ на плоскости любая прямая, перпендикулярные
+$XY$, задается условием
+$\{Z \colon ZX^2 - ZY^2 = \const\}$.
+Пусть $P$~--- середина $CD$.
+Тогда условие $EP \perp AB$ влечет равенство
+$P A^2 - P B^2 = E A^2 - E B^2 = A C^2 - B D^2$.
+Значит, $A P^2 - A C^2 = B P^2 - B D^2 = B' P^2 - B' C^2$, где точка $B'$
+симметрична $B$ относительно серединного перпендикуляра к $CD$
+(в силу условия о непараллельности $B' \ne A$).
+Отсюда получаем, что прямые $AB'$ и $PC$ перпендикулярны.
+Для направленных углов между прямыми имеем 
+\begin{gather*}
+    \pi / 2
+=
+    \angle (AB', PC)
+=
+    \angle (AB', B'C) + \angle (B'C, CP)
+=\\=
+    \angle (AB, BC) + \angle (DP, DB)
+=
+    \angle (AB, BC) + \angle (AP, AB)
+=
+    \angle (AP, BC)
+.\end{gather*}
+Таким образом, прямые $AP$ и $BC$ перпендикулярны.
+Это значит, что разность угловых мер дуг $AB$ и $PC$
+(не содержащих точек $P$ и $A$ соответственно) равна $\pi$.
+Если обозначит дугу $PC$ за $x$, то получаем, что дуга $AB$
+(не содержащая $P$) равна $2 \pi - 4 x$, откуда $5 x = \pi$, $x = \pi / 5$,
+дуга $AB$ равна $6 \pi / 5$, угол $\angle ACB$ равен $3 \pi / 5$.
+\emph{Ответ:} $3 \pi / 5$.
+

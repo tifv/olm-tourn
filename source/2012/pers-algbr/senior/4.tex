@@ -1,0 +1,103 @@
+Найдите наименьшее положительное $C$ такое, что неравенство
+\[
+    \frac{x}{\sqrt{yz}} \cdot \frac{1}{x+1}
+    +
+    \frac{y}{\sqrt{zx}} \cdot \frac{1}{y+1}
+    +
+    \frac{z}{\sqrt{xy}} \cdot \frac{1}{z+1}
+\leq
+    C
+\]
+выполнено для любых положительных чисел $x$, $y$, $z$, удовлетворяющих
+равенству
+\[
+    \frac{1}{x+1} + \frac{1}{y+1} + \frac{1}{z+1}
+=
+    1
+.\]
+
+\solution
+Сделаем замену:
+$a = 1 / (x + 1)$, $b = 1 / (y + 1)$,  $c = 1 / (z + 1)$, откуда
+$x = (1 - a) / a$, $y = (1 - b) / b$, $z = (1 - c) / c$,
+$a + b + c = 1$,
+\begin{align*}
+    \frac{x}{\sqrt{y z}} & \cdot \frac{1}{x + 1}
+    +
+    \frac{y}{\sqrt{z x}} \cdot \frac{1}{y + 1}
+    +
+    \frac{z}{\sqrt{x y}} \cdot \frac{1}{z + 1}
+=\\={}&
+    (1 - a) \sqrt{\frac{b c \mathstrut}{(1 - b) (1 - c)}}
+    +
+    (1 - b) \sqrt{\frac{c a \mathstrut}{(1 - c) (1 - a)}}
+    +
+    (1 - c) \sqrt{\frac{a b \mathstrut}{(1 - a) (1 - b)}}
+=
+    W
+.\end{align*}
+Возьмем $a = b = \eps, c = 1 - 2 \eps$.
+Тогда 
+\[
+    W
+=
+    \sqrt{2} (1 - \eps) \sqrt{\frac{1 - 2 \eps}{1 - \eps}}
+    +
+    \frac{2{\eps}^2}{1 - \eps}
+>
+    \sqrt{2} (1 - \eps) \frac{1 - 2 \eps}{1 - \eps}
+=
+    \sqrt{2} (1 - 2 \eps).
+\]
+Если $0 < D < \sqrt{2}$, то приняв $\eps = (1 - D / \sqrt{2}) / 2$,
+получим, что $W > D$.
+Поэтому требуемое $C$ больше или равно $\sqrt{2}$.
+\par
+Докажем, что $W$ всегда не превосходит $\sqrt{2}$.
+Без ограничения общности, $c$ является наибольшим среди чисел $a$, $b$, $c$.
+Заметим, что следующие неравенства верны:
+\[
+    (1 - a) \sqrt{\frac{b c}{(1 - b) (1 - c)}}
+=
+    (1 - a) \sqrt{\frac{b}{1 - c} \cdot \frac{c}{a + c}}
+\leq
+    (1 - a) \sqrt{\frac{b}{1 - c}}
+,\]
+\[
+    (1 - b) \sqrt{\frac{c a}{(1 - c) (1 - a)}}
+=
+    (1 - b) \sqrt{\frac{a}{1 - c} \cdot \frac{c}{b + c}}
+\leq
+    (1 - b) \sqrt{\frac{a}{1 - c}}
+,\]
+\[
+    a \sqrt{\frac{a b}{(1 - a) (1 - b)}}
+=
+    a \sqrt{\frac{b}{1 - a} \cdot \frac{a}{a + c}}
+\leq
+    a \sqrt{\frac{b}{1 - c}}
+,\]
+\[
+    b \sqrt{\frac{a b}{(1 - a) (1 - b)}}
+=
+    b \sqrt{\frac{a}{1 - b} \cdot \frac{b}{b + c}}
+\leq
+    a \sqrt{\frac{a}{1 - c}}
+.\]
+Если их сложить, получим, что 
+\[
+    W
+\leq
+    \sqrt{\frac{a}{1 - c}} + \sqrt{\frac{b}{1 - c}}
+.\]
+Заметим, что сумма подкоренных выражений равна 1, поэтому по неравенству
+между средним арифметическим и средним квадратическим имеем, что
+\[
+    W
+\leq
+    2 \sqrt{1 / 2}
+=
+    \sqrt{2}
+.\]
+Поэтому $C \leq \sqrt{2}$, а значит $C = \sqrt{2}$.  
+
