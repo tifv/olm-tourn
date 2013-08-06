@@ -1,16 +1,17 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     A = (0,0), B = (0,3), D = (5,2), C = (1,4),
     M = C + (D - B),
     N = A + (D - B);
 
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(A--C);
 draw(B--D);
 draw(N--D--M, dashed);

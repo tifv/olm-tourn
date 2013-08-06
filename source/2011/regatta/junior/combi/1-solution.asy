@@ -1,8 +1,9 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 path[]
     block = (0,0)--(0,1)--(4,1),
@@ -13,6 +14,7 @@ path[]
         shift(1,0) * rblock ^^
         shift(2,0) * rblock ^^
         shift(3,0) * rblock,
+
     section =
                       block ^^
         shift(0, 1) * block ^^
@@ -22,6 +24,7 @@ path[]
         shift(0,11) * block ^^
         shift(0,12) * rsquare ^^
         (0,0)--(4,0),
+
     rsection = shift(0,16) * yscale(-1) * section;
 
 draw(shift( 0,0) * section);

@@ -1,10 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,0), B = (2,0), C = (3 A + I * B) / (3 + I),
@@ -12,7 +13,7 @@ var
     M = midpoint(ABC.AB),
     Q = (2 C + B) / 3, Ap = 2 C - A;
 
-draw(A--B--C--cycle, black+1);
+draw(A--B--C--cycle, linewidth(1));
 draw(Q--A);
 draw(C--M--Q);
 
@@ -23,9 +24,9 @@ mark(M--B, 1);
 mark(Ap--C, 2);
 mark(C--A, 2);
 
-markangle(Ap, M, C, radius=mr);
-markangle(M, Ap, B, radius=mr);
-markangle(M, A, Q, radius=mr);
+markangle(Ap, M, C, radius=1.2mr);
+markangle(M, A, Q, radius=1.2mr);
+markangle(M, Ap, B, radius=1.4mr);
 
 perpendicularmark(C, unit(A-C), dir=NE, size=0.5mr);
 

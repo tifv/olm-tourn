@@ -1,10 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0, Tan(40)), B = (-1, 0), C = (1, 0),
@@ -13,7 +14,7 @@ var
     D = bisectorpoint(ABC.AC),
     X = intersectionpoint(ABC.BC, parallel(D, (C-D) / ((A-B) / (C-B))));
 
-draw(ABC);
+draw(ABC, linewidth(1));
 draw(B--D--X);
 
 markangle(D, X, B, radius=0.8mr, n=1, L="$4 \alpha$");

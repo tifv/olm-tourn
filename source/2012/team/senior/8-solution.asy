@@ -1,8 +1,9 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 point chord(point A, circle c, vector n) {
     return reflect(parallel(c.C, n)) * A;
@@ -38,8 +39,8 @@ var
 
 draw(line(Y, Z), gray(0.5));
 
-draw(gamma1, black+1);
-draw(gamma2, black+1);
+draw(gamma1, linewidth(1));
+draw(gamma2, linewidth(1));
 draw(circumATX);
 draw(circumBTX);
 

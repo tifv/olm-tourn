@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
    A = (0,0), B = (1,0), C = (1,1), D = (0,1),
@@ -21,7 +22,7 @@ var
 
 // plain.N !
 
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(K--L--A--M--N);
 draw(A--Lp--N ^^ Lp--D, dashed);
 

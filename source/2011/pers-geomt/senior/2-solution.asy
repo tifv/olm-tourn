@@ -1,9 +1,11 @@
 import three;
+access jeolm;
+from jeolm access mark;
+from geometry access tildeframe;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     D = (0,0,0),
@@ -27,10 +29,8 @@ pair p(triple A) {
         A.z * Sin(psi) + A.x * Sin(phi) * Cos(psi) + A.y * Cos(phi) * Cos(psi));
 }
 
-draw(p(A)--p(B)--p(C)--cycle);
-draw(p(D)--p(A));
-draw(p(D)--p(B));
-draw(p(D)--p(C));
+draw(p(A)--p(B)--p(C)--cycle ^^ p(D)--p(A) ^^ p(D)--p(B) ^^ p(D)--p(C),
+    linewidth(1) );
 draw(p(A2)--p(B2)--p(C2)--cycle, p=gray(0.5));
 
 dot(Label("$A$", p(A), SE));
@@ -51,6 +51,6 @@ mark(p(A1)--p(A), 3);
 mark(p(D)--p(B2), 2);
 mark(p(B1)--p(B), 2);
 
-mark(p(D)--p(C2), 1);
-mark(p(C1)--p(C), 1);
+mark(p(D)--p(C2), tildeframe(1));
+mark(p(C1)--p(C), tildeframe(1));
 

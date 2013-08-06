@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     circ = circle((point)(0,0), 1),
@@ -19,7 +20,7 @@ perpendicularmark(Y, unit(A-Y), dir=NE, size=0.5mr, p=gray(0.5));
 perpendicularmark(Z, unit(A-Z), dir=NE, size=0.5mr, p=gray(0.5));
 
 draw(circ);
-draw(A--B--C--D--cycle, p=linewidth(1));
+draw(A--B--C--D--cycle, linewidth(1));
 draw(A--C ^^ B--D);
 draw(X--O);
 

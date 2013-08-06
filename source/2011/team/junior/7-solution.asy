@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     A = (0,0), B = (5,0), C = (4,3), D = (1,2),
@@ -25,7 +26,7 @@ clipdraw(circumAPC, p=circlepen);
 clipdraw(circumBQD, p=circlepen);
     draw(circumBQC, p=circlepen);
 
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(D--K--C, dashed);
 
 mark(A--P, 1);

@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     the_circle = circle((point)(0,0), 1),
@@ -18,7 +19,7 @@ var
 
 draw(the_circle);
 draw(BDF, dashed);
-draw(A--B--C--D--E--F--cycle);
+draw(A--B--C--D--E--F--cycle, linewidth(1));
 draw(B--O);
 draw(D--O);
 draw(F--O);

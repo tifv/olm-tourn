@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (1,3), B = (0,0), C = (5,0),
@@ -22,7 +23,7 @@ var
     B1 = intersectionpoint(IJ, ABC.AC),
     C1 = intersectionpoint(IJ, ABC.AB);
 
-draw(ABC);
+draw(ABC, linewidth(1));
 draw(A--X);
 draw(A--L);
 draw(A--Y);

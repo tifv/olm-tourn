@@ -1,6 +1,8 @@
 !!omap
-- common.asy: {}
+- base.sty: {}
+- common-sizes.asy: {}
 - '2011': !!omap
+  - extension.sty: {}
   - regatta: !!omap
     - junior: !!omap
       - algbr: !!omap
@@ -21,13 +23,13 @@
         - 4.tex: {}
         - 1-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 2-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 3-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap
         - 1.tex:
             figures: !!omap
@@ -37,7 +39,7 @@
         - 4.tex: {}
         - 1-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - algbr: !!omap
         - 1.tex: {}
@@ -59,16 +61,16 @@
             - 4-solution: !path '2011/regatta/senior/geomt/4-solution'
         - 1-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 2-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 3-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 4-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap
         - 1.tex: {}
         - 2.tex: {}
@@ -99,13 +101,13 @@
           - 4-solution: !path '2011/pers-geomt/junior/4-solution'
       - 1-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 3-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 4-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex:
           figures: !!omap
@@ -121,16 +123,16 @@
           - 4-solution: !path '2011/pers-geomt/senior/4-solution'
       - 1-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 2-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 3-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 4-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
   - pers-combi: !!omap
     - junior: !!omap
       - 1.tex:
@@ -142,7 +144,7 @@
       - 5.tex: {}
       - 1-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex: {}
       - 2.tex: {}
@@ -167,13 +169,13 @@
           - 8-problem: !path '2011/team/junior/8-problem'
       - 2-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 7-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 8-problem.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex: {}
       - 2.tex: {}
@@ -190,11 +192,12 @@
       - 9.tex: {}
       - 4-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 5-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
 - '2012': !!omap
+  - extension.sty: {}
   - regatta: !!omap
     - junior: !!omap
       - algbr: !!omap
@@ -217,16 +220,16 @@
             - 4-solution: !path '2012/regatta/junior/geomt/4-solution'
         - 1-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 2-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 3-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 4-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap
         - 1.tex: {}
         - 2.tex: {}
@@ -249,10 +252,10 @@
             - 4-solution: !path '2012/regatta/senior/geomt/4-solution'
         - 2-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 4-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap
         - 1.tex: {}
         - 2.tex: {}
@@ -262,7 +265,7 @@
             - 4-solution: !path '2012/regatta/senior/combi/4-solution'
         - 4-solution.asy:
             used: !!omap
-            - common.asy: !path 'common.asy'
+            - common-sizes.asy: !path 'common-sizes.asy'
   - pers-algbr: !!omap
     - junior: !!omap
       - 1.tex: {}
@@ -288,13 +291,13 @@
       - 4.tex: {}
       - 1-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 2-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 3-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex:
           figures: !!omap
@@ -306,10 +309,10 @@
           - 4-solution: !path '2012/pers-geomt/senior/4-solution'
       - 1-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 4-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
   - pers-combi: !!omap
     - junior: !!omap
       - 1.tex: {}
@@ -339,7 +342,7 @@
           - 10-solution: !path '2012/team/junior/10-solution'
       - 10-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex: {}
       - 2.tex: {}
@@ -355,8 +358,9 @@
       - 10.tex: {}
       - 8-solution.asy:
           used: !!omap
-          - common.asy: !path 'common.asy'
+          - common-sizes.asy: !path 'common-sizes.asy'
 - '2013': !!omap
+  - extension.sty: {}
   - pers-algbr: !!omap
     - junior: !!omap
       - 1.tex: {}

@@ -1,8 +1,9 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 pair ratio(real alpha) {
     // required 72 < alpha < 90.
@@ -31,7 +32,7 @@ draw(P(0));
 draw(S(0));
 draw(P(1));
 
-for (int k = 0; k < 2; ++k)
+for (int k = 0; k <= 1; ++k)
     for (int i = 0; i < 5; ++i)
         dot(A(k, i));
 
@@ -39,4 +40,8 @@ for (int i = 0; i < 5; ++i) {
     draw((0,0)--A(0,i));
 }
 dot((0,0));
+
+real r = 1.5;
+draw((-r,-r)--(-r,r)--(r,r)--(r,-r)--cycle, gray(0.5)+1+dashed);
+label("$k=1$", (r,1), E, p=gray(0.5));
 

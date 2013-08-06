@@ -1,10 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,0), B = (2,0), C = (2 * A + 3I * B) / (2 + 3I),
@@ -14,7 +15,7 @@ var
     X = (1-alpha) * B + alpha * A,
     Yp = 2 C - Y;
 
-draw(ABC, black+1);
+draw(ABC, linewidth(1));
 draw(A--Y--X);
 draw(A--Yp--C, dashed);
 

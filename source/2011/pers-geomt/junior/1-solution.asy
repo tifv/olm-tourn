@@ -1,10 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,4), B = (5,0), C = (0,0),
@@ -15,7 +16,7 @@ var
     K = intersectionpoint(parallel(M, ABC.AC), ABC.AB),
     L = midpoint(ABC.AB);
 
-draw(ABC);
+draw(ABC, linewidth(1));
 draw(A--A1);
 draw(C--M--K--cycle);
 draw(M--L, p=dashed);

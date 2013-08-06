@@ -1,8 +1,9 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     next1 = rotate(360.0 / 7),
@@ -26,7 +27,7 @@ var
 fill(heptagon2, gray(0.8));
 fill(heptagon1, gray(0.6));
 
-draw(heptagon1, black+1);
+draw(heptagon1, linewidth(1));
 draw(heptagon2);
 
 draw(A--D);

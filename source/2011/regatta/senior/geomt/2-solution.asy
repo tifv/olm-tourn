@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     the_circle = circle((point)(0,0), 1),
@@ -13,7 +14,7 @@ var
     K = (B+D)/2, M = extension(A, C, B, D);
 
 draw(the_circle);
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(A--C);
 draw(B--D);
 draw(O--B);

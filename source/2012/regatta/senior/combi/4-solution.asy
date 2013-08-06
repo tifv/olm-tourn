@@ -1,10 +1,10 @@
 import three;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 currentprojection = perspective(65, 70, 80);
-settings.render = common.render;
+settings.render = sizes.render;
 
 bool coloured = false;
 

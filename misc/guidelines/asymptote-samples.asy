@@ -1,3 +1,6 @@
+//********************
+// Normal image
+
 import geometry;
 
 // use /common.asy as common.asy
@@ -16,7 +19,9 @@ markangle(A, M, C, radius=mr);
 
 perpendicularmark(B, unit(A-B), dir=NE, size=0.5mr);
 
-// 3D images version
+//********************
+// 3D image
+
 import three;
 
 // use /common.asy as common.asy

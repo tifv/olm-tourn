@@ -1,8 +1,9 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 
 var
     A = (0,0), B = (1,2.5), C = (2,0),
@@ -22,7 +23,8 @@ var
     Qp = extension(A, C, Q, E);
 
 draw(beam, gray(0.5));
-draw(ABC, black+1);
+
+draw(ABC, linewidth(1));
 draw(inABC);
 draw(C--Qp--Q);
 draw(A--Pp--E);

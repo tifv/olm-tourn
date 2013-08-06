@@ -1,10 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,0), B = dir(60), D = (2,0), C = B + D,
@@ -12,7 +13,7 @@ var
 
 marker m = marker(markinterval(stickframe(1), rotated=true));
 
-draw(A--B--C--D--A--cycle);
+draw(A--B--C--D--A--cycle, linewidth(1));
 draw(A--M);
 draw(B--D);
 

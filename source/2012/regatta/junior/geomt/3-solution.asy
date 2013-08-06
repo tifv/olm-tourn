@@ -1,9 +1,12 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+void mark(path p) { jeolm.mark(p, tildeframe(1, linewidth(1))); };
+
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     alpha = 70,
@@ -12,13 +15,7 @@ var
     E = intersectionpoint(line(D, C), parallel(A, dir(beta))),
     F = intersectionpoint(line(C, B), parallel(E, dir(beta - alpha)));
 
-void mark(path p) {
-    draw(p,
-        marker(markinterval(tildeframe(1), rotated=true)),
-        p=invisible );
-};
-
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(A--E--F);
 
 mark(B--C);

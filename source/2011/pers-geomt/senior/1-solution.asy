@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,0), B = (0, 3), D = (4.5, 0), C = B + D - A,
@@ -11,7 +12,7 @@ var
     P = (A + B) / 2,
     Q = projection(P, D) * C;
 
-draw(A--B--C--D--cycle);
+draw(A--B--C--D--cycle, linewidth(1));
 draw(D--P--C--Q--B);
 
 markangle(A, P, D, radius=mr);

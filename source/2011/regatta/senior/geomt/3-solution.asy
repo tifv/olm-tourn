@@ -1,9 +1,11 @@
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 pair
     A = (-3,0), B = (0,0), C = (5,0),
@@ -11,14 +13,21 @@ pair
 
     M = 2.5 dir(140), N = rotate(-60) * M;
 
-draw(A--B--C--N--M--cycle);
-draw(M--B--N);
-draw(B--Ap--N, linetype(new real[] {6, 7}));
+draw(A--B--M--cycle, linewidth(1));
+draw(B--C--N--cycle, linewidth(1));
+draw(M--N);
+draw(B--Ap--N, dashed);
 
-markangle(N, B, M, radius=mr);
 markangle(B, M, N, radius=mr);
 markangle(M, N, B, radius=mr);
-markangle(Ap, B, A, radius=0.7mr);
+
+markangle(N, B, M, radius=0.8mr);
+//markangle(Ap, B, A, radius=1.1mr);
+
+mark(A--B, 2);
+mark(Ap--B, 2);
+mark(A--M, 1);
+mark(Ap--N, 1);
 
 dot(Label("$A$", A, SW));
 dot(Label("$B$", B, S));

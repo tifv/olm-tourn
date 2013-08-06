@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (0,0), BC = parallel((1,0), (0,1)),
@@ -16,7 +17,7 @@ var
 
     P = extension(A, T, C, S);
 
-draw(ABC);
+draw(ABC, linewidth(1));
 draw(A--T);
 draw(C--S);
 draw(S--T);

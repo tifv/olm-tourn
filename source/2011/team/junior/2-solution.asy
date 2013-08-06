@@ -1,9 +1,10 @@
 import geometry;
+access jeolm;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     b = 0.6,
@@ -13,7 +14,7 @@ var
     ABC = triangle(A, B, C),
     L = bisectorpoint(ABC.BC);
 
-draw(ABC);
+draw(ABC, linewidth(1));
 draw(A--L);
 
 markangle(B, A, L, radius=mr);
