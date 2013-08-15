@@ -22,6 +22,7 @@ markangle(C, D, P, radius=mr);
 markangle(B, C, Q, radius=mr);
 
 perpendicular(Q, unit(D-Q), NE, size=0.5mr);
+perpendicular(B, unit(A-B), NE, size=0.5mr);
 
 dot(Label("$A$", A, SW));
 dot(Label("$B$", B, NW));

@@ -1,8 +1,12 @@
 !!omap
 - base.sty: {}
+- written-postword.sty: {}
+- oral-postword.sty: {}
+- team-postword.sty: {}
+- miscellany-numeration.sty: {}
 - common-sizes.asy: {}
 - '2011': !!omap
-  - extension.sty: {}
+  - year.sty: {}
   - regatta: !!omap
     - junior: !!omap
       - algbr: !!omap
@@ -197,7 +201,7 @@
           used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
 - '2012': !!omap
-  - extension.sty: {}
+  - year.sty: {}
   - regatta: !!omap
     - junior: !!omap
       - algbr: !!omap
@@ -360,7 +364,7 @@
           used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
 - '2013': !!omap
-  - extension.sty: {}
+  - year.sty: {}
   - pers-algbr: !!omap
     - junior: !!omap
       - 1.tex: {}

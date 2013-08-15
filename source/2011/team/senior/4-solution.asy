@@ -21,7 +21,8 @@ var
 
     IJ = line(I, J),
     B1 = intersectionpoint(IJ, ABC.AC),
-    C1 = intersectionpoint(IJ, ABC.AB);
+    C1 = intersectionpoint(IJ, ABC.AB),
+    P = intersectionpoint(IJ, ABC.BC);
 
 draw(ABC, linewidth(1));
 draw(A--X);
