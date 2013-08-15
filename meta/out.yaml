@@ -52,6 +52,29 @@ $labels:
 - &round-4-name
   Четвертый тур
 
+- &junior-name-en
+  Junior league
+- &senior-name-en
+  Senior league
+- &algbr-name-en
+  Algebra and Number Theory
+- &geomt-name-en
+  Geometry
+- &combi-name-en
+  Combinatorics and Logic
+- &regatta-name-en
+  Regatta
+- &team-name-en
+  Team oral contest
+- &round-1-name-en
+  First round
+- &round-2-name-en
+  Second round
+- &round-3-name-en
+  Third round
+- &round-4-name-en
+  Fourth round
+
 $style: [/base]
 
 archive:
@@ -203,6 +226,130 @@ miscellany:
       "2": *2011-regatta-2
       "3": *2011-regatta-3
       "4": *2011-regatta-4
+
+  en:
+    problems:
+      $fluid: *tourn-fluid-problems
+    $delegate: *tourn-delegate
+    $style: [/en/base, year]
+
+    pers-algbr:
+      $contest:
+        name: *algbr-name-en
+        leagues: *leagues
+      $style: {append: [/en/written-postword]}
+      junior:
+        $contest$league:
+          name: *junior-name-en
+          problems: 4
+        $rigid: [[.]]
+      senior:
+        $contest$league:
+          name: *senior-name-en
+          problems: 4
+        $rigid: [[.]]
+
+    pers-geomt:
+      $contest:
+        name: *geomt-name-en
+        leagues: *leagues
+      $style: {append: [/en/written-postword]}
+      junior:
+        $contest$league:
+          name: *junior-name-en
+          problems: 4
+        $rigid: [[.]]
+      senior:
+        $contest$league:
+          name: *senior-name-en
+          problems: 4
+        $rigid: [[.]]
+
+    pers-combi:
+      $contest:
+        name: *combi-name-en
+        leagues: *leagues
+      $style: {append: [/en/oral-postword]}
+      junior:
+        $contest$league:
+          name: *junior-name-en
+          problems: 5
+        $rigid: [[.]]
+      senior:
+        $contest$league:
+          name: *senior-name-en
+          problems: 5
+        $rigid: [[.]]
+
+    team:
+      $contest:
+        name: *team-name-en
+        leagues: *leagues
+      $style: {append: [/en/team-postword]}
+      junior:
+        $contest$league:
+          name: *junior-name-en
+          problems: 8
+        $rigid: [[.]]
+      senior:
+        $contest$league:
+          name: *senior-name-en
+          problems: 9
+        $rigid: [[.]]
+
+    regatta:
+      $regatta:
+        name: *regatta-name-en
+        leagues: *leagues
+      junior:
+        $regatta$league:
+          name: *junior-name-en
+          subjects: *regatta-subjects
+          rounds: *regatta-rounds
+        algbr: &2011-regatta-algbr-en
+          $regatta$subject:
+            name: *algbr-name-en
+            index: 'a'
+        geomt: &2011-regatta-geomt-en
+          $regatta$subject:
+            name: *geomt-name-en
+            index: 'b'
+        combi: &2011-regatta-combi-en
+          $regatta$subject:
+            name: *combi-name-en
+            index: 'c'
+        "1": &2011-regatta-1-en
+          $regatta$round:
+            name: *round-1-name-en
+            index: '1'
+            mark: 4
+        "2": &2011-regatta-2-en
+          $regatta$round:
+            name: *round-2-name-en
+            index: '2'
+            mark: 5
+        "3": &2011-regatta-3-en
+          $regatta$round:
+            name: *round-3-name-en
+            index: '3'
+            mark: 6
+        "4": &2011-regatta-4-en
+          $regatta$round:
+            name: *round-4-name-en
+            index: '4'
+            mark: 5
+      senior:
+        $regatta$league:
+          name: *senior-name-en
+          subjects: *regatta-subjects
+          rounds: *regatta-rounds
+        algbr: *2011-regatta-algbr-en
+        geomt: *2011-regatta-geomt-en
+        combi: *2011-regatta-combi-en
+        "1": *2011-regatta-1-en
+        "2": *2011-regatta-2-en
+        "3": *2011-regatta-3-en
+        "4": *2011-regatta-4-en
 
 
 # 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 2012

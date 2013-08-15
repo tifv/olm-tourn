@@ -4,6 +4,11 @@
 - oral-postword.sty: {}
 - team-postword.sty: {}
 - miscellany-numeration.sty: {}
+- en: !!omap
+  - base.sty: {}
+  - oral-postword.sty: {}
+  - team-postword.sty: {}
+  - written-postword.sty: {}
 - common-sizes.asy: {}
 - '2011': !!omap
   - year.sty: {}
@@ -200,6 +205,96 @@
       - 5-solution.asy:
           used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+  - en: !!omap
+    - year.sty: {}
+    - regatta: !!omap
+      - junior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+      - senior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+    - pers-algbr: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-geomt: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-combi: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+    - team: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+        - 9.tex: {}
 - '2012': !!omap
   - year.sty: {}
   - regatta: !!omap
