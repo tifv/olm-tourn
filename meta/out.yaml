@@ -16,11 +16,11 @@ $labels:
   - ../pers-combi/problems
   - ../team/problems
 - &tourn-fluid-complete
-  - ../regatta/complete
-  - ../pers-algbr/complete
-  - ../pers-geomt/complete
-  - ../pers-combi/complete
-  - ../team/complete
+  - ../regatta/complete/contained
+  - ../pers-algbr/complete/contained
+  - ../pers-geomt/complete/contained
+  - ../pers-combi/complete/contained
+  - ../team/complete/contained
 - &tourn-delegate
   - regatta
   - pers-algbr
@@ -42,7 +42,7 @@ $labels:
 - &regatta-name
   Регата
 - &team-name
-  Командная устная олимпиада
+  Командная олимпиада
 - &round-1-name
   Первый тур
 - &round-2-name
@@ -65,7 +65,7 @@ $labels:
 - &regatta-name-en
   Regatta
 - &team-name-en
-  Team oral contest
+  Team contest
 - &round-1-name-en
   First round
 - &round-2-name-en
@@ -75,7 +75,7 @@ $labels:
 - &round-4-name-en
   Fourth round
 
-$style: [/base]
+$style: [/base, /ru/lang]
 
 archive:
   $delegate:
@@ -113,7 +113,7 @@ miscellany:
     $contest:
       name: *algbr-name
       leagues: *leagues
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
     junior:
       $contest$league:
         name: *junior-name
@@ -129,7 +129,7 @@ miscellany:
     $contest:
       name: *geomt-name
       leagues: *leagues
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
     junior:
       $contest$league:
         name: *junior-name
@@ -145,7 +145,7 @@ miscellany:
     $contest:
       name: *combi-name
       leagues: *leagues
-    $style: {append: [/oral-postword]}
+    $style: {append: [/ru/oral-postword]}
     junior:
       $contest$league:
         name: *junior-name
@@ -161,7 +161,7 @@ miscellany:
     $contest:
       name: *team-name
       leagues: *leagues
-    $style: {append: [/team-postword]}
+    $style: {append: [/ru/team-postword]}
     junior:
       $contest$league:
         name: *junior-name
@@ -231,7 +231,7 @@ miscellany:
     problems:
       $fluid: *tourn-fluid-problems
     $delegate: *tourn-delegate
-    $style: [/en/base, year]
+    $style: [/base, /en/lang, year]
 
     pers-algbr:
       $contest:
@@ -375,7 +375,7 @@ miscellany:
         name: *senior-name
         problems: 4
       $rigid: [[.]]
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
 
   pers-geomt:
     $contest:
@@ -391,7 +391,7 @@ miscellany:
         name: *senior-name
         problems: 4
       $rigid: [[.]]
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
 
   pers-combi:
     $contest:
@@ -407,7 +407,7 @@ miscellany:
         name: *senior-name
         problems: 5
       $rigid: [[.]]
-    $style: {append: [/oral-postword]}
+    $style: {append: [/ru/oral-postword]}
 
   team:
     $contest:
@@ -423,7 +423,7 @@ miscellany:
         name: *senior-name
         problems: 10
       $rigid: [[.]]
-    $style: {append: [/team-postword]}
+    $style: {append: [/ru/team-postword]}
 
   regatta:
     $regatta:
@@ -502,7 +502,7 @@ miscellany:
         name: *senior-name
         problems: 4
       $rigid: [[.]]
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
 
   pers-geomt:
     $contest:
@@ -518,7 +518,7 @@ miscellany:
         name: *senior-name
         problems: 4
       $rigid: [[.]]
-    $style: {append: [/written-postword]}
+    $style: {append: [/ru/written-postword]}
 
   pers-combi:
     $contest:
@@ -534,7 +534,7 @@ miscellany:
         name: *senior-name
         problems: 5
       $rigid: [[.]]
-    $style: {append: [/oral-postword]}
+    $style: {append: [/ru/oral-postword]}
 
   team:
     $contest:
@@ -550,7 +550,7 @@ miscellany:
         name: *senior-name
         problems: 10
       $rigid: [[.]]
-    $style: {append: [/team-postword]}
+    $style: {append: [/ru/team-postword]}
 
   regatta:
     $regatta:

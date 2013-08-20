@@ -1,14 +1,16 @@
 !!omap
 - base.sty: {}
-- written-postword.sty: {}
-- oral-postword.sty: {}
-- team-postword.sty: {}
 - miscellany-numeration.sty: {}
-- en: !!omap
-  - base.sty: {}
+- ru: !!omap
+  - lang.sty: {}
+  - written-postword.sty: {}
   - oral-postword.sty: {}
   - team-postword.sty: {}
+- en: !!omap
+  - lang.sty: {}
   - written-postword.sty: {}
+  - oral-postword.sty: {}
+  - team-postword.sty: {}
 - common-sizes.asy: {}
 - '2011': !!omap
   - year.sty: {}
@@ -284,7 +286,9 @@
         - 5.tex: {}
         - 6.tex: {}
         - 7.tex: {}
-        - 8.tex: {}
+        - 8.tex:
+            figures: !!omap
+            - ../../../team/junior/8-problem: !path '2011/team/junior/8-problem'
       - senior: !!omap
         - 1.tex: {}
         - 2.tex: {}
