@@ -1,18 +1,15 @@
+from itertools import zip_longest
 from collections import OrderedDict as ODict
 
 from pathlib import PurePosixPath as PurePath
 
-import jeolm.drivers
-from jeolm.drivers.course import CourseDriver, RecordNotFoundError
-from jeolm.utils import pure_join, path_startswith as startswith
+from jeolm.driver import Driver as OriginalDriver, RecordNotFoundError
+from jeolm.utils import pure_join
 
 import logging
-logger = logging.getLogger('jeolm.drivers.tourn')
+logger = logging.getLogger(__name__)
 
-#def pathset(*strings):
-#    return frozenset(map(PurePath, strings))
-
-class TournDriver(CourseDriver):
+class Driver(OriginalDriver):
 
     # contest DELEGATE
     #     contest/league for each league
@@ -79,6 +76,10 @@ class TournDriver(CourseDriver):
     ##########
     # High-level functions
 
+    def __init__(self, inrecords, outrecords):
+        super().__init__(inrecords, outrecords)
+        self.translations = outrecords.get('$translations')
+
     def list_targets(self):
         yield from super().list_targets()
         for mimic_target, mimic_key in self.outrecords.list_mimic_targets():
@@ -126,26 +127,34 @@ class TournDriver(CourseDriver):
         mimicpath = record['$mimic$path']
 
         if mimickey == '$contest':
-            if startswith(mimicpath, {'problems', 'solutions', 'complete'}):
+            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
-                for league in record['$contest']['leagues']:
+                for leaguekey in record['$contest']['leagues']:
+                    if leaguekey not in record:
+                        raise ValueError(mimicroot/leaguekey)
                     yield from self.trace_delegators(
-                        mimicroot/league/mimicpath, seen_targets=seen_targets )
+                        mimicroot/leaguekey/mimicpath,
+                        seen_targets=seen_targets )
         elif mimickey == '$contest$league':
             yield target
         elif mimickey == '$regatta':
-            if startswith(mimicpath, {'problems', 'solutions', 'complete'}):
+            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
-                for league in record['$regatta']['leagues']:
+                for leaguekey in record['$regatta']['leagues']:
+                    if leaguekey not in record:
+                        raise ValueError(mimicroot/leaguekey)
                     yield from self.trace_delegators(
-                        mimicroot/league/mimicpath, seen_targets=seen_targets )
+                        mimicroot/leaguekey/mimicpath,
+                        seen_targets=seen_targets )
         elif mimickey == '$regatta$league':
-            if startswith(mimicpath, {'problems', 'solutions', 'complete'}):
+            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
                 for subjectkey in record['$regatta$league']['subjects']:
+                    if subjectkey not in record:
+                        raise ValueError(mimicroot/subjectkey)
                     yield from self.trace_delegators(
                         mimicroot/subjectkey/mimicpath,
                         seen_targets=seen_targets )
@@ -215,13 +224,13 @@ class TournDriver(CourseDriver):
 
         if mimickey == '$contest':
             # contest/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.contest_fluid_targets):
+            if path_prefixed(subtarget, self.contest_fluid_targets):
                 return self.produce_fluid_contest_protorecord(target, record,
                     contest=self.find_contest(record), **kwargs )
             raise RecordNotFoundError(target)
         elif mimickey == '$contest$league':
             # contest/league/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.contest_league_fluid_targets):
+            if path_prefixed(subtarget, self.contest_league_fluid_targets):
                 return self.produce_fluid_contest_league_protorecord(
                     target, record,
                     contest=self.find_contest(record),
@@ -236,13 +245,13 @@ class TournDriver(CourseDriver):
             raise RecordNotFoundError(target)
         elif mimickey == '$regatta':
             # regatta/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.regatta_fluid_targets):
+            if path_prefixed(subtarget, self.regatta_fluid_targets):
                 return self.produce_fluid_regatta_protorecord(target, record,
                     regatta=self.find_regatta(record), **kwargs )
             raise RecordNotFoundError(target)
         elif mimickey == '$regatta$league':
             # regatta/league/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.regatta_league_fluid_targets):
+            if path_prefixed(subtarget, self.regatta_league_fluid_targets):
                 return self.produce_fluid_regatta_league_protorecord(
                     target, record,
                     regatta=self.find_regatta(record),
@@ -250,7 +259,7 @@ class TournDriver(CourseDriver):
             raise RecordNotFoundError(target)
         elif mimickey == '$regatta$subject':
             # regatta/league/subject/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.regatta_subject_fluid_targets):
+            if path_prefixed(subtarget, self.regatta_subject_fluid_targets):
                 return self.produce_fluid_regatta_subject_protorecord(
                     target, record,
                     regatta=self.find_regatta(record),
@@ -267,7 +276,7 @@ class TournDriver(CourseDriver):
             raise RecordNotFoundError(target)
         elif mimickey == '$regatta$round':
             # regatta/league/round/{problems,solutions,complete,jury}
-            if startswith(subtarget, self.regatta_round_fluid_targets):
+            if path_prefixed(subtarget, self.regatta_round_fluid_targets):
                 return self.produce_fluid_regatta_round_protorecord(
                     target, record,
                     regatta=self.find_regatta(record),
@@ -297,7 +306,8 @@ class TournDriver(CourseDriver):
                     raise ValueError(item, target)
 
                 append(self.substitute_jeolmheader())
-                append(self.constitute_section(contest['name']))
+                append(self.constitute_section(
+                    self.find_name(contest, record.get('$lang')) ))
                 append(self.substitute_begin_problems())
                 for i in range(1, 1 + league['problems']):
                     inpath = subroot/(str(i)+'.tex')
@@ -313,7 +323,8 @@ class TournDriver(CourseDriver):
         protorecord.update(record.get('$rigid$opt', ()))
         protorecord['preamble'] = preamble = list(
             protorecord.get('preamble', ()) )
-        preamble.append({'league' : league['name']})
+        preamble.append({
+            'league' : self.find_name(league, record.get('$lang')) })
         return protorecord
 
     def produce_rigid_regatta_subject_protorecord(self,
@@ -332,7 +343,8 @@ class TournDriver(CourseDriver):
             append(self.substitute_clearpage())
             append(self.substitute_jeolmheader_nospace())
             append(self.substitute_rigid_regatta_caption(
-                caption=regatta['name'], mark=round['mark'] ))
+                caption=self.find_name(regatta, record.get('$lang')),
+                mark=round['mark'] ))
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, target)
@@ -351,7 +363,8 @@ class TournDriver(CourseDriver):
         protorecord.update(league_record.get('$rigid$opt', ()))
         protorecord.update(record.get('$rigid$opt', ()))
         preamble = protorecord.setdefault('preamble', [])
-        preamble.append({'league' : league['name']})
+        preamble.append({
+            'league' : self.find_name(league, record.get('$lang')) })
         return protorecord
 
     def produce_fluid_contest_protorecord(self,
@@ -362,10 +375,12 @@ class TournDriver(CourseDriver):
         body = []
         select, target_options = self.split_subtarget(subtarget)
         if 'contained' in target_options:
-            body.append(self.constitute_section(contest['name']))
+            body.append(self.constitute_section(
+                self.find_name(contest, record.get('$lang')) ))
             target_options.discard('contained')
         else:
-            body.append(self.constitute_section(contest['name'],
+            body.append(self.constitute_section(
+                self.find_name(contest, record.get('$lang')),
                 select=select ))
         league_records = self.find_contest_league_records(record)
         subtarget = PurePath(select, *target_options)
@@ -391,11 +406,16 @@ class TournDriver(CourseDriver):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(league['name'], level=contained))
+            append(self.constitute_section(
+                self.find_name(league, record.get('$lang')),
+                level=contained ))
             target_options.discard('contained')
         else:
             append(self.constitute_section(
-                contest['name'] + '. ' + league['name'], select=select ))
+                '{}. {}'.format(
+                    self.find_name(contest, record.get('$lang')),
+                    self.find_name(league, record.get('$lang')) ),
+                select=select ))
         append(self.substitute_begin_problems())
         for i in range(1, 1 + league['problems']):
             inpath = subroot/(str(i)+'.tex')
@@ -440,10 +460,12 @@ class TournDriver(CourseDriver):
         body = []
         select, target_options = self.split_subtarget(subtarget)
         if 'contained' in target_options:
-            body.append(self.constitute_section(regatta['name']))
+            body.append(self.constitute_section(
+                self.find_name(regatta, record.get('$lang')) ))
             target_options.discard('contained')
         else:
-            body.append(self.constitute_section(regatta['name'],
+            body.append(self.constitute_section(
+                self.find_name(regatta, record.get('$lang')),
                 select=select ))
         league_records = self.find_regatta_league_records(record)
         subtarget = PurePath(select, *target_options)
@@ -469,11 +491,16 @@ class TournDriver(CourseDriver):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(league['name'], level=contained))
+            append(self.constitute_section(
+                self.find_name(league, record.get('$lang')),
+                level=contained ))
             target_options.discard('contained')
         else:
             append(self.constitute_section(
-                regatta['name'] + '. ' + league['name'], select=select ))
+                '{}. {}'.format(
+                    self.find_name(regatta, record.get('$lang')),
+                    self.find_name(league, record.get('$lang')) ),
+                select=select ))
 
         if select in {'jury'}:
             group_by = 'subject'
@@ -523,12 +550,16 @@ class TournDriver(CourseDriver):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(subject['name'], level=contained))
+            append(self.constitute_section(
+            self.find_name(subject, record.get('$lang')),
+            level=contained ))
             target_options.discard('contained')
         else:
             append(self.constitute_section(
                 '{}. {}. {}'.format(
-                    regatta['name'], league['name'], subject['name'] ),
+                    self.find_name(regatta, record.get('$lang')),
+                    self.find_name(league, record.get('$lang')),
+                    self.find_name(subject, record.get('$lang')) ),
                 select=select ))
         round_records = self.find_regatta_round_records(record)
         append(self.substitute_begin_problems())
@@ -559,12 +590,16 @@ class TournDriver(CourseDriver):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(round['name'], level=contained))
+            append(self.constitute_section(
+            self.find_name(round, record.get('$lang')),
+            level=contained ))
             target_options.discard('contained')
         else:
             append(self.constitute_section(
                 '{}. {}. {}'.format(
-                    regatta['name'], league['name'], round['name'] ),
+                    self.find_name(regatta, record.get('$lang')),
+                    self.find_name(league, record.get('$lang')),
+                    self.find_name(round, record.get('$lang')) ),
                 select=select ))
         subject_records = self.find_regatta_subject_records(record)
         leagueroot = subroot.parent()
@@ -726,11 +761,23 @@ class TournDriver(CourseDriver):
         else:
             raise AssertionError(mimickey, record)
 
+    def find_name(self, entity, lang):
+        name = entity['name']
+        if isinstance(name, str):
+            return name
+        elif isinstance(name, dict):
+            (key, value), = name.items()
+            if key != 'translate':
+                raise ValueError(name)
+            return self.translations[value][lang]
+        else:
+            raise TypeError(name)
+
     ##########
     # Record accessors
 
     # Extension
-    class OutrecordAccessor(CourseDriver.OutrecordAccessor):
+    class OutrecordAccessor(OriginalDriver.OutrecordAccessor):
         mimic_keys = frozenset((
             '$contest', '$contest$league',
             '$regatta', '$regatta$league',
@@ -760,6 +807,12 @@ class TournDriver(CourseDriver):
                 '$mimic$path' : parent_record['$mimic$path']/name,
             })
             return path, record;
+
+        @classmethod
+        def derive_attributes(cls, parent_record, record, path):
+            if '$lang' not in record:
+                record['$lang'] = parent_record.get('$lang')
+            super().derive_attributes(parent_record, record, path)
 
         def list_mimic_targets(self, outpath=PurePath(), outrecord=None):
             if outrecord is None:
@@ -870,4 +923,17 @@ class TournDriver(CourseDriver):
         assert select in {'problems', 'solutions', 'complete', 'jury'}
         return select, target_options
 
-jeolm.drivers.Driver = TournDriver
+def path_prefixed(path, other, recursed=False):
+    if not isinstance(other, (str, PurePath)):
+        assert not recursed
+        return any(path_prefixed(path, o, recursed=True) for o in other)
+    parts = list(path.parts)
+    other_parts = list(PurePath(other).parts)
+
+    for part, other_part in zip_longest(parts, other_parts):
+        if other_part is None:
+            return True
+        if part != other_part:
+            return False
+    return True
+

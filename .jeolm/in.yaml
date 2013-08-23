@@ -3,11 +3,19 @@
 - miscellany-numeration.sty: {}
 - ru: !!omap
   - lang.sty: {}
+  - regatta-caption.sty: {}
   - written-postword.sty: {}
   - oral-postword.sty: {}
   - team-postword.sty: {}
 - en: !!omap
   - lang.sty: {}
+  - regatta-caption.sty: {}
+  - written-postword.sty: {}
+  - oral-postword.sty: {}
+  - team-postword.sty: {}
+- sr: !!omap
+  - lang.sty: {}
+  - regatta-caption.sty: {}
   - written-postword.sty: {}
   - oral-postword.sty: {}
   - team-postword.sty: {}
@@ -299,6 +307,55 @@
         - 7.tex: {}
         - 8.tex: {}
         - 9.tex: {}
+  - sr: !!omap
+    - regatta: !!omap
+      - senior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+    - pers-algbr: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-combi: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+    - pers-geomt: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - team: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+        - 9.tex: {}
+    - year.sty: {}
 - '2012': !!omap
   - year.sty: {}
   - regatta: !!omap

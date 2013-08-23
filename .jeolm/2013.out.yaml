@@ -1,0 +1,177 @@
+'2013':
+  $style: {extend: [year]}
+  $delegate:
+  - regatta
+  - pers-algbr
+  - pers-geomt
+  - pers-combi
+  - team
+  problems:
+    $fluid: [{verbatim: '\part*{2013}'}, no-caption]
+    contained:
+      $fluid: [..]
+    no-caption:
+      $fluid:
+      - y/regatta/problems/contained
+      - y/pers-algbr/problems/contained
+      - y/pers-geomt/problems/contained
+      - y/pers-combi/problems/contained
+      - y/team/problems/contained
+      y: {$alias: ../..}
+  complete:
+    $fluid: [{verbatim: '\part*{2013 (с решениями)}'}, no-caption]
+    contained:
+      $fluid: [{verbatim: '\part*{2013}'}, ../no-caption]
+    no-caption:
+      $fluid:
+      - y/regatta/complete/contained
+      - y/pers-algbr/complete/contained
+      - y/pers-geomt/complete/contained
+      - y/pers-combi/complete/contained
+      - y/team/complete/contained
+      y: {$alias: ../..}
+
+  pers-algbr:
+    $contest:
+      name: {translate: 'algbr'}
+      leagues: [junior, senior]
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 4
+      $rigid: [[.]]
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 4
+      $rigid: [[.]]
+    $style: {extend: [/ru/written-postword]}
+
+  pers-geomt:
+    $contest:
+      name: {translate: 'geomt'}
+      leagues: [junior, senior]
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 4
+      $rigid: [[.]]
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 4
+      $rigid: [[.]]
+    $style: {extend: [/ru/written-postword]}
+
+  pers-combi:
+    $contest:
+      name: {translate: 'combi'}
+      leagues: [junior, senior]
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 5
+      $rigid: [[.]]
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 5
+      $rigid: [[.]]
+    $style: {extend: [/ru/oral-postword]}
+
+  team:
+    $contest:
+      name: {translate: 'team'}
+      leagues: [junior, senior]
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 10
+      $rigid: [[.]]
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 10
+      $rigid: [[.]]
+    $style: {extend: [/ru/team-postword]}
+
+  regatta:
+    $regatta:
+      name: {translate: 'regatta'}
+      leagues: [junior, senior]
+    $style: {extend: [/ru/regatta-caption]}
+    junior:
+      $regatta$league:
+        name: {translate: 'junior'}
+        subjects: [algbr, geomt, combi]
+        rounds: 4
+      algbr:
+        $regatta$subject:
+          name: {translate: 'algbr'}
+          index: 'a'
+      geomt:
+        $regatta$subject:
+          name: {translate: 'geomt'}
+          index: 'b'
+      combi:
+        $regatta$subject:
+          name: {translate: 'combi'}
+          index: 'c'
+      "1":
+        $regatta$round:
+          name: {translate: 'round-1'}
+          index: '1'
+          mark: 4
+      "2":
+        $regatta$round:
+          name: {translate: 'round-2'}
+          index: '2'
+          mark: 5
+      "3":
+        $regatta$round:
+          name: {translate: 'round-3'}
+          index: '3'
+          mark: 6
+      "4":
+        $regatta$round:
+          name: {translate: 'round-4'}
+          index: '4'
+          mark: 5
+    senior:
+      $regatta$league:
+        name: {translate: 'senior'}
+        subjects: [algbr, geomt, combi]
+        rounds: 4
+      algbr:
+        $regatta$subject:
+          name: {translate: 'algbr'}
+          index: 'a'
+      geomt:
+        $regatta$subject:
+          name: {translate: 'geomt'}
+          index: 'b'
+      combi:
+        $regatta$subject:
+          name: {translate: 'combi'}
+          index: 'c'
+      "1":
+        $regatta$round:
+          name: {translate: 'round-1'}
+          index: '1'
+          mark: 4
+      "2":
+        $regatta$round:
+          name: {translate: 'round-2'}
+          index: '2'
+          mark: 5
+      "3":
+        $regatta$round:
+          name: {translate: 'round-3'}
+          index: '3'
+          mark: 6
+      "4":
+        $regatta$round:
+          name: {translate: 'round-4'}
+          index: '4'
+          mark: 5
+

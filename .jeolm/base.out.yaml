@@ -1,0 +1,103 @@
+$translations:
+  junior:
+    ru:
+      Младшая лига
+    en:
+      Junior League
+    sr:
+      Junior League
+  senior:
+    ru:
+      Старшая лига
+    en:
+      Senior League
+    sr:
+      Senior League
+  algbr:
+    ru:
+      Алгебра и теория чисел
+    en:
+      Algebra and Number Theory
+    sr:
+      Algebra and Number Theory
+  geomt:
+    ru:
+      Геометрия
+    en:
+      Geometry
+    sr:
+      Geometry
+  combi:
+    ru:
+      Комбинаторика и логика
+    en:
+      Combinatorics and Logic
+    sr:
+      Combinatorics and Logic
+  regatta:
+    ru:
+      Регата
+    en:
+      Regatta
+    sr:
+      Regatta
+  team:
+    ru:
+      Командная олимпиада
+    en:
+      Team Contest
+    sr:
+      Team Contest
+  round-1:
+    ru:
+      Первый тур
+    en:
+      First Round
+    sr:
+      First Round
+  round-2:
+    ru:
+      Второй тур
+    en:
+      Second Round
+    sr:
+      Second Round
+  round-3:
+    ru:
+      Третий тур
+    en:
+      Third Round
+    sr:
+      Third Round
+  round-4:
+    ru:
+      Четвертый тур
+    en:
+      Fourth Round
+    sr:
+      Fourth Round
+
+$style: [/ru/lang, /base]
+$lang: ru
+
+archive:
+  $delegate:
+  - /miscellany
+  - /miscellany/problems
+
+miscellany:
+  $style: {extend: [/miscellany-numeration]}
+  $fluid: [complete]
+  problems:
+    $fluid:
+    - {verbatim: '\title{Многоборье 2011-2013}\date{}\maketitle'}
+    - /2011/problems/contained
+    - /2012/problems/contained
+    - /2013/problems/contained
+  complete:
+    $fluid:
+    - {verbatim: '\title{Многоборье 2011-2013 (с решениями)}\date{}\maketitle'}
+    - /2011/complete/contained
+    - /2012/complete/contained
+    - /2013/complete/contained
+
