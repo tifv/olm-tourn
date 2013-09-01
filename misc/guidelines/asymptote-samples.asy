@@ -2,12 +2,13 @@
 // Normal image
 
 import geometry;
+access jeolm;
+from jeolm access mark;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
-var mr = common.markradius;
-var mark = common.mark;
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
+var mr = sizes.markradius;
 
 var
     A = (1,0), B = (0,0), C = (0,1),
@@ -24,9 +25,9 @@ perpendicularmark(B, unit(A-B), dir=NE, size=0.5mr);
 
 import three;
 
-// use /common.asy as common.asy
-access "common.asy" as common;
-size(common.size);
+// use /common-sizes.asy as common-sizes.asy
+access "common-sizes.asy" as sizes;
+size(sizes.size);
 currentprojection = perspective(65, 70, 80);
-settings.render = common.render;
+settings.render = sizes.render;
 

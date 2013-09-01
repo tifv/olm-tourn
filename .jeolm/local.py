@@ -815,17 +815,19 @@ class Driver(OriginalDriver):
             super().derive_attributes(parent_record, record, path)
 
         def list_mimic_targets(self, outpath=PurePath(), outrecord=None):
-            if outrecord is None:
-                outrecord = self.records
-            else:
-                mimic_keys = self.mimic_keys & outrecord.keys()
-                if mimic_keys:
-                    mimic_key, = mimic_keys
-                    yield outpath, mimic_key
+            assert not (self.mimic_keys & self.records.keys())
+            yield from self._list_mimic_targets(PurePath(), self.records)
+
+        def _list_mimic_targets(self, outpath, outrecord):
+            assert isinstance(outrecord, dict), type(outrecord)
+            mimic_keys = self.mimic_keys & outrecord.keys()
+            if mimic_keys:
+                mimic_key, = mimic_keys
+                yield outpath, mimic_key
             for subname, subrecord in outrecord.items():
                 if '$' in subname:
-                    continue;
-                yield from self.list_mimic_targets(outpath/subname, subrecord)
+                    continue
+                yield from self._list_mimic_targets(outpath/subname, subrecord)
 
 #    mimic_keys = OutrecordAccessor.mimic_keys
 
