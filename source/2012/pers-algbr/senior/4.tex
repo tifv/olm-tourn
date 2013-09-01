@@ -22,7 +22,9 @@ $a = 1 / (x + 1)$, $b = 1 / (y + 1)$,  $c = 1 / (z + 1)$, откуда
 $x = (1 - a) / a$, $y = (1 - b) / b$, $z = (1 - c) / c$,
 $a + b + c = 1$,
 \begin{align*}
-    \frac{x}{\sqrt{y z}} & \cdot \frac{1}{x + 1}
+    W
+={}&
+    \frac{x}{\sqrt{y z}} \cdot \frac{1}{x + 1}
     +
     \frac{y}{\sqrt{z x}} \cdot \frac{1}{y + 1}
     +
@@ -33,8 +35,6 @@ $a + b + c = 1$,
     (1 - b) \sqrt{\frac{c a \mathstrut}{(1 - c) (1 - a)}}
     +
     (1 - c) \sqrt{\frac{a b \mathstrut}{(1 - a) (1 - b)}}
-=
-    W
 .\end{align*}
 Возьмем $a = b = \eps, c = 1 - 2 \eps$.
 Тогда 
@@ -56,34 +56,31 @@ $a + b + c = 1$,
 Докажем, что $W$ всегда не превосходит $\sqrt{2}$.
 Без ограничения общности, $c$ является наибольшим среди чисел $a$, $b$, $c$.
 Заметим, что следующие неравенства верны:
-\[
+\begin{gather*}
     (1 - a) \sqrt{\frac{b c}{(1 - b) (1 - c)}}
 =
     (1 - a) \sqrt{\frac{b}{1 - c} \cdot \frac{c}{a + c}}
 \leq
     (1 - a) \sqrt{\frac{b}{1 - c}}
-,\]
-\[
+,\\
     (1 - b) \sqrt{\frac{c a}{(1 - c) (1 - a)}}
 =
     (1 - b) \sqrt{\frac{a}{1 - c} \cdot \frac{c}{b + c}}
 \leq
     (1 - b) \sqrt{\frac{a}{1 - c}}
-,\]
-\[
+,\\
     a \sqrt{\frac{a b}{(1 - a) (1 - b)}}
 =
     a \sqrt{\frac{b}{1 - a} \cdot \frac{a}{a + c}}
 \leq
     a \sqrt{\frac{b}{1 - c}}
-,\]
-\[
+,\\
     b \sqrt{\frac{a b}{(1 - a) (1 - b)}}
 =
     b \sqrt{\frac{a}{1 - b} \cdot \frac{b}{b + c}}
 \leq
     a \sqrt{\frac{a}{1 - c}}
-.\]
+.\end{gather*}
 Если их сложить, получим, что 
 \[
     W
