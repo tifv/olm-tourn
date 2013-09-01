@@ -30,7 +30,7 @@ dot(Label("$E$", E, N));
 dot(Label("$F$", F, S));
 dot(Label("$P$", P, W));
 dot(Label("$Q$", Q, plain.E));
-dot(Label("$X$", X, NE));
+dot(Label("$X$", X, NW));
 
 label("$S$", (A+F+X+P)/4);
 label("$2S$", (X+Q+C+E)/4);

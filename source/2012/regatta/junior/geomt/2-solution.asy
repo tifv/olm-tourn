@@ -8,9 +8,9 @@ size(sizes.size);
 var mr = sizes.markradius;
 
 var
-    A = (0, 0), B = (0, -2),
+    A = (0, 0), B = (2, 0),
     circAB = circle(A, B),
-    K = angpoint(circAB, 15),
+    K = angpoint(circAB, aSin(1/5)+90),
     arcAB = arccircle(A, K, B),
     DC = tangent(circAB, K),
     D = intersectionpoint(DC, perpendicular(A, normal=B-A)),
@@ -28,10 +28,12 @@ mark(C--K, 2);
 
 draw(arcAB);
 
-dot(Label("$A$", A, NW));
-dot(Label("$B$", B, SW));
-dot(Label("$C$", C, SE));
-dot(Label("$D$", D, NE));
-dot(Label("$K$", K, ENE));
-dot(Label("$O$", O, W ));
+dot(Label("$A$", A, SW));
+dot(Label("$B$", B, SE));
+dot(Label("$C$", C, NE));
+dot(Label("$D$", D, NW));
+dot(Label("$K$", K, unit(D-C)/I));
+dot(Label(
+    "$O$", O, unit(unit(A-O) + unit(B-O))
+));
 

@@ -402,7 +402,9 @@
         - 3.tex: {}
         - 4.tex: {}
       - geomt: !!omap
-        - 1.tex: {}
+        - 1.tex:
+            $figures: !!omap
+            - 1-solution: !path '2012/regatta/senior/geomt/1-solution'
         - 2.tex:
             $figures: !!omap
             - 2-solution: !path '2012/regatta/senior/geomt/2-solution'
@@ -414,6 +416,9 @@
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
         - 4-solution.asy:
+            $used: !!omap
+            - common-sizes.asy: !path 'common-sizes.asy'
+        - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap

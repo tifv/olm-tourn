@@ -47,7 +47,7 @@ void mydraw_frame(triple a, triple b)
 void mydraw(triple a, triple b);
 
 int n = 20;
-triple dx=(0, 2, n-3), dy=(n-5, 0, 4), dz=(6, n-7, 0);
+triple dx=(0, 3, n-3), dy=(n-4, 0, 5), dz=(6, n-8, 0);
 
 if (!coloured) {
     // WAR IS PEACE

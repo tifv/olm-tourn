@@ -15,6 +15,8 @@ var
     E = intersectionpoint(line(D, C), parallel(A, dir(beta))),
     F = intersectionpoint(line(C, B), parallel(E, dir(beta - alpha)));
 
+// plain.E !
+
 draw(A--B--C--D--cycle, linewidth(1));
 draw(A--E--F);
 

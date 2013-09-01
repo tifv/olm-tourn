@@ -33,5 +33,5 @@ dot(Label("$B$", B, SE));
 dot(Label("$C$", C, unit(Yp-B)/I));
 dot(Label("$X$", X, S));
 dot(Label("$Y$", Y, unit(Yp-B)/I));
-dot(Label("$Y'$", Yp, N));
+dot(Label("\rlap{$Y'$}\phantom{$Y$}", Yp, N));
 
