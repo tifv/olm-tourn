@@ -172,9 +172,9 @@ class Driver(OriginalDriver):
 
     # Extension
     def produce_rigid_protorecord(self, target, record,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
-        kwargs = dict(inpath_set=inpath_set, date_set=date_set)
+        kwargs = dict(inpath_list=inpath_list, date_set=date_set)
         if record is None or '$mimic$key' not in record:
             return super().produce_rigid_protorecord(target, record, **kwargs)
 
@@ -212,9 +212,9 @@ class Driver(OriginalDriver):
 
     # Extension
     def produce_fluid_protorecord(self, target, record,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
-        kwargs = dict(inpath_set=inpath_set, date_set=date_set)
+        kwargs = dict(inpath_list=inpath_list, date_set=date_set)
         if record is None or '$mimic$key' not in record:
             return super().produce_fluid_protorecord(target, record, **kwargs)
 
@@ -288,7 +288,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget, rigid,
         contest, league,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         assert subtarget == PurePath('')
         body = []; append = body.append
@@ -313,7 +313,7 @@ class Driver(OriginalDriver):
                     inpath = subroot/(str(i)+'.tex')
                     if inpath not in self.inrecords:
                         raise RecordNotFoundError(inpath, target)
-                    inpath_set.add(inpath)
+                    inpath_list.append(inpath)
                     append({ 'inpath' : inpath,
                         'select' : 'problems', 'number' : str(i) })
                 append(self.substitute_end_problems())
@@ -331,7 +331,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         assert subtarget == PurePath('')
         body = []; append = body.append
@@ -348,7 +348,7 @@ class Driver(OriginalDriver):
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, target)
-            inpath_set.add(inpath)
+            inpath_list.append(inpath)
             append(self.substitute_begin_problems())
             append({ 'inpath' : inpath,
                 'select' : 'problems',
@@ -370,7 +370,7 @@ class Driver(OriginalDriver):
     def produce_fluid_contest_protorecord(self,
         target, record,
         subroot, subtarget, contest,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         body = []
         select, target_options = self.split_subtarget(subtarget)
@@ -390,7 +390,7 @@ class Driver(OriginalDriver):
                 subroot/leaguekey, subtarget,
                 contest, leaguerecord['$contest$league'],
                 contained=1,
-                inpath_set=inpath_set, date_set=date_set
+                inpath_list=inpath_list, date_set=date_set
             )
             body.extend(subprotorecord['body'])
 
@@ -401,7 +401,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         contest, league,
-        *, contained=False, inpath_set, date_set
+        *, contained=False, inpath_list, date_set
     ):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
@@ -421,7 +421,7 @@ class Driver(OriginalDriver):
             inpath = subroot/(str(i)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_set.add(inpath)
+            inpath_list.append(inpath)
             append({ 'inpath' : inpath,
                 'select' : select, 'number' : str(i) })
         append(self.substitute_end_problems())
@@ -435,16 +435,16 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         contest, league, problem,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         body = []; append = body.append
         if not 1 <= problem <= league['problems']:
             return super().produce_fluid_protorecord(target, record,
-                inpath_set=inpath_set, date_set=date_set )
+                inpath_list=inpath_list, date_set=date_set )
         inpath = subroot/(str(problem)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        inpath_set.add(inpath)
+        inpath_list.append(inpath)
         append(self.substitute_begin_problems())
         append({ 'inpath' : inpath,
             'select' : 'complete', 'number' : str(problem) })
@@ -455,7 +455,7 @@ class Driver(OriginalDriver):
     def produce_fluid_regatta_protorecord(self,
         target, record,
         subroot, subtarget, regatta,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         body = []
         select, target_options = self.split_subtarget(subtarget)
@@ -475,7 +475,7 @@ class Driver(OriginalDriver):
                 subroot/leaguekey, subtarget,
                 regatta, leaguerecord['$regatta$league'],
                 contained=1,
-                inpath_set=inpath_set, date_set=date_set
+                inpath_list=inpath_list, date_set=date_set
             )
             body.extend(subprotorecord['body'])
 
@@ -486,7 +486,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league,
-        *, contained=False, inpath_set, date_set
+        *, contained=False, inpath_list, date_set
     ):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
@@ -522,7 +522,7 @@ class Driver(OriginalDriver):
                     subroot/str(roundnum), subtarget,
                     regatta, league, roundrecord['$regatta$round'],
                     contained=contained+1,
-                    inpath_set=inpath_set, date_set=date_set
+                    inpath_list=inpath_list, date_set=date_set
                 )
                 body.extend(subprotorecord['body'])
         elif group_by == 'subject':
@@ -534,7 +534,7 @@ class Driver(OriginalDriver):
                     subroot/subjectkey, subtarget,
                     regatta, league, subjectrecord['$regatta$subject'],
                     contained=contained+1,
-                    inpath_set=inpath_set, date_set=date_set
+                    inpath_list=inpath_list, date_set=date_set
                 )
                 body.extend(subprotorecord['body'])
 
@@ -545,7 +545,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject,
-        *, contained=False, inpath_set, date_set
+        *, contained=False, inpath_list, date_set
     ):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
@@ -567,7 +567,7 @@ class Driver(OriginalDriver):
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_set.add(inpath)
+            inpath_list.append(inpath)
             append({ 'inpath' : inpath,
                 'select' : select,
                 'number' : self.substitute_regatta_number(
@@ -585,7 +585,7 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, round,
-        *, contained=False, inpath_set, date_set
+        *, contained=False, inpath_list, date_set
     ):
         body = []; append = body.append
         select, target_options = self.split_subtarget(subtarget)
@@ -609,7 +609,7 @@ class Driver(OriginalDriver):
             inpath = leagueroot/subjectkey/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_set.add(inpath)
+            inpath_list.append(inpath)
             append({ 'inpath' : inpath,
                 'select' : select,
                 'number' : self.substitute_regatta_number(
@@ -627,18 +627,18 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject, roundnum,
-        *, inpath_set, date_set
+        *, inpath_list, date_set
     ):
         body = []; append = body.append
         if not 1 <= roundnum <= league['rounds']:
             return super().produce_fluid_protorecord(target, record,
-                inpath_set=inpath_set, date_set=date_set )
+                inpath_list=inpath_list, date_set=date_set )
         roundrecord = self.find_regatta_round_records(record)[roundnum-1]
         round = roundrecord['$regatta$round']
         inpath = subroot/(str(roundnum)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        inpath_set.add(inpath)
+        inpath_list.append(inpath)
         append(self.substitute_begin_problems())
         append({ 'inpath' : inpath,
             'select' : 'complete',
