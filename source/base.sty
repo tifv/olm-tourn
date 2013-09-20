@@ -1,8 +1,6 @@
 \usepackage{jeolm}
 \usepackage{jeolm-olymp}
 
-\usepackage{catchfile}
-
 \parindent=0pt
 
 % default figures placement
@@ -11,26 +9,32 @@
 \usepackage{pgfpages}
 \pgfpagesuselayout{resize to}[a4paper]
 
+% Miscellaneous templates
 \def\problemmark#1{\textsf{(#1)}}
 
 \let\postword\relax
 
-\renewcommand\jeolmheadertemplate[3]{%
-\vspace{1.5em}%
-{\small\sffamily
-\centerline{\bfseries #1}%
-\centerline{{#2}\quad
-{\itshape #3}}%
-\vspace{1ex}%
-\smash{\parbox{\textwidth}{\hrulefill\quad
-{\large\bfseries\raisebox{-0.5ex}{\jeolmheaderleague}}%
-\quad\hrulefill}}}%
-\@ifnextchar*{\@gobble}{\vspace{-2em}}}
-\renewcommand\jeolmheaderset[3]{%
-\newcommand\jeolmheader{\jeolmheadertemplate{#1}{#2}{#3}}}
+\newcommand\jeolmtournheadertemplate[3]{%
+\vspace{4ex}%
+\begingroup\small\sffamily
+\smash{\parbox{\textwidth}{\hfill\bfseries#1\hfill\strut}}%
+\vspace{0.5ex}%
+\smash{\parbox{\textwidth}{\hfill#2\qquad{\itshape#3}\hfill\strut}}%
+\vspace{0.5ex}%
+{\large\bfseries\jeolmheaderhrule{\jeolmleague}}
+%\smash{\parbox{\textwidth}{\hrulefill\quad
+%{\large\bfseries\raisebox{-0.5ex}{\jeolmleague}}%
+%\quad\hrulefill}}
+\par\endgroup
+\@ifnextchar*{\@gobble}{\vspace{-4ex}}}
+\newcommand\jeolmtournheaderset[3]{%
+\newcommand\jeolmtournheader{\jeolmtournheadertemplate{#1}{#2}{#3}}}
 
 
 % Problem/solution segregation
+
+\usepackage{catchfile}
+
 \def\fetchproblemsolution#1{\begingroup
 \CatchFileDef{\theinput}{#1}{}%
 \expandafter\parseproblemsolution\theinput\endproblem

@@ -210,13 +210,98 @@ class Driver(OriginalDriver):
         else:
             raise AssertionError(mimickey, target)
 
+    def produce_rigid_contest_league_protorecord(self,
+        target, record,
+        subroot, subtarget, rigid,
+        contest, league,
+        *, inpath_list, date_set
+    ):
+        assert subtarget == PurePath('')
+        body = []; append = body.append
+        contest_record = self.outrecords[subroot.parent()]
+        for page in rigid:
+            append(self.substitute_clearpage())
+            if not page: # empty page
+                append(self.substitute_phantom())
+                continue;
+            for item in page:
+                if isinstance(item, dict):
+                    append(self.constitute_special(item))
+                    continue;
+                if item != '.':
+                    raise ValueError(item, target)
+
+                append(self.substitute_jeolmtournheader())
+                append(self.constitute_section(
+                    self.find_name(contest, record.get('$lang')) ))
+                append(self.substitute_begin_problems())
+                for i in range(1, 1 + league['problems']):
+                    inpath = subroot/(str(i)+'.tex')
+                    if inpath not in self.inrecords:
+                        raise RecordNotFoundError(inpath, target)
+                    inpath_list.append(inpath)
+                    append({ 'inpath' : inpath,
+                        'select' : 'problems', 'number' : str(i) })
+                append(self.substitute_end_problems())
+                append(self.substitute_postword())
+        protorecord = {'body' : body}
+        protorecord.update(contest_record.get('$rigid$opt', ()))
+        protorecord.update(record.get('$rigid$opt', ()))
+        protorecord['preamble'] = preamble = list(
+            protorecord.get('preamble', ()) )
+        preamble.append({
+            'league' : self.find_name(league, record.get('$lang')) })
+        return protorecord
+
+    def produce_rigid_regatta_subject_protorecord(self,
+        target, record,
+        subroot, subtarget,
+        regatta, league, subject,
+        *, inpath_list, date_set
+    ):
+        assert subtarget == PurePath('')
+        body = []; append = body.append
+        league_record = self.outrecords[subroot.parent()]
+        regatta_record = self.outrecords[subroot.parent(2)]
+        roundrecords = self.find_regatta_round_records(league_record)
+        for roundnum, roundrecord in enumerate(roundrecords, 1):
+            round = roundrecord['$regatta$round']
+            append(self.substitute_clearpage())
+            append(self.substitute_jeolmtournheader_nospace())
+            append(self.substitute_rigid_regatta_caption(
+                caption=self.find_name(regatta, record.get('$lang')),
+                mark=round['mark'] ))
+            inpath = subroot/(str(roundnum)+'.tex')
+            if inpath not in self.inrecords:
+                raise RecordNotFoundError(inpath, target)
+            inpath_list.append(inpath)
+            append(self.substitute_begin_problems())
+            append({ 'inpath' : inpath,
+                'select' : 'problems',
+                'number' : self.substitute_regatta_number(
+                    subject_index=subject['index'],
+                    round_index=round['index'] )
+            })
+            append(self.substitute_end_problems())
+            append(self.substitute_hrule())
+        protorecord = {'body' : body}
+        protorecord.update(regatta_record.get('$rigid$opt', ()))
+        protorecord.update(league_record.get('$rigid$opt', ()))
+        protorecord.update(record.get('$rigid$opt', ()))
+        preamble = protorecord.setdefault('preamble', [])
+        preamble.append({
+            'league' : self.find_name(league, record.get('$lang')) })
+        return protorecord
+
     # Extension
     def produce_fluid_protorecord(self, target, record,
-        *, inpath_list, date_set
+        *, inpath_list, date_set, infilter=None, fluid_opt=None
     ):
         kwargs = dict(inpath_list=inpath_list, date_set=date_set)
         if record is None or '$mimic$key' not in record:
             return super().produce_fluid_protorecord(target, record, **kwargs)
+        if infilter is not None:
+            raise ValueError(infilter)
 
         mimickey = record['$mimic$key']
         subroot = kwargs['subroot'] = record['$mimic$root']
@@ -283,89 +368,6 @@ class Driver(OriginalDriver):
                     league=self.find_regatta_league(record),
                     round=self.find_regatta_round(record), **kwargs )
             raise RecordNotFoundError(target)
-
-    def produce_rigid_contest_league_protorecord(self,
-        target, record,
-        subroot, subtarget, rigid,
-        contest, league,
-        *, inpath_list, date_set
-    ):
-        assert subtarget == PurePath('')
-        body = []; append = body.append
-        contest_record = self.outrecords[subroot.parent()]
-        for page in rigid:
-            append(self.substitute_clearpage())
-            if not page: # empty page
-                append(self.substitute_phantom())
-                continue;
-            for item in page:
-                if isinstance(item, dict):
-                    append(self.constitute_special(item))
-                    continue;
-                if item != '.':
-                    raise ValueError(item, target)
-
-                append(self.substitute_jeolmheader())
-                append(self.constitute_section(
-                    self.find_name(contest, record.get('$lang')) ))
-                append(self.substitute_begin_problems())
-                for i in range(1, 1 + league['problems']):
-                    inpath = subroot/(str(i)+'.tex')
-                    if inpath not in self.inrecords:
-                        raise RecordNotFoundError(inpath, target)
-                    inpath_list.append(inpath)
-                    append({ 'inpath' : inpath,
-                        'select' : 'problems', 'number' : str(i) })
-                append(self.substitute_end_problems())
-                append(self.substitute_postword())
-        protorecord = {'body' : body}
-        protorecord.update(contest_record.get('$rigid$opt', ()))
-        protorecord.update(record.get('$rigid$opt', ()))
-        protorecord['preamble'] = preamble = list(
-            protorecord.get('preamble', ()) )
-        preamble.append({
-            'league' : self.find_name(league, record.get('$lang')) })
-        return protorecord
-
-    def produce_rigid_regatta_subject_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league, subject,
-        *, inpath_list, date_set
-    ):
-        assert subtarget == PurePath('')
-        body = []; append = body.append
-        league_record = self.outrecords[subroot.parent()]
-        regatta_record = self.outrecords[subroot.parent(2)]
-        roundrecords = self.find_regatta_round_records(league_record)
-        for roundnum, roundrecord in enumerate(roundrecords, 1):
-            round = roundrecord['$regatta$round']
-            append(self.substitute_clearpage())
-            append(self.substitute_jeolmheader_nospace())
-            append(self.substitute_rigid_regatta_caption(
-                caption=self.find_name(regatta, record.get('$lang')),
-                mark=round['mark'] ))
-            inpath = subroot/(str(roundnum)+'.tex')
-            if inpath not in self.inrecords:
-                raise RecordNotFoundError(inpath, target)
-            inpath_list.append(inpath)
-            append(self.substitute_begin_problems())
-            append({ 'inpath' : inpath,
-                'select' : 'problems',
-                'number' : self.substitute_regatta_number(
-                    subject_index=subject['index'],
-                    round_index=round['index'] )
-            })
-            append(self.substitute_end_problems())
-            append(self.substitute_hrule())
-        protorecord = {'body' : body}
-        protorecord.update(regatta_record.get('$rigid$opt', ()))
-        protorecord.update(league_record.get('$rigid$opt', ()))
-        protorecord.update(record.get('$rigid$opt', ()))
-        preamble = protorecord.setdefault('preamble', [])
-        preamble.append({
-            'league' : self.find_name(league, record.get('$lang')) })
-        return protorecord
 
     def produce_fluid_contest_protorecord(self,
         target, record,
@@ -836,11 +838,13 @@ class Driver(OriginalDriver):
 
     # Extension
     def constitute_input(self, inpath, alias, inrecord, figname_map, *,
-        select=None, number=None
+        select=None, number=None, **kwargs
     ):
         if select is None:
             return super().constitute_input(
-                inpath, alias, inrecord, figname_map );
+                inpath, alias, inrecord, figname_map, **kwargs );
+        else:
+            assert not kwargs
 
         assert number is not None, (inpath, number)
         numeration = self.substitute_rigid_numeration(number=number)
@@ -900,14 +904,15 @@ class Driver(OriginalDriver):
         else:
             return super().constitute_preamble_line(metaline)
 
-    leaguedef_template = r'\def\jeolmheaderleague{$league}'
+    leaguedef_template = r'\def\jeolmleague{$league}'
 #    postworddef_template = r'\def\postword{\jeolmpostword$postword}'
 
     begin_problems_template = r'\begin{problems}'
     end_problems_template = r'\end{problems}'
     postword_template = r'\postword'
 
-    jeolmheader_nospace_template = r'\jeolmheader*'
+    jeolmtournheader_template = r'\jeolmtournheader'
+    jeolmtournheader_nospace_template = r'\jeolmtournheader*'
     rigid_regatta_caption_template = r'\regattacaption{$caption}{$mark}'
     hrule_template = r'\medskip\hrule'
 
