@@ -14,22 +14,44 @@
 
 \let\postword\relax
 
-\newcommand\jeolmtournheadertemplate[3]{%
-\vspace{4ex}%
-\begingroup\small\sffamily
-\smash{\parbox{\textwidth}{\hfill\bfseries#1\hfill\strut}}%
-\vspace{0.5ex}%
-\smash{\parbox{\textwidth}{\hfill#2\qquad{\itshape#3}\hfill\strut}}%
-\vspace{0.5ex}%
-{\large\bfseries\jeolmheaderhrule{\jeolmleague}}
-%\smash{\parbox{\textwidth}{\hrulefill\quad
-%{\large\bfseries\raisebox{-0.5ex}{\jeolmleague}}%
-%\quad\hrulefill}}
-\par\endgroup
-\@ifnextchar*{\@gobble}{\vspace{-4ex}}}
-\newcommand\jeolmtournheaderset[3]{%
-\newcommand\jeolmtournheader{\jeolmtournheadertemplate{#1}{#2}{#3}}}
+% \begin{macro}{\jeolmheaderhrule}
+%    \begin{macrocode}
+\newlength{\jeolmhrule@width}%
+\newlength{\jeolmhrule@textwidth}%
+\newcommand\jeolmhrule[1]{\begingroup\let\sp\quad
+\settowidth{\jeolmhrule@textwidth}{\hbox{\strut\sp#1\sp\strut}}%
+\jeolmhrule@width=0.5\textwidth%
+\addtolength{\jeolmhrule@width}{-0.5\jeolmhrule@textwidth}%
+\rule[0.5ex]{\jeolmhrule@width}{0.5pt}%
+\sp#1\sp
+\rule[0.5ex]{\jeolmhrule@width}{0.5pt}
+\endgroup}
+%    \end{macrocode}
+% \end{macro}
 
+\newcommand\jeolmtournheadertemplate[3]{%
+{\Large\vspace{4ex}}\par%
+\begingroup\small\sffamily
+\strut\hfill{\bfseries#1}\hfill\strut\\[0.3ex]
+\strut\hfill{\itshape#3}\qquad{#2}\hfill\strut{\large\bfseries\\[0.3ex]
+\jeolmhrule{\jeolmleague}}
+\endgroup
+\vspace{-\parskip}
+\@ifnextchar*{\@gobble}{{\Large\vspace{-4ex}}}}
+
+\newcommand\regattacaptiontemplate[5]{%
+\parbox{0.69\textwidth}{
+\vspace{1ex}
+\textbf{\Large{#4}}
+\par\vspace{2ex}
+\textbf{#1:}\ \hbox to 10em{\hrulefill}
+\vspace{1ex}}
+\parbox{0.3\textwidth}{
+\setlength{\fboxsep}{2em}
+\texttt{#2{:}\ }\fbox{\phantom{S}}
+\par\vspace{1ex}
+\texttt{#3{:}\ #5}}%
+\vspace{1ex}}
 
 % Problem/solution segregation
 

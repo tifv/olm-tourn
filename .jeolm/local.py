@@ -172,9 +172,9 @@ class Driver(OriginalDriver):
 
     # Extension
     def produce_rigid_protorecord(self, target, record,
-        *, inpath_list, date_set
+        *, date_set
     ):
-        kwargs = dict(inpath_list=inpath_list, date_set=date_set)
+        kwargs = dict(date_set=date_set)
         if record is None or '$mimic$key' not in record:
             return super().produce_rigid_protorecord(target, record, **kwargs)
 
@@ -214,42 +214,42 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget, rigid,
         contest, league,
-        *, inpath_list, date_set
+        *, date_set
     ):
         assert subtarget == PurePath('')
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         contest_record = self.outrecords[subroot.parent()]
         for page in rigid:
-            append(self.substitute_clearpage())
+            append_verbatim(self.substitute_clearpage())
             if not page: # empty page
-                append(self.substitute_phantom())
+                append_verbatim(self.substitute_phantom())
                 continue;
             for item in page:
                 if isinstance(item, dict):
-                    append(self.constitute_special(item))
+                    append_verbatim(self.constitute_special(item))
                     continue;
                 if item != '.':
                     raise ValueError(item, target)
 
-                append(self.substitute_jeolmtournheader())
-                append(self.constitute_section(
+                append_verbatim(self.substitute_jeolmtournheader())
+                append_verbatim(self.constitute_section(
                     self.find_name(contest, record.get('$lang')) ))
-                append(self.substitute_begin_problems())
+                append_verbatim(self.substitute_begin_problems())
                 for i in range(1, 1 + league['problems']):
                     inpath = subroot/(str(i)+'.tex')
                     if inpath not in self.inrecords:
                         raise RecordNotFoundError(inpath, target)
-                    inpath_list.append(inpath)
-                    append({ 'inpath' : inpath,
+                    append({ 'input' : inpath,
                         'select' : 'problems', 'number' : str(i) })
-                append(self.substitute_end_problems())
-                append(self.substitute_postword())
+                append_verbatim(self.substitute_end_problems())
+                append_verbatim(self.substitute_postword())
         protorecord = {'body' : body}
         protorecord.update(contest_record.get('$rigid$opt', ()))
         protorecord.update(record.get('$rigid$opt', ()))
-        protorecord['preamble'] = preamble = list(
-            protorecord.get('preamble', ()) )
-        preamble.append({
+        protorecord['style'] = style = list(
+            protorecord.get('style', ()) )
+        style.append({
             'league' : self.find_name(league, record.get('$lang')) })
         return protorecord
 
@@ -257,47 +257,47 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject,
-        *, inpath_list, date_set
+        *, date_set
     ):
         assert subtarget == PurePath('')
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         league_record = self.outrecords[subroot.parent()]
         regatta_record = self.outrecords[subroot.parent(2)]
         roundrecords = self.find_regatta_round_records(league_record)
         for roundnum, roundrecord in enumerate(roundrecords, 1):
             round = roundrecord['$regatta$round']
-            append(self.substitute_clearpage())
-            append(self.substitute_jeolmtournheader_nospace())
-            append(self.substitute_rigid_regatta_caption(
+            append_verbatim(self.substitute_clearpage())
+            append_verbatim(self.substitute_jeolmtournheader_nospace())
+            append_verbatim(self.substitute_rigid_regatta_caption(
                 caption=self.find_name(regatta, record.get('$lang')),
                 mark=round['mark'] ))
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, target)
-            inpath_list.append(inpath)
-            append(self.substitute_begin_problems())
-            append({ 'inpath' : inpath,
+            append_verbatim(self.substitute_begin_problems())
+            append({ 'input' : inpath,
                 'select' : 'problems',
                 'number' : self.substitute_regatta_number(
                     subject_index=subject['index'],
                     round_index=round['index'] )
             })
-            append(self.substitute_end_problems())
-            append(self.substitute_hrule())
+            append_verbatim(self.substitute_end_problems())
+            append_verbatim(self.substitute_hrule())
         protorecord = {'body' : body}
         protorecord.update(regatta_record.get('$rigid$opt', ()))
         protorecord.update(league_record.get('$rigid$opt', ()))
         protorecord.update(record.get('$rigid$opt', ()))
-        preamble = protorecord.setdefault('preamble', [])
-        preamble.append({
+        style = protorecord.setdefault('style', [])
+        style.append({
             'league' : self.find_name(league, record.get('$lang')) })
         return protorecord
 
     # Extension
     def produce_fluid_protorecord(self, target, record,
-        *, inpath_list, date_set, infilter=None, fluid_opt=None
+        *, date_set, infilter=None, fluid_opt=None
     ):
-        kwargs = dict(inpath_list=inpath_list, date_set=date_set)
+        kwargs = dict(date_set=date_set)
         if record is None or '$mimic$key' not in record:
             return super().produce_fluid_protorecord(target, record, **kwargs)
         if infilter is not None:
@@ -372,16 +372,17 @@ class Driver(OriginalDriver):
     def produce_fluid_contest_protorecord(self,
         target, record,
         subroot, subtarget, contest,
-        *, inpath_list, date_set
+        *, date_set
     ):
-        body = []
+        body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if 'contained' in target_options:
-            body.append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(contest, record.get('$lang')) ))
             target_options.discard('contained')
         else:
-            body.append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(contest, record.get('$lang')),
                 select=select ))
         league_records = self.find_contest_league_records(record)
@@ -392,7 +393,7 @@ class Driver(OriginalDriver):
                 subroot/leaguekey, subtarget,
                 contest, leaguerecord['$contest$league'],
                 contained=1,
-                inpath_list=inpath_list, date_set=date_set
+                date_set=date_set
             )
             body.extend(subprotorecord['body'])
 
@@ -403,30 +404,30 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         contest, league,
-        *, contained=False, inpath_list, date_set
+        *, contained=False, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(league, record.get('$lang')),
                 level=contained ))
             target_options.discard('contained')
         else:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 '{}. {}'.format(
                     self.find_name(contest, record.get('$lang')),
                     self.find_name(league, record.get('$lang')) ),
                 select=select ))
-        append(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_problems())
         for i in range(1, 1 + league['problems']):
             inpath = subroot/(str(i)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_list.append(inpath)
-            append({ 'inpath' : inpath,
+            append({ 'input' : inpath,
                 'select' : select, 'number' : str(i) })
-        append(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -437,36 +438,37 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         contest, league, problem,
-        *, inpath_list, date_set
+        *, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         if not 1 <= problem <= league['problems']:
             return super().produce_fluid_protorecord(target, record,
-                inpath_list=inpath_list, date_set=date_set )
+                date_set=date_set )
         inpath = subroot/(str(problem)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        inpath_list.append(inpath)
-        append(self.substitute_begin_problems())
-        append({ 'inpath' : inpath,
+        append_verbatim(self.substitute_begin_problems())
+        append({ 'input' : inpath,
             'select' : 'complete', 'number' : str(problem) })
-        append(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_problems())
         protorecord = {'body' : body}
         return protorecord
 
     def produce_fluid_regatta_protorecord(self,
         target, record,
         subroot, subtarget, regatta,
-        *, inpath_list, date_set
+        *, date_set
     ):
-        body = []
+        body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if 'contained' in target_options:
-            body.append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(regatta, record.get('$lang')) ))
             target_options.discard('contained')
         else:
-            body.append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(regatta, record.get('$lang')),
                 select=select ))
         league_records = self.find_regatta_league_records(record)
@@ -477,7 +479,7 @@ class Driver(OriginalDriver):
                 subroot/leaguekey, subtarget,
                 regatta, leaguerecord['$regatta$league'],
                 contained=1,
-                inpath_list=inpath_list, date_set=date_set
+                date_set=date_set
             )
             body.extend(subprotorecord['body'])
 
@@ -488,17 +490,18 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league,
-        *, contained=False, inpath_list, date_set
+        *, contained=False, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 self.find_name(league, record.get('$lang')),
                 level=contained ))
             target_options.discard('contained')
         else:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 '{}. {}'.format(
                     self.find_name(regatta, record.get('$lang')),
                     self.find_name(league, record.get('$lang')) ),
@@ -524,7 +527,7 @@ class Driver(OriginalDriver):
                     subroot/str(roundnum), subtarget,
                     regatta, league, roundrecord['$regatta$round'],
                     contained=contained+1,
-                    inpath_list=inpath_list, date_set=date_set
+                    date_set=date_set
                 )
                 body.extend(subprotorecord['body'])
         elif group_by == 'subject':
@@ -536,7 +539,7 @@ class Driver(OriginalDriver):
                     subroot/subjectkey, subtarget,
                     regatta, league, subjectrecord['$regatta$subject'],
                     contained=contained+1,
-                    inpath_list=inpath_list, date_set=date_set
+                    date_set=date_set
                 )
                 body.extend(subprotorecord['body'])
 
@@ -547,36 +550,36 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject,
-        *, contained=False, inpath_list, date_set
+        *, contained=False, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
             self.find_name(subject, record.get('$lang')),
             level=contained ))
             target_options.discard('contained')
         else:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 '{}. {}. {}'.format(
                     self.find_name(regatta, record.get('$lang')),
                     self.find_name(league, record.get('$lang')),
                     self.find_name(subject, record.get('$lang')) ),
                 select=select ))
         round_records = self.find_regatta_round_records(record)
-        append(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_problems())
         for roundnum, roundrecord in enumerate(round_records, 1):
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_list.append(inpath)
-            append({ 'inpath' : inpath,
+            append({ 'input' : inpath,
                 'select' : select,
                 'number' : self.substitute_regatta_number(
                     subject_index=subject['index'],
                     round_index=roundrecord['$regatta$round']['index'] )
             })
-        append(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -587,17 +590,18 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, round,
-        *, contained=False, inpath_list, date_set
+        *, contained=False, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         select, target_options = self.split_subtarget(subtarget)
         if contained or 'contained' in target_options:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
             self.find_name(round, record.get('$lang')),
             level=contained ))
             target_options.discard('contained')
         else:
-            append(self.constitute_section(
+            append_verbatim(self.constitute_section(
                 '{}. {}. {}'.format(
                     self.find_name(regatta, record.get('$lang')),
                     self.find_name(league, record.get('$lang')),
@@ -606,19 +610,18 @@ class Driver(OriginalDriver):
         subject_records = self.find_regatta_subject_records(record)
         leagueroot = subroot.parent()
         roundnum = int(subroot.name)
-        append(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_problems())
         for subjectkey, subjectrecord in subject_records.items():
             inpath = leagueroot/subjectkey/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            inpath_list.append(inpath)
-            append({ 'inpath' : inpath,
+            append({ 'input' : inpath,
                 'select' : select,
                 'number' : self.substitute_regatta_number(
                     subject_index=subjectrecord['$regatta$subject']['index'],
                     round_index=round['index'] )
             })
-        append(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -629,26 +632,26 @@ class Driver(OriginalDriver):
         target, record,
         subroot, subtarget,
         regatta, league, subject, roundnum,
-        *, inpath_list, date_set
+        *, date_set
     ):
         body = []; append = body.append
+        def append_verbatim(x): append({'verbatim' : x})
         if not 1 <= roundnum <= league['rounds']:
             return super().produce_fluid_protorecord(target, record,
-                inpath_list=inpath_list, date_set=date_set )
+                date_set=date_set )
         roundrecord = self.find_regatta_round_records(record)[roundnum-1]
         round = roundrecord['$regatta$round']
         inpath = subroot/(str(roundnum)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        inpath_list.append(inpath)
-        append(self.substitute_begin_problems())
-        append({ 'inpath' : inpath,
+        append_verbatim(self.substitute_begin_problems())
+        append({ 'input' : inpath,
             'select' : 'complete',
             'number' : self.substitute_regatta_number(
                 subject_index=subject['index'],
                 round_index=round['index'] )
         })
-        append(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_problems())
         protorecord = {'body' : body}
         return protorecord
 
@@ -837,7 +840,8 @@ class Driver(OriginalDriver):
     # LaTeX-level functions
 
     # Extension
-    def constitute_input(self, inpath, alias, inrecord, figname_map, *,
+    @classmethod
+    def constitute_body_input(cls, inpath, alias, inrecord, figname_map, *,
         select=None, number=None, **kwargs
     ):
         if select is None:
@@ -847,27 +851,26 @@ class Driver(OriginalDriver):
             assert not kwargs
 
         assert number is not None, (inpath, number)
-        numeration = self.substitute_rigid_numeration(number=number)
+        numeration = cls.substitute_rigid_numeration(number=number)
 
         if select in {'problems'}:
-            body = self.substitute_input_problem(
+            body = cls.substitute_input_problem(
                 filename=alias, numeration=numeration )
         elif select in {'solutions'}:
-            body = self.substitute_input_solution(
+            body = cls.substitute_input_solution(
                 filename=alias, numeration=numeration )
         elif select in {'complete', 'jury'}:
-            body = self.substitute_input_both(
+            body = cls.substitute_input_both(
                 filename=alias, numeration=numeration )
         else:
             raise AssertionError(inpath, select)
 
         if figname_map:
-            body = self.constitute_figname_map(figname_map) + '\n' + body
+            body = cls.constitute_figname_map(figname_map) + '\n' + body
         return body
 
     rigid_numeration_template = r'\itemy{$number}'
 
-    input_template = r'\input{$filename}'
     input_problem_template = r'\probleminput{$numeration}{$filename}'
     input_solution_template = r'\solutioninput{$numeration}{$filename}'
     input_both_template = r'\problemsolutioninput{$numeration}{$filename}'
@@ -896,16 +899,13 @@ class Driver(OriginalDriver):
     }
 
     @classmethod
-    def constitute_preamble_line(cls, metaline):
-        if 'league' in metaline:
-            return cls.substitute_leaguedef(league=metaline['league'])
-#        elif 'postword' in metaline:
-#            return cls.substitute_postworddef(postword=metaline['postword'])
+    def constitute_preamble_item(cls, item):
+        if 'league' in item:
+            return cls.substitute_leaguedef(league=item['league'])
         else:
-            return super().constitute_preamble_line(metaline)
+            return super().constitute_preamble_item(item)
 
     leaguedef_template = r'\def\jeolmleague{$league}'
-#    postworddef_template = r'\def\postword{\jeolmpostword$postword}'
 
     begin_problems_template = r'\begin{problems}'
     end_problems_template = r'\end{problems}'
@@ -929,6 +929,24 @@ class Driver(OriginalDriver):
             raise ValueError
         assert select in {'problems', 'solutions', 'complete', 'jury'}
         return select, target_options
+
+    @classmethod
+    def digest_style_item(cls, item):
+        assert isinstance(item, dict), item
+        if 'league' in item:
+            if not item.keys() <= {'league'}:
+                raise ValueError(item)
+            return {'league' : str(item['league'])}
+        else:
+            return super().digest_style_item(item)
+
+    @classmethod
+    def digest_body_item(cls, item):
+        assert isinstance(item, dict), item
+        if item.keys() == {'input', 'select', 'number'}:
+            return item.copy()
+        else:
+            return super().digest_body_item(item)
 
 def path_prefixed(path, other, recursed=False):
     if not isinstance(other, (str, PurePath)):
