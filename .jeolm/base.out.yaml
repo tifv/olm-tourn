@@ -53,7 +53,7 @@ archive:
   - /miscellany/problems
 
 miscellany:
-  $style: {extend: [/fluid-numeration]}
+  $style: {extend: [/misc/fluid-numeration]}
   $fluid: [complete]
   problems:
     $fluid:

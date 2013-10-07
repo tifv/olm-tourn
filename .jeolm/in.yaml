@@ -1,6 +1,7 @@
 !!omap
 - base.sty: {}
-- fluid-numeration.sty: {}
+- misc: !!omap
+  - fluid-numeration.sty: {}
 - ru: !!omap
   - lang.sty: {}
   - regatta-caption.sty: {}
@@ -19,7 +20,6 @@
   - written-postword.sty: {}
   - oral-postword.sty: {}
   - team-postword.sty: {}
-- common-sizes.asy: {}
 - '2011': !!omap
   - year.sty: {}
   - regatta: !!omap
@@ -33,32 +33,32 @@
         - 1.tex:
             $figures: !!omap
             - 1-solution: !path '2011/regatta/junior/geomt/1-solution'
-        - 2.tex:
-            $figures: !!omap
-            - 2-solution: !path '2011/regatta/junior/geomt/2-solution'
-        - 3.tex:
-            $figures: !!omap
-            - 3-solution: !path '2011/regatta/junior/geomt/3-solution'
-        - 4.tex: {}
         - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 2.tex:
+            $figures: !!omap
+            - 2-solution: !path '2011/regatta/junior/geomt/2-solution'
         - 2-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 3.tex:
+            $figures: !!omap
+            - 3-solution: !path '2011/regatta/junior/geomt/3-solution'
         - 3-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 4.tex: {}
       - combi: !!omap
         - 1.tex:
             $figures: !!omap
             - 1-solution: !path '2011/regatta/junior/combi/1-solution'
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
         - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
     - senior: !!omap
       - algbr: !!omap
         - 1.tex: {}
@@ -69,24 +69,24 @@
         - 1.tex:
             $figures: !!omap
             - 1-solution: !path '2011/regatta/senior/geomt/1-solution'
-        - 2.tex:
-            $figures: !!omap
-            - 2-solution: !path '2011/regatta/senior/geomt/2-solution'
-        - 3.tex:
-            $figures: !!omap
-            - 3-solution: !path '2011/regatta/senior/geomt/3-solution'
-        - 4.tex:
-            $figures: !!omap
-            - 4-solution: !path '2011/regatta/senior/geomt/4-solution'
         - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 2.tex:
+            $figures: !!omap
+            - 2-solution: !path '2011/regatta/senior/geomt/2-solution'
         - 2-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 3.tex:
+            $figures: !!omap
+            - 3-solution: !path '2011/regatta/senior/geomt/3-solution'
         - 3-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 4.tex:
+            $figures: !!omap
+            - 4-solution: !path '2011/regatta/senior/geomt/4-solution'
         - 4-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
@@ -111,19 +111,19 @@
       - 1.tex:
           $figures: !!omap
           - 1-solution: !path '2011/pers-geomt/junior/1-solution'
+      - 1-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 2.tex: {}
       - 3.tex:
           $figures: !!omap
           - 3-solution: !path '2011/pers-geomt/junior/3-solution'
-      - 4.tex:
-          $figures: !!omap
-          - 4-solution: !path '2011/pers-geomt/junior/4-solution'
-      - 1-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
       - 3-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 4.tex:
+          $figures: !!omap
+          - 4-solution: !path '2011/pers-geomt/junior/4-solution'
       - 4-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
@@ -131,24 +131,24 @@
       - 1.tex:
           $figures: !!omap
           - 1-solution: !path '2011/pers-geomt/senior/1-solution'
-      - 2.tex:
-          $figures: !!omap
-          - 2-solution: !path '2011/pers-geomt/senior/2-solution'
-      - 3.tex:
-          $figures: !!omap
-          - 3-solution: !path '2011/pers-geomt/senior/3-solution'
-      - 4.tex:
-          $figures: !!omap
-          - 4-solution: !path '2011/pers-geomt/senior/4-solution'
       - 1-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 2.tex:
+          $figures: !!omap
+          - 2-solution: !path '2011/pers-geomt/senior/2-solution'
       - 2-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 3.tex:
+          $figures: !!omap
+          - 3-solution: !path '2011/pers-geomt/senior/3-solution'
       - 3-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 4.tex:
+          $figures: !!omap
+          - 4-solution: !path '2011/pers-geomt/senior/4-solution'
       - 4-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
@@ -157,13 +157,13 @@
       - 1.tex:
           $figures: !!omap
           - 1-solution: !path '2011/pers-combi/junior/1-solution'
+      - 1-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 2.tex: {}
       - 3.tex: {}
       - 4.tex: {}
       - 5.tex: {}
-      - 1-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
     - senior: !!omap
       - 1.tex: {}
       - 2.tex: {}
@@ -176,6 +176,9 @@
       - 2.tex:
           $figures: !!omap
           - 2-solution: !path '2011/team/junior/2-solution'
+      - 2-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 3.tex: {}
       - 4.tex: {}
       - 5.tex: {}
@@ -183,15 +186,12 @@
       - 7.tex:
           $figures: !!omap
           - 7-solution: !path '2011/team/junior/7-solution'
-      - 8.tex:
-          $figures: !!omap
-          - 8-problem: !path '2011/team/junior/8-problem'
-      - 2-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
       - 7-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 8.tex:
+          $figures: !!omap
+          - 8-problem: !path '2011/team/junior/8-problem'
       - 8-problem.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
@@ -202,19 +202,19 @@
       - 4.tex:
           $figures: !!omap
           - 4-solution: !path '2011/team/senior/4-solution'
+      - 4-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 5.tex:
           $figures: !!omap
           - 5-solution: !path '2011/team/senior/5-solution'
+      - 5-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 6.tex: {}
       - 7.tex: {}
       - 8.tex: {}
       - 9.tex: {}
-      - 4-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
-      - 5-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
   - en: !!omap
     - year.sty: {}
     - regatta: !!omap
@@ -308,6 +308,7 @@
         - 8.tex: {}
         - 9.tex: {}
   - sr: !!omap
+    - year.sty: {}
     - regatta: !!omap
       - senior: !!omap
         - algbr: !!omap
@@ -331,6 +332,12 @@
         - 2.tex: {}
         - 3.tex: {}
         - 4.tex: {}
+    - pers-geomt: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
     - pers-combi: !!omap
       - senior: !!omap
         - 1.tex: {}
@@ -338,12 +345,6 @@
         - 3.tex: {}
         - 4.tex: {}
         - 5.tex: {}
-    - pers-geomt: !!omap
-      - senior: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
     - team: !!omap
       - senior: !!omap
         - 1.tex: {}
@@ -355,7 +356,6 @@
         - 7.tex: {}
         - 8.tex: {}
         - 9.tex: {}
-    - year.sty: {}
 - '2012': !!omap
   - year.sty: {}
   - regatta: !!omap
@@ -369,24 +369,24 @@
         - 1.tex:
             $figures: !!omap
             - 1-solution: !path '2012/regatta/junior/geomt/1-solution'
-        - 2.tex:
-            $figures: !!omap
-            - 2-solution: !path '2012/regatta/junior/geomt/2-solution'
-        - 3.tex:
-            $figures: !!omap
-            - 3-solution: !path '2012/regatta/junior/geomt/3-solution'
-        - 4.tex:
-            $figures: !!omap
-            - 4-solution: !path '2012/regatta/junior/geomt/4-solution'
         - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 2.tex:
+            $figures: !!omap
+            - 2-solution: !path '2012/regatta/junior/geomt/2-solution'
         - 2-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 3.tex:
+            $figures: !!omap
+            - 3-solution: !path '2012/regatta/junior/geomt/3-solution'
         - 3-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
+        - 4.tex:
+            $figures: !!omap
+            - 4-solution: !path '2012/regatta/junior/geomt/4-solution'
         - 4-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
@@ -405,20 +405,20 @@
         - 1.tex:
             $figures: !!omap
             - 1-solution: !path '2012/regatta/senior/geomt/1-solution'
+        - 1-solution.asy:
+            $used: !!omap
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 2.tex:
             $figures: !!omap
             - 2-solution: !path '2012/regatta/senior/geomt/2-solution'
+        - 2-solution.asy:
+            $used: !!omap
+            - common-sizes.asy: !path 'common-sizes.asy'
         - 3.tex: {}
         - 4.tex:
             $figures: !!omap
             - 4-solution: !path '2012/regatta/senior/geomt/4-solution'
-        - 2-solution.asy:
-            $used: !!omap
-            - common-sizes.asy: !path 'common-sizes.asy'
         - 4-solution.asy:
-            $used: !!omap
-            - common-sizes.asy: !path 'common-sizes.asy'
-        - 1-solution.asy:
             $used: !!omap
             - common-sizes.asy: !path 'common-sizes.asy'
       - combi: !!omap
@@ -447,34 +447,34 @@
       - 1.tex:
           $figures: !!omap
           - 1-solution: !path '2012/pers-geomt/junior/1-solution'
-      - 2.tex:
-          $figures: !!omap
-          - 2-solution: !path '2012/pers-geomt/junior/2-solution'
-      - 3.tex:
-          $figures: !!omap
-          - 3-solution: !path '2012/pers-geomt/junior/3-solution'
-      - 4.tex: {}
       - 1-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 2.tex:
+          $figures: !!omap
+          - 2-solution: !path '2012/pers-geomt/junior/2-solution'
       - 2-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 3.tex:
+          $figures: !!omap
+          - 3-solution: !path '2012/pers-geomt/junior/3-solution'
       - 3-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 4.tex: {}
     - senior: !!omap
       - 1.tex:
           $figures: !!omap
           - 1-solution: !path '2012/pers-geomt/senior/1-solution'
+      - 1-solution.asy:
+          $used: !!omap
+          - common-sizes.asy: !path 'common-sizes.asy'
       - 2.tex: {}
       - 3.tex: {}
       - 4.tex:
           $figures: !!omap
           - 4-solution: !path '2012/pers-geomt/senior/4-solution'
-      - 1-solution.asy:
-          $used: !!omap
-          - common-sizes.asy: !path 'common-sizes.asy'
       - 4-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
@@ -519,14 +519,58 @@
       - 8.tex:
           $figures: !!omap
           - 8-solution: !path '2012/team/senior/8-solution'
-      - 9.tex: {}
-      - 10.tex: {}
       - 8-solution.asy:
           $used: !!omap
           - common-sizes.asy: !path 'common-sizes.asy'
+      - 9.tex: {}
+      - 10.tex: {}
 - '2013': !!omap
   - year.sty: {}
+  - regatta: !!omap
+    - junior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - senior: !!omap
+      - algbr: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - geomt: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - combi: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
   - pers-algbr: !!omap
+    - junior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+    - senior: !!omap
+      - 1.tex: {}
+      - 2.tex: {}
+      - 3.tex: {}
+      - 4.tex: {}
+  - pers-geomt: !!omap
     - junior: !!omap
       - 1.tex: {}
       - 2.tex: {}
@@ -550,54 +594,9 @@
       - 3.tex: {}
       - 4.tex: {}
       - 5.tex: {}
-  - pers-geomt: !!omap
-    - junior: !!omap
-      - 1.tex: {}
-      - 2.tex: {}
-      - 3.tex: {}
-      - 4.tex: {}
-    - senior: !!omap
-      - 1.tex: {}
-      - 2.tex: {}
-      - 3.tex: {}
-      - 4.tex: {}
-  - regatta: !!omap
-    - junior: !!omap
-      - algbr: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
-      - combi: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
-      - geomt: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
-    - senior: !!omap
-      - algbr: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
-      - combi: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
-      - geomt: !!omap
-        - 1.tex: {}
-        - 2.tex: {}
-        - 3.tex: {}
-        - 4.tex: {}
   - team: !!omap
     - junior: !!omap
       - 1.tex: {}
-      - 10.tex: {}
       - 2.tex: {}
       - 3.tex: {}
       - 4.tex: {}
@@ -606,9 +605,9 @@
       - 7.tex: {}
       - 8.tex: {}
       - 9.tex: {}
+      - 10.tex: {}
     - senior: !!omap
       - 1.tex: {}
-      - 10.tex: {}
       - 2.tex: {}
       - 3.tex: {}
       - 4.tex: {}
@@ -617,3 +616,148 @@
       - 7.tex: {}
       - 8.tex: {}
       - 9.tex: {}
+      - 10.tex: {}
+  - en: !!omap
+    - year.sty: {}
+    - regatta: !!omap
+      - junior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+      - senior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+    - pers-algbr: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-geomt: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-combi: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+    - team: !!omap
+      - junior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+        - 9.tex: {}
+        - 10.tex: {}
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+        - 9.tex: {}
+        - 10.tex: {}
+  - sr: !!omap
+    - year.sty: {}
+    - regatta: !!omap
+      - senior: !!omap
+        - algbr: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - geomt: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+        - combi: !!omap
+          - 1.tex: {}
+          - 2.tex: {}
+          - 3.tex: {}
+          - 4.tex: {}
+    - pers-algbr: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-geomt: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+    - pers-combi: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+    - team: !!omap
+      - senior: !!omap
+        - 1.tex: {}
+        - 2.tex: {}
+        - 3.tex: {}
+        - 4.tex: {}
+        - 5.tex: {}
+        - 6.tex: {}
+        - 7.tex: {}
+        - 8.tex: {}
+        - 9.tex: {}
+        - 10.tex: {}
+- common-sizes.asy: {}

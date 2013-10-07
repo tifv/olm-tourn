@@ -132,6 +132,7 @@ class Driver(OriginalDriver):
             else:
                 for leaguekey in record['$contest']['leagues']:
                     if leaguekey not in record:
+                        # Plain error XXX
                         raise ValueError(mimicroot/leaguekey)
                     yield from self.trace_delegators(
                         mimicroot/leaguekey/mimicpath,
@@ -845,7 +846,7 @@ class Driver(OriginalDriver):
         select=None, number=None, **kwargs
     ):
         if select is None:
-            return super().constitute_input(
+            return super().constitute_body_input(
                 inpath, alias, inrecord, figname_map, **kwargs );
         else:
             assert not kwargs
