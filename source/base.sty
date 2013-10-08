@@ -53,37 +53,64 @@
 \texttt{#3{:}\ #5}}%
 \vspace{1ex}}
 
+%%%%%%%%%%
 % Problem/solution segregation
 
-\usepackage{catchfile}
+% High-level dispatch
+\newenvironment{tourn-problems}[1]%
+    {\def\problem@tourn@env{tourn-problems/#1}%
+        \begin{\problem@tourn@env}}%
+    {\end{\problem@tourn@env}}
+\newcommand\tournproblem[1]{\def\problem@tourn@number{\itemy{#1}}}
+\newenvironment{tourn-problems/complete}%
+    {\begin{problems}\let\problem\problem@tourn@complete}%
+    {\end{problems}}
+\newenvironment{tourn-problems/problems}
+    {\begin{problems}\let\problem\problem@tourn@problem}%
+    {\end{problems}}%
+\newenvironment{tourn-problems/solutions}%
+    {\begin{problems}\let\problem\problem@tourn@solution}%
+    {\end{problems}}%
 
-\def\fetchproblemsolution#1{\begingroup
-\CatchFileDef{\theinput}{#1}{}%
-\expandafter\parseproblemsolution\theinput\endproblem
+% Selection/formatting 
+\long\def\problem@tourn@complete#1\endproblem{\begingroup
+\problem@tourn@parse#1\endproblem
+{\problem@tourn@fetched@preproblem}{\problem@tourn@fetched@presolution}%
+\problem@tourn@number\problem@tourn@fetched@problem
+\solution@delimiter\problem@tourn@fetched@solution
 \endgroup}
-\long\def\parseproblemsolution#1\solution#2\endproblem{%
-\@ifnextchar[{\parsepreproblem}{\parseproblem}#1\endproblem
-\@ifnextchar[{\parsepresolution}{\parsesolution}#2\endsolution}
-\long\def\parsepreproblem[#1]#2\endproblem{%
-    \global\def\preproblem@fetched{#1}%
-    \global\def\problem@fetched{#2}}
-\long\def\parseproblem#1\endproblem{%
-    \global\def\preproblem@fetched{}%
-    \global\def\problem@fetched{#1}}
-\long\def\parsepresolution[#1]#2\endsolution{%
-    \global\def\presolution@fetched{#1}%
-    \global\def\solution@fetched{#2}}
-\long\def\parsesolution#1\endsolution{%
-    \global\def\presolution@fetched{}%
-    \global\def\solution@fetched{#1}}
+\long\def\problem@tourn@problem#1\endproblem{\begingroup
+\problem@tourn@parse#1\endproblem
+{\problem@tourn@fetched@preproblem}%
+\problem@tourn@number\problem@tourn@fetched@problem
+\endgroup}
+\long\def\problem@tourn@solution#1\endproblem{\begingroup
+\problem@tourn@parse#1\endproblem
+{\problem@tourn@fetched@presolution}%
+\problem@tourn@number\problem@tourn@fetched@solution
+\endgroup}
 
-\newcommand\problemsolutioninput[2]{\fetchproblemsolution{#2}%
-{\preproblem@fetched\presolution@fetched}%
-#1\problem@fetched\solution@delimiter\solution@fetched}
-\newcommand\probleminput[2]{\fetchproblemsolution{#2}%
-\preproblem@fetched#1\problem@fetched}
-\newcommand\solutioninput[2]{\fetchproblemsolution{#2}%
-\presolution@fetched#1\solution@fetched}
+% Parsing/segregation
+\long\def\problem@tourn@parse#1\solution#2\endproblem{%
+    \@ifnextchar[%
+        {\problem@tourn@parse@preproblem}%
+        {\problem@tourn@parse@problem}#1\endproblem%
+    \@ifnextchar[%
+        {\problem@tourn@parse@presolution}%
+        {\problem@tourn@parse@solution}#2\endsolution%
+}
+\long\def\problem@tourn@parse@preproblem[#1]#2\endproblem{%
+    \long\def\problem@tourn@fetched@preproblem{#1}%
+    \long\def\problem@tourn@fetched@problem{#2}}
+\long\def\problem@tourn@parse@problem#1\endproblem{%
+    \long\def\problem@tourn@fetched@preproblem{}%
+    \long\def\problem@tourn@fetched@problem{#1}}
+\long\def\problem@tourn@parse@presolution[#1]#2\endsolution{%
+    \long\def\problem@tourn@fetched@presolution{#1}%
+    \long\def\problem@tourn@fetched@solution{#2}}
+\long\def\problem@tourn@parse@solution#1\endsolution{%
+    \long\def\problem@tourn@fetched@presolution{}%
+    \long\def\problem@tourn@fetched@solution{#1}}
 
 \newcommand\solution@delimiter{$\square$\quad}
 

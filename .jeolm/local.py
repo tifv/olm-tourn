@@ -130,10 +130,8 @@ class Driver(OriginalDriver):
             if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
-                for leaguekey in record['$contest']['leagues']:
-                    if leaguekey not in record:
-                        # Plain error XXX
-                        raise ValueError(mimicroot/leaguekey)
+                leaguekeys = list(self.find_contest_league_records(record))
+                for leaguekey in leaguekeys:
                     yield from self.trace_delegators(
                         mimicroot/leaguekey/mimicpath,
                         seen_targets=seen_targets )
@@ -143,9 +141,8 @@ class Driver(OriginalDriver):
             if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
-                for leaguekey in record['$regatta']['leagues']:
-                    if leaguekey not in record:
-                        raise ValueError(mimicroot/leaguekey)
+                leaguekeys = list(self.find_regatta_league_records(record))
+                for leaguekey in leaguekeys:
                     yield from self.trace_delegators(
                         mimicroot/leaguekey/mimicpath,
                         seen_targets=seen_targets )
@@ -153,9 +150,8 @@ class Driver(OriginalDriver):
             if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
                 yield target
             else:
-                for subjectkey in record['$regatta$league']['subjects']:
-                    if subjectkey not in record:
-                        raise ValueError(mimicroot/subjectkey)
+                subjectkeys = list(self.find_regatta_subject_records(record))
+                for subjectkey in subjectkeys:
                     yield from self.trace_delegators(
                         mimicroot/subjectkey/mimicpath,
                         seen_targets=seen_targets )
@@ -228,7 +224,7 @@ class Driver(OriginalDriver):
                 continue;
             for item in page:
                 if isinstance(item, dict):
-                    append_verbatim(self.constitute_special(item))
+                    append(item)
                     continue;
                 if item != '.':
                     raise ValueError(item, target)
@@ -236,14 +232,14 @@ class Driver(OriginalDriver):
                 append_verbatim(self.substitute_jeolmtournheader())
                 append_verbatim(self.constitute_section(
                     self.find_name(contest, record.get('$lang')) ))
-                append_verbatim(self.substitute_begin_problems())
+                append_verbatim(self.substitute_begin_tourn_problems(
+                    select='problems' ))
                 for i in range(1, 1 + league['problems']):
                     inpath = subroot/(str(i)+'.tex')
                     if inpath not in self.inrecords:
                         raise RecordNotFoundError(inpath, target)
-                    append({ 'input' : inpath,
-                        'select' : 'problems', 'number' : str(i) })
-                append_verbatim(self.substitute_end_problems())
+                    append({ 'input' : inpath, 'number' : str(i) })
+                append_verbatim(self.substitute_end_tourn_problems())
                 append_verbatim(self.substitute_postword())
         protorecord = {'body' : body}
         protorecord.update(contest_record.get('$rigid$opt', ()))
@@ -276,14 +272,14 @@ class Driver(OriginalDriver):
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, target)
-            append_verbatim(self.substitute_begin_problems())
+            append_verbatim(self.substitute_begin_tourn_problems(
+                select='problems' ))
             append({ 'input' : inpath,
-                'select' : 'problems',
                 'number' : self.substitute_regatta_number(
                     subject_index=subject['index'],
                     round_index=round['index'] )
             })
-            append_verbatim(self.substitute_end_problems())
+            append_verbatim(self.substitute_end_tourn_problems())
             append_verbatim(self.substitute_hrule())
         protorecord = {'body' : body}
         protorecord.update(regatta_record.get('$rigid$opt', ()))
@@ -421,14 +417,13 @@ class Driver(OriginalDriver):
                     self.find_name(contest, record.get('$lang')),
                     self.find_name(league, record.get('$lang')) ),
                 select=select ))
-        append_verbatim(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_tourn_problems(select=select))
         for i in range(1, 1 + league['problems']):
             inpath = subroot/(str(i)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
-            append({ 'input' : inpath,
-                'select' : select, 'number' : str(i) })
-        append_verbatim(self.substitute_end_problems())
+            append({ 'input' : inpath, 'number' : str(i) })
+        append_verbatim(self.substitute_end_tourn_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -449,10 +444,10 @@ class Driver(OriginalDriver):
         inpath = subroot/(str(problem)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        append_verbatim(self.substitute_begin_problems())
-        append({ 'input' : inpath,
-            'select' : 'complete', 'number' : str(problem) })
-        append_verbatim(self.substitute_end_problems())
+        append_verbatim(self.substitute_begin_tourn_problems(
+            select='complete' ))
+        append({ 'input' : inpath, 'number' : str(problem) })
+        append_verbatim(self.substitute_end_tourn_problems())
         protorecord = {'body' : body}
         return protorecord
 
@@ -569,18 +564,17 @@ class Driver(OriginalDriver):
                     self.find_name(subject, record.get('$lang')) ),
                 select=select ))
         round_records = self.find_regatta_round_records(record)
-        append_verbatim(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_tourn_problems(select=select))
         for roundnum, roundrecord in enumerate(round_records, 1):
             inpath = subroot/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
             append({ 'input' : inpath,
-                'select' : select,
                 'number' : self.substitute_regatta_number(
                     subject_index=subject['index'],
                     round_index=roundrecord['$regatta$round']['index'] )
             })
-        append_verbatim(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_tourn_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -611,18 +605,17 @@ class Driver(OriginalDriver):
         subject_records = self.find_regatta_subject_records(record)
         leagueroot = subroot.parent()
         roundnum = int(subroot.name)
-        append_verbatim(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_tourn_problems(select=select))
         for subjectkey, subjectrecord in subject_records.items():
             inpath = leagueroot/subjectkey/(str(roundnum)+'.tex')
             if inpath not in self.inrecords:
                 raise RecordNotFoundError(inpath, subroot)
             append({ 'input' : inpath,
-                'select' : select,
                 'number' : self.substitute_regatta_number(
                     subject_index=subjectrecord['$regatta$subject']['index'],
                     round_index=round['index'] )
             })
-        append_verbatim(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_tourn_problems())
 
         if target_options:
             raise ValueError(target_options)
@@ -645,14 +638,14 @@ class Driver(OriginalDriver):
         inpath = subroot/(str(roundnum)+'.tex')
         if inpath not in self.inrecords:
             raise RecordNotFoundError(inpath, subroot)
-        append_verbatim(self.substitute_begin_problems())
+        append_verbatim(self.substitute_begin_tourn_problems(
+            select='complete' ))
         append({ 'input' : inpath,
-            'select' : 'complete',
             'number' : self.substitute_regatta_number(
                 subject_index=subject['index'],
                 round_index=round['index'] )
         })
-        append_verbatim(self.substitute_end_problems())
+        append_verbatim(self.substitute_end_tourn_problems())
         protorecord = {'body' : body}
         return protorecord
 
@@ -835,7 +828,6 @@ class Driver(OriginalDriver):
                     continue
                 yield from self._list_mimic_targets(outpath/subname, subrecord)
 
-#    mimic_keys = OutrecordAccessor.mimic_keys
 
     ##########
     # LaTeX-level functions
@@ -843,38 +835,24 @@ class Driver(OriginalDriver):
     # Extension
     @classmethod
     def constitute_body_input(cls, inpath, alias, inrecord, figname_map, *,
-        select=None, number=None, **kwargs
+        number=None, **kwargs
     ):
-        if select is None:
+        if number is None:
             return super().constitute_body_input(
                 inpath, alias, inrecord, figname_map, **kwargs );
         else:
-            assert not kwargs
+            assert not kwargs, kwargs
 
-        assert number is not None, (inpath, number)
-        numeration = cls.substitute_rigid_numeration(number=number)
-
-        if select in {'problems'}:
-            body = cls.substitute_input_problem(
-                filename=alias, numeration=numeration )
-        elif select in {'solutions'}:
-            body = cls.substitute_input_solution(
-                filename=alias, numeration=numeration )
-        elif select in {'complete', 'jury'}:
-            body = cls.substitute_input_both(
-                filename=alias, numeration=numeration )
-        else:
-            raise AssertionError(inpath, select)
+        body = cls.substitute_tourn_problem_input(
+            number=number, filename=alias, inpath=inpath )
 
         if figname_map:
             body = cls.constitute_figname_map(figname_map) + '\n' + body
         return body
 
-    rigid_numeration_template = r'\itemy{$number}'
-
-    input_problem_template = r'\probleminput{$numeration}{$filename}'
-    input_solution_template = r'\solutioninput{$numeration}{$filename}'
-    input_both_template = r'\problemsolutioninput{$numeration}{$filename}'
+    tourn_problem_input_template = (
+        r'\tournproblem{$number}' '\n'
+        r'\input{$filename}% $inpath' )
 
     @classmethod
     def constitute_section(cls, caption, *, level=0, select='problems'):
@@ -908,8 +886,8 @@ class Driver(OriginalDriver):
 
     leaguedef_template = r'\def\jeolmleague{$league}'
 
-    begin_problems_template = r'\begin{problems}'
-    end_problems_template = r'\end{problems}'
+    begin_tourn_problems_template = r'\begin{tourn-problems}{$select}'
+    end_tourn_problems_template = r'\end{tourn-problems}'
     postword_template = r'\postword'
 
     jeolmtournheader_template = r'\jeolmtournheader'
@@ -944,7 +922,7 @@ class Driver(OriginalDriver):
     @classmethod
     def digest_body_item(cls, item):
         assert isinstance(item, dict), item
-        if item.keys() == {'input', 'select', 'number'}:
+        if item.keys() == {'input', 'number'}:
             return item.copy()
         else:
             return super().digest_body_item(item)
