@@ -9,13 +9,14 @@
 \usepackage{pgfpages}
 \pgfpagesuselayout{resize to}[a4paper]
 
-% Miscellaneous templates
-\def\problemmark#1{\textsf{(#1)}}
+\newcounter{problem@score}
+\newcommand\problemscore[1]{\addtocounter{problem@score}{#1}\textsf{(#1)}}
+\newcommand\problemscoresum{\arabic{problem@score}\setcounter{problem@score}{0}}
 
 \let\postword\relax
 
-% \begin{macro}{\jeolmheaderhrule}
-%    \begin{macrocode}
+% Miscellaneous templates
+
 \newlength{\jeolmhrule@width}%
 \newlength{\jeolmhrule@textwidth}%
 \newcommand\jeolmhrule[1]{\begingroup\let\sp\quad
@@ -26,8 +27,6 @@
 \sp#1\sp
 \rule[0.5ex]{\jeolmhrule@width}{0.5pt}
 \endgroup}
-%    \end{macrocode}
-% \end{macro}
 
 \newcommand\jeolmtournheadertemplate[3]{%
 {\Large\vspace{4ex}}\par%
