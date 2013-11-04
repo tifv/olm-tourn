@@ -1,0 +1,50 @@
+- miscellany:
+    $style: 
+    - ..
+    - verbatim: '\makeatletter\def\problem@itemy#1{\item}\makeatoather'
+    # Replace all \section* with \section and \part* with \part
+    - verbatim: '\makeatletter'
+    - verbatim: '\let\oldpart\part\def\part{\@firstoftwo{\oldpart}}'
+    - verbatim: '\let\oldsection\section\def\section{\@firstoftwo{\oldsection}}'
+    - verbatim: '\let\oldtbc\tableofcontents'
+    - verbatim:
+        \def\tableofcontents{\begingroup
+          \let\section\oldsection\oldtbc
+        \endgroup}
+    - verbatim: '\makeatother'
+    $delegate:
+    - delegate: ru
+      flags: [problems]
+    - delegate: ru
+      flags: [complete]
+    ru:
+      $style: [.., /lang/ru]
+      $manner:
+      - - .[no-header]
+      $matter:
+      - verbatim:
+          '\title{Многоборье 2011-2012}\date{}\author{}\maketitle'
+        condition: problems
+      - verbatim:
+          '\title{Многоборье 2011-2012 (с решениями)}\date{}\author{}\maketitle'
+        condition: complete
+      - verbatim: '\tableofcontents'
+      - /2011/ru[contained]
+      - /2012/ru[contained]
+#    en:
+#      $style: [/base, /en]
+#      $matter:
+#      - verbatim:
+#          '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'
+#      - /2011/en[problems,contained]
+#      - /2012/en[problems,contained]
+#      - /2013/en[problems,contained]
+#    sr:
+#      $style: [/base, /sr]
+#      $matter:
+#      - verbatim:
+#          '\title{Многоборье 2011-2013 (Српски)}\date{}\author{}\maketitle'
+#      - /2011/sr[problems,contained]
+#      - /2012/sr[problems,contained]
+#      - /2013/sr[problems,contained]
+

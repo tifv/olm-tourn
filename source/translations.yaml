@@ -1,0 +1,46 @@
+$translations:
+  junior:
+    ru: Младшая лига
+    en: Junior League
+    sr: Млађи узраст
+  senior:
+    ru: Старшая лига
+    en: Senior League
+    sr: Стариjи узраст
+  algbr:
+    ru: Алгебра и теория чисел
+    en: Algebra and Number Theory
+    sr: Алгебра и теориjа броjева
+  geomt:
+    ru: Геометрия
+    en: Geometry
+    sr: Геометриjа
+  combi:
+    ru: Комбинаторика и логика
+    en: Combinatorics and Logic
+    sr: Комбинаторика и логика
+  regatta:
+    ru: Регата
+    en: Regatta
+    sr: Регата
+  team:
+    ru: Командная олимпиада
+    en: Team Contest
+    sr: Екипно такмичење
+  round-1:
+    ru: Первый тур
+    en: First Round
+    sr: Први круг
+  round-2:
+    ru: Второй тур
+    en: Second Round
+    sr: Други круг
+  round-3:
+    ru: Третий тур
+    en: Third Round
+    sr: Трећи круг
+  round-4:
+    ru: Четвертый тур
+    en: Fourth Round
+    sr: Четврти круг
+

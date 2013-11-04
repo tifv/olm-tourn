@@ -1,0 +1,78 @@
+contest DELEGATE
+    contest/league for each league
+contest[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    contest/league[problems|solutions|complete|jury] for each league
+contest[] MATTER
+    contest[problems]
+
+contest/league[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    contest/league/problem[problems|solutions|complete] for each problem
+contest/league[] MATTER
+    contest/league[problems]
+    *postword
+
+contest/league/problem[problems|solutions|complete|jury] MATTER
+    *problems|solutions|complete
+contest/league/problem[] DELEGATE
+    contest/league/problem[problems]
+contest/league/problem[] MATTER
+    contest/league/problem[problems]
+
+regatta DELEGATE
+    regatta/league for each league
+regatta[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    regatta/league[problems|solutions|complete|jury] for each league
+regatta[blank] MATTER
+    regatta/league[blank] for each league
+regatta[] MATTER
+    regatta[problems]
+
+regatta/league[by-round] DELEGATE
+    regatta/league/round for each round
+regatta/league DELEGATE
+    regatta/league/subject for each subject
+regatta/league[by-subject,problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    regatta/league/subject[problems|solutions|complete|jury] for each subject
+regatta/league[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    regatta/league/round[problems|solutions|complete|jury] for each round
+regatta/league[by-subject,blank] MATTER
+    regatta/league/subject[blank] for each subject
+regatta/league[blank] MATTER
+    regatta/league/round[blank] for each round
+regatta/league[] MATTER
+    regatta/league[problems]
+
+regatta/league/subject[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    regatta/league/subject/round[problems|solutions|complete] for each round
+regatta/league/subject[blank] MATTER
+    *regatta/league/subject/round[blank] for each problem
+regatta/league/subject[] DELEGATE
+    regatta/league/subject[problems]
+regatta/league/subject[] MATTER
+    regatta/league/subject[problems]
+
+regatta/league/round[problems|solutions|complete|jury] MATTER
+    *caption[problems|solutions|complete|jury]
+    regatta/league/subject/round[problems|solutions|complete] for each subject
+regatta/league/round[blank] MATTER
+    regatta/league/subject/round[blank] for each subject
+regatta/league/round[] DELEGATE
+    regatta/league/round[problems]
+regatta/league/round[] MATTER
+    regatta/league/round[problems]
+
+regatta/league/subject/problem[blank] MATTER
+    *blank
+regatta/league/subject/problem[problems|solutions|complete|jury] MATTER
+    *problem|solution|complete
+regatta/league/subject/problem[] DELEGATE
+    regatta/league/subject/problem[problems]
+regatta/league/subject/problem[] MATTER
+    regatta/league/subject/problem[problems]
+

@@ -1,0 +1,31 @@
+$style:
+- /base
+- /pgfpages
+$style[tiled4]:
+- package: geometry
+  options: [a6paper, landscape]
+- /base
+- /pgfpages[4on1,-print] # avoid flag clash
+
+base: # base.sty
+  $targetable: off
+pgfpages:
+  $targetable: off
+  $style:
+  - package : pgfpages
+  - verbatim : '\pgfpagesuselayout{resize to}[a4paper]'
+  $style[2on1]:
+  - package : pgfpages
+  - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper,landscape]'
+  $style[2on1-portrait]:
+  - package : pgfpages
+  - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper]'
+  $style[4on1]:
+  - package : pgfpages
+  - verbatim : '\pgfpagesuselayout{4 on 1}[a4paper,landscape]'
+  $style[print]:
+  - style: .
+    flags: [2on1]
+- lang:
+    $targetable: off
+

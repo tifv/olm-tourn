@@ -1,0 +1,36 @@
+\usepackage[serbianc]{babel}
+
+\newcommand\regattablankcaption{%
+\regattablankcaptiontemplate{Team name}{Score}{Maximal}}
+
+\newcommand\writtenpostword{\jeolmpostword{%
+Појединачно писмено такмичење.  Време за рад: 240 минута.\\
+Сваки тачно решен задатак вреди 7 поена.}}
+
+\newcommand\oralpostword{\jeolmpostword{%
+Појединачно усмено такмичење.  Време за рад: 240 минута.\\
+Сваки тачно решен задатак вреди 1 поен.  Непотпуна решења вреде 0 поена.\\
+На сваком задатку дозвољена су три покушаја.}}
+
+\newcommand\teampostword{\jeolmpostword{%
+Екипно усмено такмичење.  Време за рад: 240 минута.\\
+Вредност сваког задатка је приказана у загради.
+Максимални укупни број поена је \problemscoresum.\\
+Сваки неуспешан покушај одбране решења задатка смањује поене на том задатку
+за 1.\\
+Сваки такмичар може да брани решења највише три различита задатка.}}
+
+\providecommand\jeolmheader{
+{\Large\vspace{4ex}}\par%
+\begingroup\small\sffamily
+\strut\hfill%
+{\bfseries Командно-личный турнир <<Математическое многоборье>>}%
+\hfill\strut\\[0.3ex]%
+\strut\hfill
+{\itshape г.\,Москва}%
+\hfill\strut{\large\bfseries\\[0.3ex]
+\rule[0.5ex]{\textwidth}{0.5pt}}
+\endgroup
+\vspace{-\parskip}
+\@ifnextchar*{\@gobble}{{\Large\vspace{-4ex}}}}
+

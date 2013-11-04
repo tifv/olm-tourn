@@ -3,7 +3,8 @@ from collections import OrderedDict as ODict
 
 from pathlib import PurePosixPath as PurePath
 
-from jeolm.driver import Driver as OriginalDriver, RecordNotFoundError
+from jeolm.driver import Driver as OriginalDriver
+from jeolm.driver import RecordNotFoundError, fetch_metarecord
 from jeolm.utils import pure_join
 
 import logging
@@ -11,754 +12,433 @@ logger = logging.getLogger(__name__)
 
 class Driver(OriginalDriver):
 
-    # contest DELEGATE
-    #     contest/league for each league
-    # contest/problems FLUID
-    #     contest/league/problems for each league
-    # contest/solutions FLUID
-    #     contest/league/solutions for each league
-    # contest/complete FLUID
-    #     contest/league/complete for each league
-    # contest/jury DELEGATE
-    #     contest/league/jury for each league
-    # contest/jury FLUID
-    #     contest/league/jury for each league
-
-    # contest/league RIGID
-    # contest/league/problems FLUID
-    # contest/league/solutions FLUID
-    # contest/league/complete FLUID
-    # contest/league/jury FLUID
-
-    # contest/league/<problem> FLUID
-
-    # regatta DELEGATE
-    #     regatta/league for each league
-    # regatta/problems FLUID
-    #     regatta/league/problems for each league
-    # regatta/solutions FLUID
-    #     regatta/league/solutions for each league
-    # regatta/complete FLUID
-    #     regatta/league/complete for each league
-    # regatta/jury DELEGATE
-    #     regatta/league/jury for each league
-    # regatta/jury FLUID
-    #     regatta/league/jury for each league
-
-    # regatta/league DELEGATE
-    #     regatta/league/subject for each subject
-    # regatta/league/problems FLUID
-    #     regatta/league/round/problems for each round
-    # regatta/league/solutions FLUID
-    #     regatta/league/round/solutions for each round
-    # regatta/league/complete FLUID
-    #     regatta/league/round/complete for each round
-    # regatta/league/jury DELEGATE
-    #     regatta/league/subject/jury for each subject
-    # regatta/league/jury FLUID
-    #     regatta/league/round/jury for each subject
-
-    # regatta/league/subject RIGID
-    # regatta/league/subject/problems FLUID
-    # regatta/league/subject/solutions FLUID
-    # regatta/league/subject/complete FLUID
-    # regatta/league/subject/jury FLUID
-
-    # regatta/league/round DELEGATE
-    #     regatta/league/round/complete
-    # regatta/league/round/problems FLUID
-    # regatta/league/round/solutions FLUID
-    # regatta/league/round/complete FLUID
-    # regatta/league/round/jury FLUID
-
-    # regatta/league/subject/<problem> FLUID
 
     ##########
     # High-level functions
 
-    def __init__(self, inrecords, outrecords):
-        super().__init__(inrecords, outrecords)
-        self.translations = outrecords.get('$translations')
+    def __init__(self, metarecords):
+        super().__init__(metarecords)
+        self.translations = self.metarecords.get_root()['$translations']
 
-    def list_targets(self):
-        yield from super().list_targets()
-        for mimic_target, mimic_key in self.outrecords.list_mimic_targets():
-            if mimic_key == '$contest':
-                for key in self.contest_fluid_targets:
-                    yield mimic_target/key
-            elif mimic_key == '$contest$league':
-                for key in self.contest_league_fluid_targets:
-                    yield mimic_target/key
-            elif mimic_key == '$regatta':
-                for key in self.regatta_fluid_targets:
-                    yield mimic_target/key
-            elif mimic_key == '$regatta$league':
-                for key in self.regatta_league_fluid_targets:
-                    yield mimic_target/key
-            elif mimic_key == '$regatta$subject':
-                for key in self.regatta_subject_fluid_targets:
-                    yield mimic_target/key
-            elif mimic_key == '$regatta$round':
-                for key in self.regatta_round_fluid_targets:
-                    yield mimic_target/key
-
-    contest_fluid_targets = \
-    contest_league_fluid_targets = \
-    regatta_fluid_targets = \
-    regatta_league_fluid_targets = \
-    regatta_subject_fluid_targets = \
-    regatta_round_fluid_targets = \
-        frozenset(('problems', 'solutions', 'complete', 'jury'))
 
     ##########
     # Record-level functions
 
-    # Extension
-    def _trace_delegators(self, target, resolved_path, record,
-        *, seen_targets
-    ):
-        if not '$mimic$key' in record:
-            yield from super()._trace_delegators(target, resolved_path, record,
-                seen_targets=seen_targets )
-            return;
-
-        mimickey = record['$mimic$key']
-        mimicroot = record['$mimic$root']
-        mimicpath = record['$mimic$path']
-
-        if mimickey == '$contest':
-            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
-                yield target
-            else:
-                leaguekeys = list(self.find_contest_league_records(record))
-                for leaguekey in leaguekeys:
-                    yield from self.trace_delegators(
-                        mimicroot/leaguekey/mimicpath,
-                        seen_targets=seen_targets )
-        elif mimickey == '$contest$league':
-            yield target
-        elif mimickey == '$regatta':
-            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
-                yield target
-            else:
-                leaguekeys = list(self.find_regatta_league_records(record))
-                for leaguekey in leaguekeys:
-                    yield from self.trace_delegators(
-                        mimicroot/leaguekey/mimicpath,
-                        seen_targets=seen_targets )
-        elif mimickey == '$regatta$league':
-            if path_prefixed(mimicpath, {'problems', 'solutions', 'complete'}):
-                yield target
-            else:
-                subjectkeys = list(self.find_regatta_subject_records(record))
-                for subjectkey in subjectkeys:
-                    yield from self.trace_delegators(
-                        mimicroot/subjectkey/mimicpath,
-                        seen_targets=seen_targets )
-        elif mimickey == '$regatta$subject':
-            yield target
-        elif mimickey == '$regatta$round':
-            if mimicpath == PurePath(''):
-                yield from self.trace_delegators(
-                    mimicroot/'problems',
-                    seen_targets=seen_targets )
-            else:
-                yield target
+    tourn_flags = frozenset((
+        'problems', 'solutions', 'complete', 'jury', 'blank' ))
+    contest_flags=frozenset((
+        'problems', 'solutions', 'complete', 'jury' ))
+    regatta_flags=frozenset((
+        'problems', 'solutions', 'complete', 'jury', 'blank' ))
+    @classmethod
+    def get_tourn_flags(cls, tourn_key):
+        if tourn_key in {'$contest', '$contest$league', '$contest$problem'}:
+            return cls.contest_flags
+        elif tourn_key in {'$regatta', '$regatta$league',
+            '$regatta$subject', '$regatta$round',
+            '$regatta$problem'
+        }:
+            return cls.regatta_flags
         else:
-            raise AssertionError(mimickey, target)
+            raise AssertionError(tourn_key)
 
     # Extension
-    def produce_rigid_protorecord(self, target, record,
-        *, date_set
-    ):
-        kwargs = dict(date_set=date_set)
-        if record is None or '$mimic$key' not in record:
-            return super().produce_rigid_protorecord(target, record, **kwargs)
+    def find_delegators(self, metapath, flags, metarecord):
 
-        mimickey = record['$mimic$key']
-        subroot = kwargs['subroot'] = record['$mimic$root']
-        subtarget = kwargs['subtarget'] = record['$mimic$path']
+        yield from super().find_delegators(metapath, flags, metarecord)
+        if '$tourn$key' not in metarecord:
+            return
+        tourn_key = metarecord['$tourn$key']
 
-        if mimickey == '$contest':
-            raise RecordNotFoundError(target);
-        elif mimickey == '$contest$league':
-            if subtarget == PurePath(''):
-                return self.produce_rigid_contest_league_protorecord(
-                    target, record, rigid=record['$rigid'],
-                    contest=self.find_contest(record),
-                    league=self.find_contest_league(record),
-                    **kwargs );
-            raise RecordNotFoundError(target);
-        elif mimickey == '$regatta':
-            raise RecordNotFoundError(target);
-        elif mimickey == '$regatta$league':
-            raise RecordNotFoundError(target);
-        elif mimickey == '$regatta$subject':
-            if subtarget == PurePath(''):
-                return self.produce_rigid_regatta_subject_protorecord(
-                    target, record,
-                    regatta=self.find_regatta(record),
-                    league=self.find_regatta_league(record),
-                    subject=self.find_regatta_subject(record),
-                    **kwargs );
-            raise RecordNotFoundError(target);
-        elif mimickey == '$regatta$round':
-            raise RecordNotFoundError(target);
+        if tourn_key in {'$contest', '$regatta'}:
+            for leaguekey in metarecord[tourn_key]['leagues']:
+                yield metapath/leaguekey, flags
+        elif tourn_key == '$contest$league':
+            pass
+        elif tourn_key == '$contest$problem':
+            if not flags.intersection(self.contest_flags):
+                yield metapath, flags.union(('problems',))
+        elif tourn_key == '$regatta$league':
+            by_subject = 'by-subject' in flags or 'by-round' not in flags
+            flags = flags.difference(('by-subject', 'by-round',))
+            league = metarecord['$regatta$league']
+            if by_subject:
+                for subjectkey in league['subjects']:
+                    yield metapath/subjectkey, flags
+            else:
+                for roundnum in range(1, 1 + league['rounds']):
+                    yield metapath/str(roundnum), flags
+        elif tourn_key in {'$regatta$subject', '$regatta$round', '$regatta$problem'}:
+            if not flags.intersection(self.regatta_flags):
+                yield metapath, flags.union(('problems',))
         else:
-            raise AssertionError(mimickey, target)
+            raise AssertionError(tourn_key)
 
-    def produce_rigid_contest_league_protorecord(self,
-        target, record,
-        subroot, subtarget, rigid,
-        contest, league,
-        *, date_set
+    def generate_manner(self, metapath, flags, metarecord):
+        ignore_manner = (
+            '$contest$key' in metarecord and
+                flags.intersection(self.contest_flags) or
+            '$regatta$key' in metarecord and
+                flags.intersection(self.regatta_flags) )
+        if ignore_manner:
+            flags = flags.union(('matter',))
+        return super().generate_manner(metapath, flags, metarecord)
+
+    @fetch_metarecord
+    def generate_matter_metabody(self, metapath, flags, metarecord,
+        *, date_set=None
     ):
-        assert subtarget == PurePath('')
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        contest_record = self.outrecords[subroot.parent()]
-        for page in rigid:
-            append_verbatim(self.substitute_clearpage())
-            if not page: # empty page
-                append_verbatim(self.substitute_phantom())
-                continue;
-            for item in page:
-                if isinstance(item, dict):
-                    append(item)
-                    continue;
-                if item != '.':
-                    raise ValueError(item, target)
 
-                append_verbatim(self.substitute_jeolmtournheader())
-                append_verbatim(self.constitute_section(
-                    self.find_name(contest, record.get('$lang')) ))
-                append_verbatim(self.substitute_begin_tourn_problems(
-                    select='problems' ))
-                for i in range(1, 1 + league['problems']):
-                    inpath = subroot/(str(i)+'.tex')
-                    if inpath not in self.inrecords:
-                        raise RecordNotFoundError(inpath, target)
-                    append({ 'input' : inpath, 'number' : str(i) })
-                append_verbatim(self.substitute_end_tourn_problems())
-                append_verbatim(self.substitute_postword())
-        protorecord = {'body' : body}
-        protorecord.update(contest_record.get('$rigid$opt', ()))
-        protorecord.update(record.get('$rigid$opt', ()))
-        protorecord['style'] = style = list(
-            protorecord.get('style', ()) )
-        style.append({
-            'league' : self.find_name(league, record.get('$lang')) })
-        return protorecord
+        if '$tourn$key' not in metarecord or 'every-header' in flags:
+            if date_set is None:
+                date_set = set()
+            yield from super().generate_matter_metabody(
+                metapath, flags, metarecord, date_set=date_set )
+            return
 
-    def produce_rigid_regatta_subject_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league, subject,
-        *, date_set
-    ):
-        assert subtarget == PurePath('')
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        league_record = self.outrecords[subroot.parent()]
-        regatta_record = self.outrecords[subroot.parent(2)]
-        roundrecords = self.find_regatta_round_records(league_record)
-        for roundnum, roundrecord in enumerate(roundrecords, 1):
-            round = roundrecord['$regatta$round']
-            append_verbatim(self.substitute_clearpage())
-            append_verbatim(self.substitute_jeolmtournheader_nospace())
-            append_verbatim(self.substitute_rigid_regatta_caption(
-                caption=self.find_name(regatta, record.get('$lang')),
-                mark=round['mark'] ))
-            inpath = subroot/(str(roundnum)+'.tex')
-            if inpath not in self.inrecords:
-                raise RecordNotFoundError(inpath, target)
-            append_verbatim(self.substitute_begin_tourn_problems(
-                select='problems' ))
-            append({ 'input' : inpath,
-                'number' : self.substitute_regatta_number(
-                    subject_index=subject['index'],
-                    round_index=round['index'] )
-            })
-            append_verbatim(self.substitute_end_tourn_problems())
-            append_verbatim(self.substitute_hrule())
-        protorecord = {'body' : body}
-        protorecord.update(regatta_record.get('$rigid$opt', ()))
-        protorecord.update(league_record.get('$rigid$opt', ()))
-        protorecord.update(record.get('$rigid$opt', ()))
-        style = protorecord.setdefault('style', [])
-        style.append({
-            'league' : self.find_name(league, record.get('$lang')) })
-        return protorecord
+        tourn_key = metarecord['$tourn$key']
+        no_league = tourn_key in {'$contest', '$regatta'}
+        is_regatta = tourn_key in {'$regatta', '$regatta$league',
+            '$regatta$subject', '$regatta$round', '$regatta$problem',}
+        is_regatta_blank = is_regatta and 'blank' in flags
+        single_problem = tourn_key in {'$contest$problem', '$regatta$problem'}
+        if 'no-header' not in flags and not is_regatta_blank:
+            assert 'blank' not in flags
+            if no_league:
+                yield {'verbatim' : self.constitute_leaguedef(None)}
+            else:
+                league = self.find_league(metarecord)
+                yield {'verbatim' : self.constitute_leaguedef(
+                    self.find_name(league, metarecord['$lang']) )}
+                if not single_problem:
+                    flags = flags.union(('league-contained',))
+            if single_problem:
+                yield {'verbatim' : self.substitute_jeolmtournheader_nospace()}
+            else:
+                yield {'verbatim' : self.substitute_jeolmtournheader()}
+        if 'no-header' not in flags:
+            flags = flags.union(('no-header',))
 
-    # Extension
-    def produce_fluid_protorecord(self, target, record,
-        *, date_set, infilter=None, fluid_opt=None
-    ):
-        kwargs = dict(date_set=date_set)
-        if record is None or '$mimic$key' not in record:
-            return super().produce_fluid_protorecord(target, record, **kwargs)
-        if infilter is not None:
-            raise ValueError(infilter)
+        matter = self.generate_tourn_matter(metapath, flags, metarecord)
+        pseudorecord = metarecord.copy()
+        self.clear_flagged_keys(pseudorecord, '$matter')
+        pseudorecord['$matter'] = matter
+        yield from super().generate_matter_metabody(
+            metapath, flags, pseudorecord, date_set=set() )
 
-        mimickey = record['$mimic$key']
-        subroot = kwargs['subroot'] = record['$mimic$root']
-        subtarget = kwargs['subtarget'] = record['$mimic$path']
+    def generate_tourn_matter(self, metapath, flags, metarecord):
+        tourn_key = metarecord['$tourn$key']
+        tourn_flags = flags.intersection(self.get_tourn_flags(tourn_key))
+        if len(tourn_flags) > 1:
+            raise ValueError(sorted(tourn_flags))
 
-        if mimickey == '$contest':
-            # contest/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.contest_fluid_targets):
-                return self.produce_fluid_contest_protorecord(target, record,
-                    contest=self.find_contest(record), **kwargs )
-            raise RecordNotFoundError(target)
-        elif mimickey == '$contest$league':
-            # contest/league/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.contest_league_fluid_targets):
-                return self.produce_fluid_contest_league_protorecord(
-                    target, record,
-                    contest=self.find_contest(record),
-                    league=self.find_contest_league(record), **kwargs )
-            # contest/league/<problem number>
-            elif str(subtarget).isnumeric():
-                return self.produce_fluid_contest_problem_protorecord(
-                    target, record,
-                    contest=self.find_contest(record),
-                    league=self.find_contest_league(record),
-                    problem=int(str(subtarget)), **kwargs )
-            raise RecordNotFoundError(target)
-        elif mimickey == '$regatta':
-            # regatta/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.regatta_fluid_targets):
-                return self.produce_fluid_regatta_protorecord(target, record,
-                    regatta=self.find_regatta(record), **kwargs )
-            raise RecordNotFoundError(target)
-        elif mimickey == '$regatta$league':
-            # regatta/league/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.regatta_league_fluid_targets):
-                return self.produce_fluid_regatta_league_protorecord(
-                    target, record,
-                    regatta=self.find_regatta(record),
-                    league=self.find_regatta_league(record), **kwargs )
-            raise RecordNotFoundError(target)
-        elif mimickey == '$regatta$subject':
-            # regatta/league/subject/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.regatta_subject_fluid_targets):
-                return self.produce_fluid_regatta_subject_protorecord(
-                    target, record,
-                    regatta=self.find_regatta(record),
-                    league=self.find_regatta_league(record),
-                    subject=self.find_regatta_subject(record), **kwargs )
-            # regatta/league/subject/<round number>
-            elif str(subtarget).isnumeric():
-                return self.produce_fluid_regatta_problem_protorecord(
-                    target, record,
-                    regatta=self.find_regatta(record),
-                    league=self.find_regatta_league(record),
-                    subject=self.find_regatta_subject(record),
-                    roundnum=int(str(subtarget)), **kwargs )
-            raise RecordNotFoundError(target)
-        elif mimickey == '$regatta$round':
-            # regatta/league/round/{problems,solutions,complete,jury}
-            if path_prefixed(subtarget, self.regatta_round_fluid_targets):
-                return self.produce_fluid_regatta_round_protorecord(
-                    target, record,
-                    regatta=self.find_regatta(record),
-                    league=self.find_regatta_league(record),
-                    round=self.find_regatta_round(record), **kwargs )
-            raise RecordNotFoundError(target)
-
-    def produce_fluid_contest_protorecord(self,
-        target, record,
-        subroot, subtarget, contest,
-        *, date_set
-    ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-                self.find_name(contest, record.get('$lang')) ))
-            target_options.discard('contained')
+        args = [metapath, flags, metarecord]
+        kwargs = dict()
+        if tourn_key.startswith('$contest'):
+            kwargs.update(contest=self.find_contest(metarecord))
+        elif tourn_key.startswith('$regatta'):
+            kwargs.update(regatta=self.find_regatta(metarecord))
         else:
-            append_verbatim(self.constitute_section(
-                self.find_name(contest, record.get('$lang')),
-                select=select ))
-        league_records = self.find_contest_league_records(record)
-        subtarget = PurePath(select, *target_options)
-        for leaguekey, leaguerecord in league_records.items():
-            subprotorecord = self.produce_fluid_contest_league_protorecord(
-                subroot/leaguekey/subtarget, leaguerecord,
-                subroot/leaguekey, subtarget,
-                contest, leaguerecord['$contest$league'],
-                contained=1,
-                date_set=date_set
-            )
-            body.extend(subprotorecord['body'])
+            raise AssertionError(tourn_key)
+        if tourn_key not in {'$contest', '$regatta'}:
+            kwargs.update(league=self.find_league(metarecord))
 
-        protorecord = {'body' : body}
-        return protorecord
-
-    def produce_fluid_contest_league_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        contest, league,
-        *, contained=False, date_set
-    ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if contained or 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-                self.find_name(league, record.get('$lang')),
-                level=contained ))
-            target_options.discard('contained')
+        if tourn_key == '$contest':
+            method = self.generate_contest_matter
+        elif tourn_key == '$regatta':
+            method = self.generate_regatta_matter
+        elif tourn_key == '$contest$league':
+            method = self.generate_contest_league_matter
+        elif tourn_key == '$regatta$league':
+            method = self.generate_regatta_league_matter
+        elif tourn_key == '$regatta$subject':
+            method = self.generate_regatta_subject_matter
+        elif tourn_key == '$regatta$round':
+            method = self.generate_regatta_round_matter
+        elif tourn_key == '$contest$problem':
+            method = self.generate_contest_problem_matter
+        elif tourn_key == '$regatta$problem':
+            method = self.generate_regatta_problem_matter
         else:
-            append_verbatim(self.constitute_section(
-                '{}. {}'.format(
-                    self.find_name(contest, record.get('$lang')),
-                    self.find_name(league, record.get('$lang')) ),
-                select=select ))
-        append_verbatim(self.substitute_begin_tourn_problems(select=select))
+            raise AssertionError(tourn_key)
+
+        yield from method(*args, **kwargs)
+
+    def generate_contest_matter(self, metapath, flags, metarecord,
+        *, contest
+    ):
+        if not flags.intersection(self.contest_flags):
+            yield from self.generate_contest_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                contest=contest, )
+            return
+        yield {'verbatim' : self.constitute_section(
+            self.find_name(contest, metarecord['$lang']),
+            flags=flags )}
+        if 'contained' not in flags:
+            flags = flags.union(('contained',))
+        flags = flags.union(self.increase_containment(flags))
+
+        for leaguekey in contest['leagues']:
+            yield {'matter' : leaguekey, 'flags' : flags}
+
+    def generate_regatta_matter(self, metapath, flags, metarecord,
+        *, regatta
+    ):
+        if not flags.intersection(self.regatta_flags):
+            yield from self.generate_regatta_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                regatta=regatta, )
+            return
+        if 'blank' not in flags:
+            yield {'verbatim' : self.constitute_section(
+                self.find_name(regatta, metarecord['$lang']),
+                flags=flags )}
+            if 'contained' not in flags:
+                flags = flags.union(('contained',))
+            flags = flags.union(self.increase_containment(flags))
+
+        for leaguekey in regatta['leagues']:
+            yield {'matter' : leaguekey, 'flags' : flags}
+
+    def generate_contest_league_matter(self, metapath, flags, metarecord,
+        *, contest, league
+    ):
+        if not flags.intersection(self.contest_flags):
+            yield from self.generate_contest_league_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                contest=contest, league=league )
+            yield {'verbatim' : self.substitute_postword()}
+            return
+        add_flags = set()
+        if 'league-contained' in flags:
+            yield {'verbatim' : self.constitute_section(
+                self.find_name(contest, metarecord['$lang']),
+                #league_name,
+                flags=flags )}
+        else:
+            league_name = self.find_name(league, metarecord['$lang'])
+            yield {'verbatim' : self.constitute_section(
+                self.find_name(contest, metarecord['$lang']),
+                league_name,
+                flags=flags )}
+
+        yield {'verbatim' : self.constitute_begin_tourn_problems(
+            flags.intersection(self.contest_flags) )}
+        add_flags.add('itemized')
         for i in range(1, 1 + league['problems']):
-            inpath = subroot/(str(i)+'.tex')
-            if inpath not in self.inrecords:
-                raise RecordNotFoundError(inpath, subroot)
-            append({ 'input' : inpath, 'number' : str(i) })
-        append_verbatim(self.substitute_end_tourn_problems())
+            yield {'matter' : str(i), 'add flags' : add_flags }
+        yield {'verbatim' : self.substitute_end_tourn_problems()}
 
-        if target_options:
-            raise ValueError(target_options)
-        protorecord = {'body' : body}
-        return protorecord
-
-    def produce_fluid_contest_problem_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        contest, league, problem,
-        *, date_set
+    def generate_regatta_league_matter(self, metapath, flags, metarecord,
+        *, regatta, league
     ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        if not 1 <= problem <= league['problems']:
-            return super().produce_fluid_protorecord(target, record,
-                date_set=date_set )
-        inpath = subroot/(str(problem)+'.tex')
-        if inpath not in self.inrecords:
-            raise RecordNotFoundError(inpath, subroot)
-        append_verbatim(self.substitute_begin_tourn_problems(
-            select='complete' ))
-        append({ 'input' : inpath, 'number' : str(problem) })
-        append_verbatim(self.substitute_end_tourn_problems())
-        protorecord = {'body' : body}
-        return protorecord
+        if not flags.intersection(self.regatta_flags):
+            yield from self.generate_regatta_league_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                regatta=regatta, league=league )
+            return
+        add_flags = set()
+        if 'blank' not in flags:
+            if 'league-contained' in flags:
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    #league_name,
+                    flags=flags )}
+            else:
+                league_name = self.find_name(league, metarecord['$lang'])
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    league_name,
+                    flags=flags )}
+                add_flags.add('league-contained')
+            if 'contained' not in flags:
+                add_flags.add('contained')
+            add_flags.update(self.increase_containment(flags))
+        by_round = 'by-round' in flags or not 'by-subject' in flags
 
-    def produce_fluid_regatta_protorecord(self,
-        target, record,
-        subroot, subtarget, regatta,
-        *, date_set
-    ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-                self.find_name(regatta, record.get('$lang')) ))
-            target_options.discard('contained')
+        if by_round:
+            for roundnum in range(1, 1 + league['rounds']):
+                yield {'matter' : str(roundnum), 'add flags' : add_flags}
         else:
-            append_verbatim(self.constitute_section(
-                self.find_name(regatta, record.get('$lang')),
-                select=select ))
-        league_records = self.find_regatta_league_records(record)
-        subtarget = PurePath(select, *target_options)
-        for leaguekey, leaguerecord in league_records.items():
-            subprotorecord = self.produce_fluid_regatta_league_protorecord(
-                subroot/leaguekey/subtarget, leaguerecord,
-                subroot/leaguekey, subtarget,
-                regatta, leaguerecord['$regatta$league'],
-                contained=1,
-                date_set=date_set
-            )
-            body.extend(subprotorecord['body'])
+            for subjectkey in league['subjects']:
+                yield {'matter' : subjectkey, 'add flags' : add_flags}
 
-        protorecord = {'body' : body}
-        return protorecord
-
-    def produce_fluid_regatta_league_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league,
-        *, contained=False, date_set
+    def generate_regatta_subject_matter(self, metapath, flags, metarecord,
+        *, regatta, league
     ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if contained or 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-                self.find_name(league, record.get('$lang')),
-                level=contained ))
-            target_options.discard('contained')
-        else:
-            append_verbatim(self.constitute_section(
-                '{}. {}'.format(
-                    self.find_name(regatta, record.get('$lang')),
-                    self.find_name(league, record.get('$lang')) ),
-                select=select ))
+        if not flags.intersection(self.regatta_flags):
+            yield from self.generate_regatta_subject_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                regatta=regatta, league=league )
+            return
 
-        if select in {'jury'}:
-            group_by = 'subject'
-        else:
-            group_by = 'round'
-        if 'by-subject' in target_options:
-            group_by = 'subject'
-            target_options.discard('by-subject')
-        elif 'by-round' in target_options:
-            group_by = 'round'
-            target_options.discard('by-round')
+        subject = self.find_regatta_subject(metarecord)
+        if 'blank' not in flags:
+            if 'league-contained' in flags:
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    #league_name,
+                    self.find_name(subject, metarecord['$lang']),
+                    flags=flags )}
+            else:
+                league_name = self.find_name(league, metarecord['$lang'])
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    league_name,
+                    self.find_name(subject, metarecord['$lang']),
+                    flags=flags )}
 
-        subtarget = PurePath(select, *target_options)
-        if group_by == 'round':
-            round_records = self.find_regatta_round_records(record)
-            for roundnum, roundrecord in enumerate(round_records, 1):
-                subprotorecord = self.produce_fluid_regatta_round_protorecord(
-                    subroot/str(roundnum)/subtarget, roundrecord,
-                    subroot/str(roundnum), subtarget,
-                    regatta, league, roundrecord['$regatta$round'],
-                    contained=contained+1,
-                    date_set=date_set
-                )
-                body.extend(subprotorecord['body'])
-        elif group_by == 'subject':
-            subject_records = self.find_regatta_subject_records(record)
-            for subjectkey, subjectrecord in subject_records.items():
-                subprotorecord = \
-                self.produce_fluid_regatta_subject_protorecord(
-                    subroot/subjectkey/subtarget, subjectrecord,
-                    subroot/subjectkey, subtarget,
-                    regatta, league, subjectrecord['$regatta$subject'],
-                    contained=contained+1,
-                    date_set=date_set
-                )
-                body.extend(subprotorecord['body'])
+        if 'blank' not in flags:
+            yield {'verbatim' : self.constitute_begin_tourn_problems(
+                flags.intersection(self.regatta_flags) )}
+            flags = flags.union(('itemized',))
+        for roundnum in range(1, 1 + league['rounds']):
+            yield {'matter' : str(roundnum), 'flags' : flags}
+        if 'blank' not in flags:
+            yield {'verbatim' : self.substitute_end_tourn_problems()}
 
-        protorecord = {'body' : body}
-        return protorecord
-
-    def produce_fluid_regatta_subject_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league, subject,
-        *, contained=False, date_set
+    def generate_regatta_round_matter(self, metapath, flags, metarecord,
+        *, regatta, league
     ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if contained or 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-            self.find_name(subject, record.get('$lang')),
-            level=contained ))
-            target_options.discard('contained')
-        else:
-            append_verbatim(self.constitute_section(
-                '{}. {}. {}'.format(
-                    self.find_name(regatta, record.get('$lang')),
-                    self.find_name(league, record.get('$lang')),
-                    self.find_name(subject, record.get('$lang')) ),
-                select=select ))
-        round_records = self.find_regatta_round_records(record)
-        append_verbatim(self.substitute_begin_tourn_problems(select=select))
-        for roundnum, roundrecord in enumerate(round_records, 1):
-            inpath = subroot/(str(roundnum)+'.tex')
-            if inpath not in self.inrecords:
-                raise RecordNotFoundError(inpath, subroot)
-            append({ 'input' : inpath,
-                'number' : self.substitute_regatta_number(
-                    subject_index=subject['index'],
-                    round_index=roundrecord['$regatta$round']['index'] )
-            })
-        append_verbatim(self.substitute_end_tourn_problems())
+        if not flags.intersection(self.regatta_flags):
+            yield from self.generate_regatta_round_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                regatta=regatta, league=league )
+            return
 
-        if target_options:
-            raise ValueError(target_options)
-        protorecord = {'body' : body}
-        return protorecord
+        round = self.find_regatta_round(metarecord)
+        if 'blank' not in flags:
+            if 'league-contained' in flags:
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    #league_name,
+                    self.find_name(round, metarecord['$lang']),
+                    flags=flags )}
+            else:
+                league_name = self.find_name(league, metarecord['$lang'])
+                yield {'verbatim' : self.constitute_section(
+                    self.find_name(regatta, metarecord['$lang']),
+                    league_name,
+                    self.find_name(round, metarecord['$lang']),
+                    flags=flags )}
 
-    def produce_fluid_regatta_round_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league, round,
-        *, contained=False, date_set
+        if 'blank' not in flags:
+            yield {'verbatim' : self.constitute_begin_tourn_problems(
+                flags.intersection(self.regatta_flags) )}
+            flags = flags.union(('itemized',))
+        for subjectkey in league['subjects']:
+            yield { 'matter' : '../{}/{}'.format(subjectkey, metapath.name),
+                'flags' : flags }
+        if 'blank' not in flags:
+            yield {'verbatim' : self.substitute_end_tourn_problems()}
+
+    def generate_contest_problem_matter(self, metapath, flags, metarecord,
+        *, contest, league
     ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        select, target_options = self.split_subtarget(subtarget)
-        if contained or 'contained' in target_options:
-            append_verbatim(self.constitute_section(
-            self.find_name(round, record.get('$lang')),
-            level=contained ))
-            target_options.discard('contained')
-        else:
-            append_verbatim(self.constitute_section(
-                '{}. {}. {}'.format(
-                    self.find_name(regatta, record.get('$lang')),
-                    self.find_name(league, record.get('$lang')),
-                    self.find_name(round, record.get('$lang')) ),
-                select=select ))
-        subject_records = self.find_regatta_subject_records(record)
-        leagueroot = subroot.parent()
-        roundnum = int(subroot.name)
-        append_verbatim(self.substitute_begin_tourn_problems(select=select))
-        for subjectkey, subjectrecord in subject_records.items():
-            inpath = leagueroot/subjectkey/(str(roundnum)+'.tex')
-            if inpath not in self.inrecords:
-                raise RecordNotFoundError(inpath, subroot)
-            append({ 'input' : inpath,
-                'number' : self.substitute_regatta_number(
-                    subject_index=subjectrecord['$regatta$subject']['index'],
-                    round_index=round['index'] )
-            })
-        append_verbatim(self.substitute_end_tourn_problems())
+        if not flags.intersection(self.contest_flags):
+            assert 'problems' not in flags, flags.as_set()
+            yield from self.generate_contest_problem_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                contest=contest, league=league )
+            return
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.constitute_begin_tourn_problems(
+                flags.intersection(self.contest_flags) )}
+        yield {
+            'inpath' : metapath.with_suffix('.tex'),
+            'number' : metapath.name }
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.substitute_end_tourn_problems()}
 
-        if target_options:
-            raise ValueError(target_options)
-        protorecord = {'body' : body}
-        return protorecord
-
-    def produce_fluid_regatta_problem_protorecord(self,
-        target, record,
-        subroot, subtarget,
-        regatta, league, subject, roundnum,
-        *, date_set
+    def generate_regatta_problem_matter(self, metapath, flags, metarecord,
+        *, regatta, league
     ):
-        body = []; append = body.append
-        def append_verbatim(x): append({'verbatim' : x})
-        if not 1 <= roundnum <= league['rounds']:
-            return super().produce_fluid_protorecord(target, record,
-                date_set=date_set )
-        roundrecord = self.find_regatta_round_records(record)[roundnum-1]
-        round = roundrecord['$regatta$round']
-        inpath = subroot/(str(roundnum)+'.tex')
-        if inpath not in self.inrecords:
-            raise RecordNotFoundError(inpath, subroot)
-        append_verbatim(self.substitute_begin_tourn_problems(
-            select='complete' ))
-        append({ 'input' : inpath,
+        if not flags.intersection(self.regatta_flags):
+            yield from self.generate_regatta_problem_matter(
+                metapath, flags.union(('problems',)), metarecord,
+                regatta=regatta, league=league )
+            return
+        subject = self.find_regatta_subject(metarecord)
+        round = self.find_regatta_round(metarecord)
+        if 'blank' in flags:
+            assert 'itemized' not in flags, (metapath, flags.as_set())
+            assert 'league-contained' not in flags
+            yield {'verbatim' : self.constitute_leaguedef(
+                self.find_name(league, metarecord['$lang']) )}
+            yield {'verbatim' : self.substitute_jeolmtournheader_nospace()}
+            yield {'verbatim' : self.substitute_regatta_blank_caption(
+                caption=self.find_name(regatta, metarecord.get('$lang')),
+                mark=round['mark'] )}
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.constitute_begin_tourn_problems(
+                flags.intersection(self.regatta_flags) )}
+        yield {
+            'inpath' : metapath.with_suffix('.tex'),
             'number' : self.substitute_regatta_number(
                 subject_index=subject['index'],
                 round_index=round['index'] )
-        })
-        append_verbatim(self.substitute_end_tourn_problems())
-        protorecord = {'body' : body}
-        return protorecord
+            }
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.substitute_end_tourn_problems()}
+        if 'blank' in flags:
+            yield {'verbatim' : self.substitute_hrule()}
+            yield {'verbatim' : self.substitute_clearpage()}
 
-    def find_contest(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$contest':
-            return record['$contest']
-        elif mimickey == '$contest$league':
-            league = record['$contest$league']
-            return self.find_contest(self.outrecords[
-                record['$mimic$root'].parent() ])
+    def find_contest(self, metarecord):
+        contest_key = metarecord['$contest$key']
+        if contest_key == '$contest':
+            return metarecord[contest_key]
+        elif contest_key in {'$contest$league', '$contest$problem'}:
+            return self.find_contest(self.metarecords[
+                metarecord['$path'].parent() ])
         else:
-            raise AssertionError(mimickey, record)
+            raise AssertionError(contest_key, metarecord)
 
-    def find_contest_league(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$contest$league':
-            return record['$contest$league']
+    def find_regatta(self, metarecord):
+        regatta_key = metarecord['$regatta$key']
+        if regatta_key == '$regatta':
+            return metarecord[regatta_key]
+        elif regatta_key in { '$regatta$league',
+            '$regatta$subject', '$regatta$round', '$regatta$problem'
+        }:
+            return self.find_regatta(self.metarecords[
+                metarecord['$path'].parent() ])
         else:
-            raise AssertionError(mimickey, record)
+            raise AssertionError(regatta_key, metarecord)
 
-    def find_contest_league_records(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$contest':
-            return ODict(
-                (leaguekey, self.outrecords[record['$mimic$root']/leaguekey])
-                for leaguekey in record['$contest']['leagues'] )
+    def find_league(self, metarecord):
+        tourn_key = metarecord['$tourn$key']
+        if tourn_key in {'$contest$league', '$regatta$league'}:
+            return metarecord[tourn_key]
+        elif tourn_key in { '$contest$problem',
+            '$regatta$subject', '$regatta$round', '$regatta$problem'
+        }:
+            return self.find_league(self.metarecords[
+                metarecord['$path'].parent() ])
         else:
-            raise AssertionError(mimickey, record)
+            raise AssertionError(tourn_key, metarecord)
 
-    def find_regatta(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta':
-            return record['$regatta']
-        elif mimickey == '$regatta$league':
-            league = record['$regatta$league']
-            return self.find_regatta(self.outrecords[
-                record['$mimic$root'].parent() ])
-        elif mimickey == '$regatta$subject':
-            subject = record['$regatta$subject']
-            return self.find_regatta(self.outrecords[
-                record['$mimic$root'].parent(2) ])
-        elif mimickey == '$regatta$round':
-            round = record['$regatta$round']
-            return self.find_regatta(self.outrecords[
-                record['$mimic$root'].parent(2) ])
+    def find_regatta_subject(self, metarecord):
+        regatta_key = metarecord['$regatta$key']
+        if regatta_key == '$regatta$subject':
+            return metarecord['$regatta$subject']
+        elif regatta_key == '$regatta$problem':
+            return self.find_regatta_subject(self.metarecords[
+                metarecord['$path'].parent() ])
         else:
-            raise AssertionError(mimickey, record)
+            raise AssertionError(regatta_key, metarecord)
 
-    def find_regatta_league(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta$league':
-            return record['$regatta$league']
-        elif mimickey == '$regatta$subject':
-            subject = record['$regatta$subject']
-            return self.find_regatta_league(self.outrecords[
-                record['$mimic$root'].parent() ])
-        elif mimickey == '$regatta$round':
-            round = record['$regatta$round']
-            return self.find_regatta_league(self.outrecords[
-                record['$mimic$root'].parent() ])
+    def find_regatta_round(self, metarecord):
+        regatta_key = metarecord['$regatta$key']
+        if regatta_key == '$regatta$round':
+            return metarecord['$regatta$round']
+        elif regatta_key == '$regatta$problem':
+            metapath = metarecord['$path']
+            return self.find_regatta_round(self.metarecords[
+                metapath.parent(2)/metapath.name ])
         else:
-            raise AssertionError(mimickey, record)
-
-    def find_regatta_league_records(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta':
-            return ODict(
-                (leaguekey, self.outrecords[record['$mimic$root']/leaguekey])
-                for leaguekey in record['$regatta']['leagues'] )
-        else:
-            raise AssertionError(mimickey, record)
-
-    def find_regatta_subject(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta$subject':
-            return record['$regatta$subject']
-        else:
-            raise AssertionError(mimickey, record)
-
-    def find_regatta_subject_records(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta$league':
-            return ODict(
-                (subjectkey, self.outrecords[record['$mimic$root']/subjectkey])
-                for subjectkey in record['$regatta$league']['subjects'] )
-        elif mimickey == '$regatta$round':
-            return self.find_regatta_subject_records(self.outrecords[
-                record['$mimic$root'].parent() ])
-        else:
-            raise AssertionError(mimickey, record)
-
-    def find_regatta_round(self, record):
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta$round':
-            return record['$regatta$round']
-        else:
-            raise AssertionError(mimickey, record)
-
-    def find_regatta_round_records(self, record):
-        assert '$mimic$key' in record, record
-        mimickey = record['$mimic$key']
-        if mimickey == '$regatta$league':
-            return [
-                self.outrecords[record['$mimic$root']/str(roundnum)]
-                for roundnum
-                in range(1, 1 + record['$regatta$league']['rounds'])
-            ]
-        elif mimickey == '$regatta$subject':
-            return self.find_regatta_round_records(self.outrecords[
-                record['$mimic$root'].parent() ])
-        else:
-            raise AssertionError(mimickey, record)
+            raise AssertionError(regatta_key, metarecord)
 
     def find_name(self, entity, lang):
         name = entity['name']
@@ -766,86 +446,76 @@ class Driver(OriginalDriver):
             return name
         elif isinstance(name, dict):
             (key, value), = name.items()
-            if key != 'translate':
+            if key == 'translate-metaname':
+                key, value = 'translate', entity['metaname']
+            if key == 'translate':
+                return self.translations[value][lang]
+            else:
                 raise ValueError(name)
-            return self.translations[value][lang]
         else:
             raise TypeError(name)
 
     ##########
-    # Record accessors
+    # Record accessor
 
-    # Extension
-    class OutrecordAccessor(OriginalDriver.OutrecordAccessor):
-        mimic_keys = frozenset((
-            '$contest', '$contest$league',
+    class Metarecords(OriginalDriver.Metarecords):
+        contest_keys = frozenset((
+            '$contest', '$contest$league', '$contest$problem' ))
+        regatta_keys = frozenset((
             '$regatta', '$regatta$league',
-            '$regatta$subject', '$regatta$round', ))
+            '$regatta$subject', '$regatta$round',
+            '$regatta$problem' ))
 
-        # Extension
-        def get_child(self, parent_path, parent_record, name, **kwargs):
-            path, record = super().get_child(
-                parent_path, parent_record, name, **kwargs )
-            mimic_keys = self.mimic_keys & record.keys()
-            if mimic_keys:
-                mimic_key, = mimic_keys
-                record = record.copy()
-                record.update({
-                    '$mimic$key' : mimic_key,
-                    '$mimic$root' : path,
-                    '$mimic$path' : PurePath() })
-                return path, record;
-            if not record.get('$fake') or '$mimic$key' not in parent_record:
-                return path, record
+        def derive_attributes(self, parent_record, child_record, name):
+            super().derive_attributes(parent_record, child_record, name)
+            path = child_record['$path']
+            child_record.setdefault('$lang', parent_record.get('$lang'))
+            if '$contest$league' in parent_record:
+                child_record['$contest$problem'] = {}
+            if '$regatta$subject' in parent_record:
+                child_record['$regatta$problem'] = {}
 
-            mimic_key = parent_record['$mimic$key']
-            record.update({
-                mimic_key : parent_record[mimic_key],
-                '$mimic$key' : mimic_key,
-                '$mimic$root' : parent_record['$mimic$root'],
-                '$mimic$path' : parent_record['$mimic$path']/name,
-            })
-            return path, record;
+            contest_keys = self.contest_keys.intersection(child_record.keys())
+            if contest_keys:
+                contest_key, = contest_keys
+                child_record['$contest$key'] = contest_key
+            else:
+                contest_key = None
 
-        @classmethod
-        def derive_attributes(cls, parent_record, record, path):
-            if '$lang' not in record:
-                record['$lang'] = parent_record.get('$lang')
-            super().derive_attributes(parent_record, record, path)
+            regatta_keys = self.regatta_keys.intersection(child_record.keys())
+            if regatta_keys:
+                regatta_key, = regatta_keys
+                child_record['$regatta$key'] = regatta_key
+            else:
+                regatta_key = None
 
-        def list_mimic_targets(self, outpath=PurePath(), outrecord=None):
-            assert not (self.mimic_keys & self.records.keys())
-            yield from self._list_mimic_targets(PurePath(), self.records)
+            if contest_key and regatta_key:
+                raise ValueError(child_record.keys())
 
-        def _list_mimic_targets(self, outpath, outrecord):
-            assert isinstance(outrecord, dict), type(outrecord)
-            mimic_keys = self.mimic_keys & outrecord.keys()
-            if mimic_keys:
-                mimic_key, = mimic_keys
-                yield outpath, mimic_key
-            for subname, subrecord in outrecord.items():
-                if '$' in subname:
-                    continue
-                yield from self._list_mimic_targets(outpath/subname, subrecord)
-
+            tourn_key = contest_key or regatta_key
+            if not tourn_key:
+                return
+            child_record['$tourn$key'] = tourn_key
+            tourn_entity = child_record[tourn_key] = \
+                child_record[tourn_key].copy()
+            tourn_entity['metaname'] = path.name
 
     ##########
     # LaTeX-level functions
 
     # Extension
     @classmethod
-    def constitute_body_input(cls, inpath, alias, inrecord, figname_map, *,
-        number=None, **kwargs
+    def constitute_body_input(cls, inpath,
+        *,alias, figname_map, number=None, **kwargs
     ):
         if number is None:
             return super().constitute_body_input(
-                inpath, alias, inrecord, figname_map, **kwargs );
+                inpath, alias=alias, figname_map=figname_map, **kwargs )
         else:
             assert not kwargs, kwargs
 
         body = cls.substitute_tourn_problem_input(
             number=number, filename=alias, inpath=inpath )
-
         if figname_map:
             body = cls.constitute_figname_map(figname_map) + '\n' + body
         return body
@@ -855,16 +525,22 @@ class Driver(OriginalDriver):
         r'\input{$filename}% $inpath' )
 
     @classmethod
-    def constitute_section(cls, caption, *, level=0, select='problems'):
-        if level == 0:
-            substitute_section = cls.substitute_section
-        elif level == 1:
-            substitute_section = cls.substitute_subsection
-        elif level == 2:
+    def constitute_section(cls, *names, flags):
+        try:
+            select, = flags.intersection(
+                ('problems', 'solutions', 'complete', 'jury',) )
+        except ValueError as exc:
+            exc.args += (flags,)
+            raise
+        caption = names[-1]
+        if 'subsubcontained' in flags:
             substitute_section = cls.substitute_subsubsection
+        elif 'subcontained' in flags:
+            substitute_section = cls.substitute_subsection
         else:
-            raise AssertionError(level)
-        caption += cls.caption_select_appendage[select]
+            substitute_section = cls.substitute_section
+        if 'contained' not in flags:
+            caption = '. '.join(names) + cls.caption_select_appendage[select]
         return substitute_section(caption=caption)
 
     section_template = r'\section*{$caption}'
@@ -878,12 +554,17 @@ class Driver(OriginalDriver):
     }
 
     @classmethod
-    def constitute_preamble_item(cls, item):
-        if 'league' in item:
-            return cls.substitute_leaguedef(league=item['league'])
-        else:
-            return super().constitute_preamble_item(item)
+    def constitute_begin_tourn_problems(cls, tourn_flags):
+        select, = tourn_flags
+        return cls.substitute_begin_tourn_problems(select=select)
 
+    @classmethod
+    def constitute_leaguedef(cls, league_name):
+        if league_name is None:
+            return cls.substitute_leagueundef()
+        return cls.substitute_leaguedef(league=league_name)
+
+    leagueundef_template = r'\let\jeolmleague\relax'
     leaguedef_template = r'\def\jeolmleague{$league}'
 
     begin_tourn_problems_template = r'\begin{tourn-problems}{$select}'
@@ -892,7 +573,7 @@ class Driver(OriginalDriver):
 
     jeolmtournheader_template = r'\jeolmtournheader'
     jeolmtournheader_nospace_template = r'\jeolmtournheader*'
-    rigid_regatta_caption_template = r'\regattacaption{$caption}{$mark}'
+    regatta_blank_caption_template = r'\regattablankcaption{$caption}{$mark}'
     hrule_template = r'\medskip\hrule'
 
     regatta_number_template = r'$round_index$subject_index'
@@ -900,44 +581,20 @@ class Driver(OriginalDriver):
     ##########
     # Supplementary finctions
 
-    @staticmethod
-    def split_subtarget(subtarget):
-        select, *target_options_list = subtarget.parts
-        target_options = set(target_options_list)
-        if len(target_options) != len(target_options_list):
-            raise ValueError
-        assert select in {'problems', 'solutions', 'complete', 'jury'}
-        return select, target_options
-
     @classmethod
-    def digest_style_item(cls, item):
+    def digest_metabody_item(cls, item):
         assert isinstance(item, dict), item
-        if 'league' in item:
-            if not item.keys() <= {'league'}:
-                raise ValueError(item)
-            return {'league' : str(item['league'])}
-        else:
-            return super().digest_style_item(item)
-
-    @classmethod
-    def digest_body_item(cls, item):
-        assert isinstance(item, dict), item
-        if item.keys() == {'input', 'number'}:
+        if item.keys() == {'inpath', 'number'}:
             return item.copy()
         else:
-            return super().digest_body_item(item)
+            return super().digest_metabody_item(item)
 
-def path_prefixed(path, other, recursed=False):
-    if not isinstance(other, (str, PurePath)):
-        assert not recursed
-        return any(path_prefixed(path, o, recursed=True) for o in other)
-    parts = list(path.parts)
-    other_parts = list(PurePath(other).parts)
-
-    for part, other_part in zip_longest(parts, other_parts):
-        if other_part is None:
-            return True
-        if part != other_part:
-            return False
-    return True
+    @staticmethod
+    def increase_containment(flags):
+        if 'subcontained' not in flags:
+            yield 'subcontained'
+        elif 'subsubcontained' not in flags:
+            yield 'subsubcontained'
+        else:
+            raise ValueError(flags)
 

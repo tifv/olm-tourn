@@ -1,0 +1,10 @@
+!!omap
+- $contest:
+    name: {translate: 'team'}
+    leagues: [senior]
+- $style: [.., {'verbatim' : '\let\postword\teampostword'}]
+- senior:
+    $contest$league:
+      name: {translate-metaname: }
+      problems: 9
+

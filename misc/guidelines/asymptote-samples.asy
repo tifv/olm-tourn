@@ -16,9 +16,13 @@ var
 
     M = centroid(ABC);
 
+mark(M--A, 1);
+
 markangle(A, M, C, radius=mr);
 
 perpendicularmark(B, unit(A-B), dir=NE, size=0.5mr);
+
+dot(Label("$A$", A, NW));
 
 //********************
 // 3D image

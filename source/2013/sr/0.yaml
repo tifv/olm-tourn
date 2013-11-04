@@ -1,0 +1,27 @@
+!!omap
+- $style: [.., /lang/sr]
+- $lang: sr
+- $delegate:
+  - regatta
+  - pers-algbr
+  - pers-geomt
+  - pers-combi
+  - team
+- $matter:
+  - verbatim: '\part*{2013}'
+    condition: contained
+  - verbatim: '\part*{2013 (Српски)}'
+    condition: {not: contained}
+  - regatta[contained]
+  - pers-algbr[contained]
+  - pers-geomt[contained]
+  - pers-combi[contained]
+  - team[contained]
+
+- regatta:
+- pers-algbr:
+- pers-geomt:
+- pers-combi:
+- team:
+
+
