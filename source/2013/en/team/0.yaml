@@ -1,1 +1,13 @@
-../../ru/team/.meta.yaml
+$contest:
+  name: {translate: 'team'}
+  leagues: [junior, senior]
+$style: [.., {'verbatim' : '\let\postword\teampostword'}]
+junior:
+  $contest$league:
+    name: {translate-metaname: }
+    problems: 9
+senior:
+  $contest$league:
+    name: {translate-metaname: }
+    problems: 10
+

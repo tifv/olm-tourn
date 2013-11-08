@@ -1,6 +1,40 @@
 \problem
-Statement \texttt{en/regatta/senior/geomt/1.tex}.
+Points $M$ and $N$ are chosen on a hypotenuse $AC$ of rectangular isosceles
+triangle $ABC$.
+Given that $\angle MBN = 45^\circ$, prove that it is possible to construct a
+rectangular triangle from the segments $AM$, $MN$ and $NC$.
 
 \solution
-
+[{\begin{figure}\centering
+    \jeolmfigure[width=0.4\textwidth]{solution}
+\caption{for the \ref{solution:2013/en/regatta/senior/geomt/1}.}
+\label{fig:solution:2013/en/regatta/senior/geomt/1}
+\end{figure}}]%
+\label{solution:2013/en/regatta/senior/geomt/1}%
+See fig. \ref{fig:solution:2013/en/regatta/senior/geomt/1}.
+The point $X$ symmetric to $A$ with respect to $BM$ coinsides with a point
+symmetric to $C$ with respect to $BN$.
+The triangle $XMN$ is the required one.
+\par
+\begin{figure}
+\centering
+    \jeolmfigure[width=0.4\textwidth]{another-solution}
+\caption{к задаче \ref{solution:2013/en/regatta/senior/geomt/1}
+    (другое решение).}
+\label{fig:solution:2013/en/regatta/senior/geomt/1/another}
+\end{figure}%
+\emph{Another solution.}
+See fig. \ref{fig:solution:2013/en/regatta/senior/geomt/1/another}.
+Let $D$ be in the same half plane as $B$ with respect to $AC$, such that
+$CD \perp AC$, $CD = AM$.
+Then $\angle BAM = \angle BCD = 45^\circ$, and $\triangle ABM = \triangle BCD$.
+Thus,
+\(
+    \angle DBN = \angle DBC + \angle CBN
+=
+    \angle MBA + \angle CBN = 45^\circ
+\).
+Consequently, $\triangle MBN = \triangle DBN$ and $DN = MN$.
+The rectangular triangle $\triangle DNC$ is the required.
 \endproblem
+% $problem-source: folklore

@@ -1,1 +1,13 @@
-../../ru/pers-geomt/.meta.yaml
+$contest:
+  name: {translate: 'geomt'}
+  leagues: [junior, senior]
+$style: [.., {'verbatim' : '\let\postword\writtenpostword'}]
+junior:
+  $contest$league:
+    name: {translate-metaname: }
+    problems: 4
+senior:
+  $contest$league:
+    name: {translate-metaname: }
+    problems: 4
+

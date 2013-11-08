@@ -1,5 +1,38 @@
 \problem
-Условие \texttt{regatta/senior/geomt/4.tex}.
+Неравнобедренный треугольник $ABC$ вписан в окружность $\Gamma$.
+Биссектриса угла $A$ пересекает отрезок $BC$ в точке $E$.
+Пусть $M$~--- середина дуги $BAC$.
+Прямая $ME$ повторно пересекает $\Gamma$ в точке $D$.
+Докажите, что центр описанной окружности треугольника $AED$ совпадает с точкой
+пересечения касательной к $\Gamma$ в точке $D$ и прямой $BC$.
 
-\solution Решение \texttt{regatta/senior/geomt/4.tex}.
+\solution
+[{\begin{figure}\centering
+    \jeolmfigure[width=0.4\textwidth]{solution}
+\caption{к задаче \ref{solution:2013/ru/regatta/senior/geomt/4}.}
+\label{fig:solution:2013/ru/regatta/senior/geomt/4}
+\end{figure}}]%
+\label{solution:2013/ru/regatta/senior/geomt/4}%
+Рис.~\ref{fig:solution:2013/ru/regatta/senior/geomt/4}.
+Предположим, что $AB < AC$, тогда точка $D$ располагается на дуге $BC$ ближе к
+точке $B$, чем к $C$.
+Тогда $O$~--- точка пересечения касательной в точке $D$ и прямой $BC$, лежит в
+той же полуплоскости относительно $DE$, что и точка $A$.
+Тогда
+\(
+    \angle ODE
+=
+    \frac{1}{2} \wideparen{DBM}
+=
+    \frac{1}{2}(\wideparen{BD} + \wideparen{BM})
+=
+    \frac{1}{2} (\wideparen{BD} + \wideparen{MC})
+=
+    \angle OED
+\).
+Следовательно, достаточно проверить, что $\angle DOE = 2\angle DAE$, но это
+равенство очевидно, поскольку
+$\angle DOE = \frac{1}{2} (\wideparen{CD}-\wideparen{BD}) = \wideparen{DX}$,
+где $X$~--- точка пересечения $AE$ с окружностью.
 \endproblem
+% $problem-source: Italy TST 2002

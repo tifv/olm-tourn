@@ -1,5 +1,23 @@
 \problem
-Условие \texttt{pers-geomt/junior/2.tex}.
+Шестиугольник $ABCDEF$ вписан в окружность.
+Диагонали $AD$ и $BE$ пересекаются в точке $X$, диагонали $AD$ и $CF$~--- в
+точке $Y$, а диагонали $BE$ и $CF$~--- в точке $Z$.
+Оказалось, что $AX = DY$ и $CY = FZ$.
+Докажите, что $BX = EZ$.
 
-\solution Решение \texttt{pers-geomt/junior/2.tex}.
+\solution
+[{\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+\caption{к задаче \ref{solution:2013/ru/pers-geomt/junior/2}.}
+\label{fig:solution:2013/ru/pers-geomt/junior/2}
+\end{figure}}]%
+\label{solution:2013/ru/pers-geomt/junior/2}
+Рис. \ref{fig:solution:2013/ru/pers-geomt/junior/2}.
+Заметим, что $AX \cdot XD = AY \cdot YD$ (так как $AX=YD$ и $AY=XD$).
+Теперь $AY \cdot YD = FY \cdot YC$ (так как произведение отрезков хорд равны).
+Далее $FY \cdot YC = FZ \cdot ZC = EZ \cdot ZB$.
+С другой стороны $AX \cdot XD = BX \cdot XE$.
+Используя все эти равенства, мы получаем $BX \cdot XE = BZ \cdot ZE$.
+Отсюда легко вытекает, что $BX = ZE$, что и требовалось доказать.
 \endproblem
+% $problem-source: Д.\,Максимов, Ф.\,Петров

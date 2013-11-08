@@ -1,6 +1,21 @@
 \problem
-Statement \texttt{en/pers-geomt/junior/4.tex}.
+Point $O$ is the circumcenter and point $H$ is the orthocenter in an acute
+nonisosceles triangle $ABC$.
+Circle $\omega_A$ is symmetric to the circumcircle of $AOH$ with respect to
+$AO$.
+Circles $\omega_B$ and $\omega_C$ are defined similarly.
+Prove that circles $\omega_A$, $\omega_B$ and $\omega_C$ have a common point,
+which lies on the circumcircle of $ABC$.
 
 \solution
+Denote by $X$ the intersection point of the circumcircle of $ABC$ and $\omega_A$, by $H_A$ and $H_B$ denote a points symmetric to $H$ with respect to the midpoints of segments $OA$ and $OB$ respectively. By oriented angle between to lines $\ell_1$ и $\ell_2$ we mean the angle in which it is necessary to rotate the line $\ell_1$ to obtain the line parallel to $\ell_2$. We denote this oriented angle by $\angle (\ell_1, \ell_2)$. Using the simplest properties of the orinted angles we get $\angle(BX,OX)=\angle(BX,AX)+\angle(AX,OX)$. Moreover $\angle(BX,AX)=\angle (BC,AC)=\angle (AH,BH)$, because the
+points $A$, $B$, $C$, $X$ are cyclic and the oriented angle between the sides of triangle is equal to the angle between corresponding altitudes. Additionaly we get $\angle(AX,OX)=\angle(AH_A,OH_A)=\angle (OH,AH)$, because $A$, $O$, $X$ and  $H_A$ are lying on $\omega_A$. Thus, $\angle(BX,OX)=\angle (AH,BH)+\angle (OH,AH)=\angle (OH,BH)=\angle (BH_B,OH_B)$. Consequently the point $X$ is on $\omega_B$. In the same way we get that $X$  is on $\omega_C$.
 
+\emph{Another solution.} 
+Let us think that the circumcircle of the triangle $ABC$ is a unit circle at the complex plane with center at the origin. The names of all points we identify with corresponding complex numbers. Then $H=A+B+C$, a point $H_A$ symmetric to $H$ with respect to the midpoint of segment $OA$ can be calculated by formula $H_A=-B-C$. Let $X$  be a point of intersection of $\omega_A$ and  $\omega_B$. The fact that $X\in\omega_A$ and $X\in \omega_B$ is equivalent to 
+\[
+\frac{X-O}{X-A}:\frac{-B-C-O}{-B-C-A}\in {\mathbb R} \mbox{ and } \frac{X-O}{X-B}:\frac{-A-C-O}{-C-A-B}\in {\mathbb R}.
+\]
+Deviding one ratio by another we obtain that the quantity \[\frac{X-B}{X-A}:\frac{-C-B}{-C-A}\] is real. Consequently the points $X$, $A$, $B$ and $-C$ are cyclic and so the point $X$ is lying on the circumcirle of $ABC$ and different with  $A$, $B$ and $C$. ФAnd so we ontain the required.
 \endproblem
+% $problem-source: Ф.\,Бахарев, inspired by Iran TST 2013

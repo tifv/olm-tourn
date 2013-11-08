@@ -1,0 +1,28 @@
+$matter:
+- verbatim: '\part*{2013}'
+  condition: {or : [contained, problems]}
+- verbatim: '\part*{2013 (решения)}'
+  condition: {and: [{not: contained}, solutions]}
+- verbatim: '\part*{2013 (с решениями)}'
+  condition: {and: [{not: contained}, complete]}
+- regatta[contained]
+- pers-algbr[contained]
+- pers-combi[contained]
+- pers-geomt[contained]
+- team[contained]
+
+$manner[poster]:
+- ['regatta[contained,no-header]']
+- ['pers-algbr[contained,no-header]']
+- ['pers-combi[contained,no-header]']
+- ['pers-geomt[contained,no-header]']
+- ['team[contained,no-header]']
+
+$manner$options[poster]:
+  font: 12pt
+$manner$style[poster]:
+- .[print]
+- /flow-problem-numeration
+$manner$style[complete]:
+- .
+- /flow-problem-numeration

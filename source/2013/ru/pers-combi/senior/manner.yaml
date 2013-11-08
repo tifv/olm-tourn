@@ -1,0 +1,3 @@
+$manner[print]: [[.], [.]]
+$manner$options[print]:
+  font: 12pt

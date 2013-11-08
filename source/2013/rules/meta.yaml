@@ -1,0 +1,16 @@
+$style:
+- package: math-common
+- package: inputenc
+  options: [utf8]
+- package: fontenc
+  options: [T2A]
+- package: babel
+  options: [russian]
+- package: geometry
+  options: [margin=2em]
+#- verbatim: \pagestyle{empty}
+$manner:
+- - .[no-header]
+$matter:
+- team
+- pers

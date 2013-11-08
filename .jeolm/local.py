@@ -1,14 +1,26 @@
 from itertools import zip_longest
 from collections import OrderedDict as ODict
+from functools import wraps
 
 from pathlib import PurePosixPath as PurePath
 
 from jeolm.driver import Driver as OriginalDriver
 from jeolm.driver import RecordNotFoundError, fetch_metarecord
 from jeolm.utils import pure_join
+from jeolm.flags import FlagSet
 
 import logging
 logger = logging.getLogger(__name__)
+
+def default_tourn_flags(add_flags):
+    def wrapper(method):
+        @wraps(method)
+        def wrapped(self, metapath, flags, metarecord, **kwargs):
+            if not flags.intersection(self.get_tourn_flags(metarecord)):
+                flags = flags.union(add_flags)
+            return method(self, metapath, flags, metarecord, **kwargs)
+        return wrapped
+    return wrapper
 
 class Driver(OriginalDriver):
 
@@ -24,14 +36,16 @@ class Driver(OriginalDriver):
     ##########
     # Record-level functions
 
-    tourn_flags = frozenset((
-        'problems', 'solutions', 'complete', 'jury', 'blank' ))
+#    tourn_flags = frozenset((
+#        'problems', 'solutions', 'complete', 'jury', 'blank' ))
     contest_flags=frozenset((
         'problems', 'solutions', 'complete', 'jury' ))
     regatta_flags=frozenset((
         'problems', 'solutions', 'complete', 'jury', 'blank' ))
     @classmethod
     def get_tourn_flags(cls, tourn_key):
+        if isinstance(tourn_key, dict):
+            tourn_key = tourn_key['$tourn$key']
         if tourn_key in {'$contest', '$contest$league', '$contest$problem'}:
             return cls.contest_flags
         elif tourn_key in {'$regatta', '$regatta$league',
@@ -68,21 +82,13 @@ class Driver(OriginalDriver):
             else:
                 for roundnum in range(1, 1 + league['rounds']):
                     yield metapath/str(roundnum), flags
-        elif tourn_key in {'$regatta$subject', '$regatta$round', '$regatta$problem'}:
+        elif tourn_key in {'$regatta$subject', '$regatta$round',
+            '$regatta$problem'
+        }:
             if not flags.intersection(self.regatta_flags):
                 yield metapath, flags.union(('problems',))
         else:
             raise AssertionError(tourn_key)
-
-    def generate_manner(self, metapath, flags, metarecord):
-        ignore_manner = (
-            '$contest$key' in metarecord and
-                flags.intersection(self.contest_flags) or
-            '$regatta$key' in metarecord and
-                flags.intersection(self.regatta_flags) )
-        if ignore_manner:
-            flags = flags.union(('matter',))
-        return super().generate_manner(metapath, flags, metarecord)
 
     @fetch_metarecord
     def generate_matter_metabody(self, metapath, flags, metarecord,
@@ -116,8 +122,7 @@ class Driver(OriginalDriver):
                 yield {'verbatim' : self.substitute_jeolmtournheader_nospace()}
             else:
                 yield {'verbatim' : self.substitute_jeolmtournheader()}
-        if 'no-header' not in flags:
-            flags = flags.union(('no-header',))
+        flags = flags.union(('no-header',), overadd=False)
 
         matter = self.generate_tourn_matter(metapath, flags, metarecord)
         pseudorecord = metarecord.copy()
@@ -164,38 +169,29 @@ class Driver(OriginalDriver):
 
         yield from method(*args, **kwargs)
 
+    @default_tourn_flags({'problems'})
     def generate_contest_matter(self, metapath, flags, metarecord,
         *, contest
     ):
-        if not flags.intersection(self.contest_flags):
-            yield from self.generate_contest_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                contest=contest, )
-            return
+        assert flags.intersection(self.get_tourn_flags(metarecord)), flags.as_set()
         yield {'verbatim' : self.constitute_section(
             self.find_name(contest, metarecord['$lang']),
             flags=flags )}
-        if 'contained' not in flags:
-            flags = flags.union(('contained',))
+        flags = flags.union(('contained',), overadd=False)
         flags = flags.union(self.increase_containment(flags))
 
         for leaguekey in contest['leagues']:
             yield {'matter' : leaguekey, 'flags' : flags}
 
+    @default_tourn_flags({'problems'})
     def generate_regatta_matter(self, metapath, flags, metarecord,
         *, regatta
     ):
-        if not flags.intersection(self.regatta_flags):
-            yield from self.generate_regatta_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                regatta=regatta, )
-            return
         if 'blank' not in flags:
             yield {'verbatim' : self.constitute_section(
                 self.find_name(regatta, metarecord['$lang']),
-                flags=flags )}
-            if 'contained' not in flags:
-                flags = flags.union(('contained',))
+    numberlags=flags )}
+            flags = flags.union(('contained',), overadd=False)
             flags = flags.union(self.increase_containment(flags))
 
         for leaguekey in regatta['leagues']:
@@ -206,11 +202,11 @@ class Driver(OriginalDriver):
     ):
         if not flags.intersection(self.contest_flags):
             yield from self.generate_contest_league_matter(
-                metapath, flags.union(('problems',)), metarecord,
+                metapath, flags.union(('problems', 'no-problem-sources')),
+                metarecord,
                 contest=contest, league=league )
             yield {'verbatim' : self.substitute_postword()}
             return
-        add_flags = set()
         if 'league-contained' in flags:
             yield {'verbatim' : self.constitute_section(
                 self.find_name(contest, metarecord['$lang']),
@@ -225,20 +221,15 @@ class Driver(OriginalDriver):
 
         yield {'verbatim' : self.constitute_begin_tourn_problems(
             flags.intersection(self.contest_flags) )}
-        add_flags.add('itemized')
+        flags = flags.union(('itemized',))
         for i in range(1, 1 + league['problems']):
-            yield {'matter' : str(i), 'add flags' : add_flags }
+            yield {'matter' : str(i), 'flags' : flags }
         yield {'verbatim' : self.substitute_end_tourn_problems()}
 
+    @default_tourn_flags({'problems'})
     def generate_regatta_league_matter(self, metapath, flags, metarecord,
         *, regatta, league
     ):
-        if not flags.intersection(self.regatta_flags):
-            yield from self.generate_regatta_league_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                regatta=regatta, league=league )
-            return
-        add_flags = set()
         if 'blank' not in flags:
             if 'league-contained' in flags:
                 yield {'verbatim' : self.constitute_section(
@@ -251,28 +242,22 @@ class Driver(OriginalDriver):
                     self.find_name(regatta, metarecord['$lang']),
                     league_name,
                     flags=flags )}
-                add_flags.add('league-contained')
-            if 'contained' not in flags:
-                add_flags.add('contained')
-            add_flags.update(self.increase_containment(flags))
+                flags = flags.union(('league-contained',))
+            flags = flags.union(('contained',), overadd=False)
+            flags = flags.union(self.increase_containment(flags))
         by_round = 'by-round' in flags or not 'by-subject' in flags
 
         if by_round:
             for roundnum in range(1, 1 + league['rounds']):
-                yield {'matter' : str(roundnum), 'add flags' : add_flags}
+                yield {'matter' : str(roundnum), 'flags' : flags}
         else:
             for subjectkey in league['subjects']:
-                yield {'matter' : subjectkey, 'add flags' : add_flags}
+                yield {'matter' : subjectkey, 'flags' : flags}
 
+    @default_tourn_flags({'problems'})
     def generate_regatta_subject_matter(self, metapath, flags, metarecord,
         *, regatta, league
     ):
-        if not flags.intersection(self.regatta_flags):
-            yield from self.generate_regatta_subject_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                regatta=regatta, league=league )
-            return
-
         subject = self.find_regatta_subject(metarecord)
         if 'blank' not in flags:
             if 'league-contained' in flags:
@@ -298,15 +283,10 @@ class Driver(OriginalDriver):
         if 'blank' not in flags:
             yield {'verbatim' : self.substitute_end_tourn_problems()}
 
+    @default_tourn_flags({'problems'})
     def generate_regatta_round_matter(self, metapath, flags, metarecord,
         *, regatta, league
     ):
-        if not flags.intersection(self.regatta_flags):
-            yield from self.generate_regatta_round_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                regatta=regatta, league=league )
-            return
-
         round = self.find_regatta_round(metarecord)
         if 'blank' not in flags:
             if 'league-contained' in flags:
@@ -333,36 +313,23 @@ class Driver(OriginalDriver):
         if 'blank' not in flags:
             yield {'verbatim' : self.substitute_end_tourn_problems()}
 
+    @default_tourn_flags({'problems'})
     def generate_contest_problem_matter(self, metapath, flags, metarecord,
         *, contest, league
     ):
-        if not flags.intersection(self.contest_flags):
-            assert 'problems' not in flags, flags.as_set()
-            yield from self.generate_contest_problem_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                contest=contest, league=league )
-            return
-        if 'itemized' not in flags:
-            yield {'verbatim' : self.constitute_begin_tourn_problems(
-                flags.intersection(self.contest_flags) )}
-        yield {
-            'inpath' : metapath.with_suffix('.tex'),
-            'number' : metapath.name }
-        if 'itemized' not in flags:
-            yield {'verbatim' : self.substitute_end_tourn_problems()}
+        yield from self.generate_tourn_problem_matter(
+            metapath, flags, metarecord,
+            number=metapath.name )
 
+    @default_tourn_flags({'problems'})
     def generate_regatta_problem_matter(self, metapath, flags, metarecord,
         *, regatta, league
     ):
-        if not flags.intersection(self.regatta_flags):
-            yield from self.generate_regatta_problem_matter(
-                metapath, flags.union(('problems',)), metarecord,
-                regatta=regatta, league=league )
-            return
         subject = self.find_regatta_subject(metarecord)
         round = self.find_regatta_round(metarecord)
         if 'blank' in flags:
             assert 'itemized' not in flags, (metapath, flags.as_set())
+            flags = flags.union(('no-problem-sources',), overadd=False)
             assert 'league-contained' not in flags
             yield {'verbatim' : self.constitute_leaguedef(
                 self.find_name(league, metarecord['$lang']) )}
@@ -370,20 +337,35 @@ class Driver(OriginalDriver):
             yield {'verbatim' : self.substitute_regatta_blank_caption(
                 caption=self.find_name(regatta, metarecord.get('$lang')),
                 mark=round['mark'] )}
-        if 'itemized' not in flags:
-            yield {'verbatim' : self.constitute_begin_tourn_problems(
-                flags.intersection(self.regatta_flags) )}
-        yield {
-            'inpath' : metapath.with_suffix('.tex'),
-            'number' : self.substitute_regatta_number(
+        yield from self.generate_tourn_problem_matter(
+            metapath, flags, metarecord,
+            number=self.substitute_regatta_number(
                 subject_index=subject['index'],
                 round_index=round['index'] )
-            }
-        if 'itemized' not in flags:
-            yield {'verbatim' : self.substitute_end_tourn_problems()}
+        )
         if 'blank' in flags:
             yield {'verbatim' : self.substitute_hrule()}
             yield {'verbatim' : self.substitute_clearpage()}
+
+    def generate_tourn_problem_matter(self, metapath, flags, metarecord,
+        *, number
+    ):
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.constitute_begin_tourn_problems(
+                flags.intersection(self.contest_flags) )}
+        yield {
+            'inpath' : metapath.with_suffix('.tex'),
+            'number' : number }
+        if 'jury' in flags and '$criteria' in metarecord:
+            yield {'verbatim' : self.substitute_criteria(
+                criteria=metarecord['$criteria'] )}
+        if 'no-problem-sources' not in flags:
+            problem_source = metarecord.get('$problem-source')
+            if problem_source is not None:
+                yield {'verbatim' : self.substitute_problem_source(
+                    source=problem_source )}
+        if 'itemized' not in flags:
+            yield {'verbatim' : self.substitute_end_tourn_problems()}
 
     def find_contest(self, metarecord):
         contest_key = metarecord['$contest$key']
@@ -530,7 +512,8 @@ class Driver(OriginalDriver):
             select, = flags.intersection(
                 ('problems', 'solutions', 'complete', 'jury',) )
         except ValueError as exc:
-            exc.args += (flags,)
+            assert isinstance(flags, FlagSet), type(flags)
+            exc.args += (flags.as_set(),)
             raise
         caption = names[-1]
         if 'subsubcontained' in flags:
@@ -577,6 +560,12 @@ class Driver(OriginalDriver):
     hrule_template = r'\medskip\hrule'
 
     regatta_number_template = r'$round_index$subject_index'
+
+    criteria_template = r'\emph{Критерии: $criteria}'
+    problem_source_template = (
+        r'\nopagebreak\begingroup'
+            r'\hfill\itshape\small($source)'
+        r'\endgroup' )
 
     ##########
     # Supplementary finctions

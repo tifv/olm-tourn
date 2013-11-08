@@ -1,5 +1,40 @@
+\providecommand\ifdiagonalsolutiondefined{\iffalse}
 \problem
-Условие \texttt{pers-algbr/senior/1.tex}.
+В клетках квадрата $100 \times 100$ вписаны натуральные числа так, что все
+$200$ сумм в рядах (строках и столбцах) различны.
+Какова наименьшая возможная сумма всех чисел в таблице?
 
-\solution Решение \texttt{pers-algbr/senior/1.tex}.
+\solution
+[\ifdiagonalsolutiondefined\else{\begin{table}\centering
+\fbox{\(\begin{array}{ccccccc}
+    0 \\
+    1 & 2 \\
+      & 0 & 4 \\
+      &   & 1 & 6 \\
+      &   &   &   & \ddots \\
+      &   &   &   &   & 196 \\
+      &   &   &   &   & 1 & 198
+\end{array}\)}
+\caption{к задаче \ref{solution:2013/ru/pers-algbr/senior/1}.}
+\label{table:solution:2013/ru/pers-algbr/senior/1}
+\end{table}}\fi]%
+\label{solution:2013/ru/pers-algbr/senior/1}%
+\emph{Ответ:} 19950.
+\ifdiagonalsolutiondefined
+См.~решение задачи \ref{solution:2013/ru/regatta/junior/algbr/4}.
+\else
+Будем для удобства считать, что числа могу быть нулями
+(потом добавим к каждому числу по единице).
+Тогда сумма в каждом ряду хотя бы 0, и значит минимально возможные значения
+этих сумм от 0 до $199$, а минимально возможная сумма~--- это
+$199 \cdot 200 / 4 = 9950$.
+Покажем, что существует пример, когда реализуются ровно такие суммы.
+Для этого на главной диагонали расставим четные числа от нуля до 198, на второй
+диагонали единицы в клеточках через 1
+(таблица \ref{table:solution:2013/ru/pers-algbr/senior/1}).
+Остальные числа объявим нулями.
+Теперь, чтобы получился пример для исходной задачи, добавим к каждому числу в
+таблице по единице.
+\fi
 \endproblem
+% $problem-source: Д.\,Максимов

@@ -1,0 +1,6 @@
+$manner[print]:
+  [[.], [.], [.], [.]]
+$manner$options[print]:
+  font: 11pt
+$manner$style[print]:
+- .[tiled4,-print]

@@ -1,5 +1,34 @@
 \problem
-Условие \texttt{pers-geomt/junior/1.tex}.
+На сторонах $AC$ и $BC$ треугольникa $ABC$ лежат точки $D$ и $E$
+соответственно, такие, что $\angle ABD = \angle CBD = \angle CAE$.
+Кроме того, $\angle ACB = \angle BAE$.
+Обозначим через $F$ точку пересечения $BD$ и $AE$.
+Докажите, что $AF = DE$.
 
-\solution Решение \texttt{pers-geomt/junior/1.tex}.
+\solution
+[{\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+\caption{к задаче \ref{solution:2013/ru/pers-geomt/junior/1}.}
+\label{fig:solution:2013/ru/pers-geomt/junior/1}
+\end{figure}}]%
+\label{solution:2013/ru/pers-geomt/junior/1}
+Рис. \ref{fig:solution:2013/ru/pers-geomt/junior/1}.
+Заметим, что
+\(
+    \angle BAD = \angle BAE + \angle EAD
+=
+    \angle BCD + \angle CBD = \angle BDA
+\)
+(мы воспользовались тем, что внешний угол треугольника равен сумме двух, не
+смежных с ним).
+Значит $AB = BD$.
+Аналогично
+\(
+    \angle BFE = \angle FBA + \angle FAB
+=
+    \angle EAD + \angle ECD = \angle BEF
+\), откуда $BF=BE$.
+Значит треугольники $ABF$ и $DBE$ равны (по двум сторонам и углу между ними).
+Отсюда следует, что $AF = DE$.
 \endproblem
+% $problem-source: Ф.\,Ивлев, Ф.\,Бахарев

@@ -1,5 +1,56 @@
 \problem
-Условие \texttt{pers-geomt/junior/3.tex}.
+Во вписанном четырёхугольнике $ABCD$ выполнено $AB > CD$ и $BC > AD$.
+На лучах $AB$ и $CD$ выбраны точки $K$ и $M$ соответственно так, что
+$AK = CM = \frac{1}{2} (AB + CD)$,
+а на лучах $BC$ и $DA$~--- точки $L$ и $N$ соответственно так, что
+$BL = DN = \frac{1}{2} (BC + AD)$.
+Докажите, что $KLMN$ --- прямоугольник и 
+площадь его равна площади $ABCD$.
 
-\solution Решение \texttt{pers-geomt/junior/3.tex}.
+\solution 
+[{\begin{figure}\centering
+    \jeolmfigure[height=0.5\textwidth]{solution}
+\caption{к задаче \ref{solution:2013/ru/pers-geomt/junior/3}.}
+\label{fig:solution:2013/ru/pers-geomt/junior/3}
+\end{figure}}]%
+\label{solution:2013/ru/pers-geomt/junior/3}
+Рис. \ref{fig:solution:2013/ru/pers-geomt/junior/3}.
+Во-первых, заметим, что в силу указанных соотношений $KB = MD$, причем точка
+$K$ лежит на отрезке $AB$, а точка $D$ на отрезке $MC$.
+Во-вторых, $NA = LC$ и точка $L$ лежит на отрезке $BC$, и точка $A$ лежит на
+отрезке $ND$.
+В треугольниках $MCL$ и $KAN$ верны соотношения $NA = CL$, $KA = MC$ и
+$\angle NAK = angle LCM$ (первый~--- внешний в четырехугольнике $ABCD$, а
+второй~--- противоположный внутренний).
+Следовательно, треугольники $MCL$ и $KAN$ равны и, в частности, равны $NK$ и
+$ML$.
+Аналогичными рассуждениями приходим к тому, что равны треугольники $KBL$ и
+$MDN$ и отрезки $KL = MN$.
+Из полученных равенств отрезков заключаем, что $KLMN$~--- параллелограмм.
+Заметим, что
+\(
+    \angle KLM
+=
+    180^\circ - \angle KLB - \angle MLC
+=
+    180^\circ - \angle MAD - \angle KNA
+=
+    180^\circ - \angle KNM
+\).
+Таким образом, противоположные углы параллелограмма дополняют друг друга до
+$180^\circ$, что возможно только если он прямоугольник.
+Осталось показать, что четырехугольник $ABCD$ и прямоугольник $KLMN$
+равновелики.
+Для этого отметим $F$~--- точку пересечения отрезков $ML$ и $AD$.
+Верна следующая цепочка равенств
+\begin{align*}
+    S_{ABCD}
+&{}=
+    S_{AKLF} + S_{KBL} + S_{LCM} - S_{MFD}
+=\\&{}=
+    S_{AKLF} + S_{MDN} + S_{MAK} - S_{MFD}
+=
+    S_{KLMN}.
+\end{align*}
 \endproblem
+% $problem-source: Eisso\,J.\,Atzema, предложил В.\,Дубровский

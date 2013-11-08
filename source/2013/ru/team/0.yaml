@@ -5,7 +5,7 @@ $style: [.., {'verbatim' : '\let\postword\teampostword'}]
 junior:
   $contest$league:
     name: {translate-metaname: }
-    problems: 10
+    problems: 9
 senior:
   $contest$league:
     name: {translate-metaname: }

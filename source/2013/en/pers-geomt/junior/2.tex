@@ -1,6 +1,14 @@
 \problem
-Statement \texttt{en/pers-geomt/junior/2.tex}.
+A hexagon $ABCDEF$ is inscribed into a circle.
+$X$ is the intersection point of the segments $AD$ and $BE$,
+$Y$ is the intersection of $AD$ and $CF$,
+and $Z$ is the intersection of $BE$ and $CF$.
+Given $AX = DY$ and $CY = FZ$, prove that $BX = EZ$.
 
 \solution
-
+It's easy to see that $AX \cdot XD = AY \cdot YD$ (because $AX=YD$ и $AY=XD$).
+Moreover $AY \cdot YD = FY \cdot YC$ (because $ACDF$ is inscrubed into a circle).
+Similarly $FY \cdot YC = FZ \cdot ZC = EZ \cdot ZB$. From other hand $AX \cdot XD = BX \cdot XE$. Using all this stuff we obtain $BX \cdot XE = BZ \cdot ZE$.
+Consequently $BX = ZE$, q.e.d.
 \endproblem
+% $problem-source: Д.\,Максимов, Ф.\,Петров

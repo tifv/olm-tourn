@@ -1,6 +1,21 @@
 \problem
-Statement \texttt{en/pers-geomt/junior/1.tex}.
+Points $D$ on the side $AC$ and $E$ on the side $BC$ of triangle $ABC$ are such
+that $\angle ABD = \angle CBD = \angle CAE$ and $\angle ACB = \angle BAE$.
+Let $F$ be the intersection point of segments $BD$ and $AE$.
+Prove that $AF = DE$.
 
 \solution
-
+It is easy to see that
+\(
+    \angle BAD = \angle BAE + \angle EAD
+=
+    \angle BCD + \angle CBD = \angle BDA
+\)
+(here we use the fact that outer angle of the triangle is the sum of two corresponding inner angles). Consequently $AB = BD$. In the same way obtain that
+\(
+    \angle BFE = \angle FBA + \angle FAB
+=
+    \angle EAD + \angle ECD = \angle BEF
+\), and hence $BF=BE$. So the triangles $ABF$ and $DBE$ are equal, and $AF = DE$.
 \endproblem
+% $problem-source: Ф.\,Ивлев, Ф.\,Бахарев

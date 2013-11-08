@@ -1,0 +1,14 @@
+$matter:
+- verbatim: '\part*{2013}'
+  condition: contained
+- verbatim: '\part*{2013 (English)}'
+  condition: {not: contained}
+- regatta[contained]
+- pers-algbr[contained]
+- pers-combi[contained]
+- pers-geomt[contained]
+- team[contained]
+
+#$manner$style:
+#- .
+#- /flow-problem-numeration

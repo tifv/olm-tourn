@@ -1,11 +1,14 @@
 $style:
 - /base
 - /pgfpages
-$style[tiled4]:
+$style{print}:
+- /base
+- /pgfpages[2on1]
+$style{tiled4}:
 - package: geometry
   options: [a6paper, landscape]
 - /base
-- /pgfpages[4on1,-print] # avoid flag clash
+- /pgfpages[4on1]
 
 base: # base.sty
   $targetable: off
@@ -14,18 +17,18 @@ pgfpages:
   $style:
   - package : pgfpages
   - verbatim : '\pgfpagesuselayout{resize to}[a4paper]'
-  $style[2on1]:
+  $style{2on1}:
   - package : pgfpages
   - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper,landscape]'
-  $style[2on1-portrait]:
+  $style{2on1-portrait}:
   - package : pgfpages
   - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper]'
-  $style[4on1]:
+  $style{4on1}:
   - package : pgfpages
   - verbatim : '\pgfpagesuselayout{4 on 1}[a4paper,landscape]'
-  $style[print]:
-  - style: .
-    flags: [2on1]
-- lang:
+lang:
     $targetable: off
+flow-problem-numeration:
+  $style:
+  - verbatim: '\makeatletter\def\problem@itemy#1{\item}\makeatother'
 
