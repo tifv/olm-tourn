@@ -10,7 +10,15 @@
 \leq
     \frac{1}{2}
 .\]
-
-\solution Решение \texttt{team/junior/8.tex}.
+\solution
+Заметим, что
+$(z + x) (z + y) = z^2 + x z + y z + x y = z (x + y + z) + x y = z + x y$.
+Значит, для первого слагаемого мы имеем:
+\[
+    \frac{xy}{\sqrt{z+xy}} = \frac{xy}{\sqrt{(z+x)(z+y)}}
+\leq
+    \frac{1}{2}(\frac{xy}{z+x}+\frac{xy}{z+y}).
+\]
+суммируя все такие неравенства мы получаем требуемое.
 \endproblem
 % $problem-source: Д.\,Максимов

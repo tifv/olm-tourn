@@ -1,11 +1,19 @@
-\providecommand\ifdiagonalsolutiondefined{\iffalse}
+\def\ifsolutiondefined{%
+    \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname
+    {\iftrue}}
+
 \problem
 В клетках квадрата $100 \times 100$ вписаны натуральные числа так, что все
 $200$ сумм в рядах (строках и столбцах) различны.
 Какова наименьшая возможная сумма всех чисел в таблице?
-
 \solution
-[\ifdiagonalsolutiondefined\else{\begin{table}\centering
+[{\ifsolutiondefined\else{\begin{table}\centering
 \fbox{\(\begin{array}{ccccccc}
     0 \\
     1 & 2 \\
@@ -17,12 +25,13 @@ $200$ сумм в рядах (строках и столбцах) различн
 \end{array}\)}
 \caption{к задаче \ref{solution:2013/ru/pers-algbr/senior/1}.}
 \label{table:solution:2013/ru/pers-algbr/senior/1}
-\end{table}}\fi]%
+\end{table}}\fi}]%
 \label{solution:2013/ru/pers-algbr/senior/1}%
 \emph{Ответ:} 19950.
-\ifdiagonalsolutiondefined
+\ifsolutiondefined
 См.~решение задачи \ref{solution:2013/ru/regatta/junior/algbr/4}.
 \else
+\definesolution
 Будем для удобства считать, что числа могу быть нулями
 (потом добавим к каждому числу по единице).
 Тогда сумма в каждом ряду хотя бы 0, и значит минимально возможные значения

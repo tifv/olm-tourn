@@ -103,17 +103,17 @@
 \problem@tourn@parse#1\endproblem
 {\problem@tourn@fetched@preproblem}{\problem@tourn@fetched@presolution}%
 \problem@tourn@number\problem@tourn@fetched@problem
-\solution@delimiter\problem@tourn@fetched@solution
+\par\solution@delimiter\problem@tourn@fetched@solution\par
 \endgroup}
 \long\def\problem@tourn@problem#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
 {\problem@tourn@fetched@preproblem}%
-\problem@tourn@number\problem@tourn@fetched@problem
+\problem@tourn@number\problem@tourn@fetched@problem\par
 \endgroup}
 \long\def\problem@tourn@solution#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
 {\problem@tourn@fetched@presolution}%
-\problem@tourn@number\problem@tourn@fetched@solution
+\problem@tourn@number\problem@tourn@fetched@solution\par
 \endgroup}
 
 % Parsing/segregation

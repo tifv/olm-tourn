@@ -190,7 +190,7 @@ class Driver(OriginalDriver):
         if 'blank' not in flags:
             yield {'verbatim' : self.constitute_section(
                 self.find_name(regatta, metarecord['$lang']),
-    numberlags=flags )}
+                flags=flags )}
             flags = flags.union(('contained',), overadd=False)
             flags = flags.union(self.increase_containment(flags))
 
@@ -562,10 +562,12 @@ class Driver(OriginalDriver):
     regatta_number_template = r'$round_index$subject_index'
 
     criteria_template = r'\emph{Критерии: $criteria}'
-    problem_source_template = (
-        r'\nopagebreak\begingroup'
+    problem_source_template = ( r''
+        r'\nopagebreak'
+        r'\vspace{-1ex}\begingroup'
             r'\hfill\itshape\small($source)'
-        r'\endgroup' )
+        r'\endgroup'
+    )
 
     ##########
     # Supplementary finctions

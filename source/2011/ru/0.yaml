@@ -7,22 +7,10 @@
   - pers-geomt
   - pers-combi
   - team
-- $matter:
-  - verbatim: '\part*{2011}'
-    condition: {or : [contained, problems]}
-  - verbatim: '\part*{2011 (решения)}'
-    condition: {and: [{not: contained}, solutions]}
-  - verbatim: '\part*{2011 (с решениями)}'
-    condition: {and: [{not: contained}, complete]}
-  - regatta[contained]
-  - pers-algbr[contained]
-  - pers-geomt[contained]
-  - pers-combi[contained]
-  - team[contained]
 
 - regatta:
 - pers-algbr:
-- pers-geomt:
 - pers-combi:
+- pers-geomt:
 - team:
 

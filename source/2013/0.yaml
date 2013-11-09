@@ -1,7 +1,11 @@
-$style: [.., year]
-$delegate: &languages
-- ru
-- en
+!!omap
+- $style: [.., year]
+- $delegate: &languages
+  - ru
+  - en
 
-$matter: []
+- ru:
+    $source: off
+- en:
+    $source: off
 

@@ -10,13 +10,13 @@ $matter:
 section:
   $targetable: off
   $matter{contained}:
-  - verbatim: '\part*{2013}'
+  - verbatim: '\part*{2011}'
   $matter:
-  - verbatim: '\part*{Многоборье-2013}'
+  - verbatim: '\part*{Многоборье-2011}'
     condition: problems
-  - verbatim: '\part*{Многоборье-2013 (решения)}'
+  - verbatim: '\part*{Многоборье-2011 (решения)}'
     condition: solutions
-  - verbatim: '\part*{Многоборье-2013 (с решениями)}'
+  - verbatim: '\part*{Многоборье-2011 (с решениями)}'
     condition: complete
 
 $manner:
