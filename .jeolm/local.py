@@ -92,14 +92,15 @@ class Driver(OriginalDriver):
 
     @fetch_metarecord
     def generate_matter_metabody(self, metapath, flags, metarecord,
-        *, date_set=None
+        *, date_set=None, seen_targets=frozenset()
     ):
 
         if '$tourn$key' not in metarecord or 'every-header' in flags:
             if date_set is None:
                 date_set = set()
             yield from super().generate_matter_metabody(
-                metapath, flags, metarecord, date_set=date_set )
+                metapath, flags, metarecord, date_set=date_set,
+                seen_targets=seen_targets )
             return
 
         tourn_key = metarecord['$tourn$key']
@@ -128,8 +129,10 @@ class Driver(OriginalDriver):
         pseudorecord = metarecord.copy()
         self.clear_flagged_keys(pseudorecord, '$matter')
         pseudorecord['$matter'] = matter
+        pseudorecord['$pseudo'] = True
         yield from super().generate_matter_metabody(
-            metapath, flags, pseudorecord, date_set=set() )
+            metapath, flags, pseudorecord, date_set=set(),
+            seen_targets=seen_targets )
 
     def generate_tourn_matter(self, metapath, flags, metarecord):
         tourn_key = metarecord['$tourn$key']
