@@ -21,6 +21,15 @@ miscellany:
     flags: [complete]
   ru:
     $style: [.., /lang/ru]
+    $delegate:
+    - .[problems]
+    - .[complete]
+    $delegate{problems}:
+    - .[no-delegate]
+    $delegate{complete}:
+    - .[no-delegate]
+    $delegate{solutions}:
+    - .[no-delegate]
     $manner:
     - - .[no-header]
     $matter:
@@ -30,6 +39,9 @@ miscellany:
     - verbatim:
         '\title{Многоборье 2011-2013 (с решениями)}\date{}\author{}\maketitle'
       condition: complete
+    - verbatim:
+        '\title{Многоборье 2011-2013 (решения)}\date{}\author{}\maketitle'
+      condition: solutions
     - verbatim: '\tableofcontents'
     - /2011/ru[contained]
     - /2012/ru[contained]
