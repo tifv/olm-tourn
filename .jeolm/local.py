@@ -376,7 +376,7 @@ class Driver(OriginalDriver):
             return metarecord[contest_key]
         elif contest_key in {'$contest$league', '$contest$problem'}:
             return self.find_contest(self.metarecords[
-                metarecord['$path'].parent() ])
+                metarecord['$path'].parent ])
         else:
             raise AssertionError(contest_key, metarecord)
 
@@ -388,7 +388,7 @@ class Driver(OriginalDriver):
             '$regatta$subject', '$regatta$round', '$regatta$problem'
         }:
             return self.find_regatta(self.metarecords[
-                metarecord['$path'].parent() ])
+                metarecord['$path'].parent ])
         else:
             raise AssertionError(regatta_key, metarecord)
 
@@ -400,7 +400,7 @@ class Driver(OriginalDriver):
             '$regatta$subject', '$regatta$round', '$regatta$problem'
         }:
             return self.find_league(self.metarecords[
-                metarecord['$path'].parent() ])
+                metarecord['$path'].parent ])
         else:
             raise AssertionError(tourn_key, metarecord)
 
@@ -410,7 +410,7 @@ class Driver(OriginalDriver):
             return metarecord['$regatta$subject']
         elif regatta_key == '$regatta$problem':
             return self.find_regatta_subject(self.metarecords[
-                metarecord['$path'].parent() ])
+                metarecord['$path'].parent ])
         else:
             raise AssertionError(regatta_key, metarecord)
 
@@ -421,7 +421,7 @@ class Driver(OriginalDriver):
         elif regatta_key == '$regatta$problem':
             metapath = metarecord['$path']
             return self.find_regatta_round(self.metarecords[
-                metapath.parent(2)/metapath.name ])
+                metapath.parent.parent/metapath.name ])
         else:
             raise AssertionError(regatta_key, metarecord)
 

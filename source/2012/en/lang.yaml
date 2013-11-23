@@ -1,0 +1,16 @@
+!!omap
+- $style: [.., /lang/en]
+- $lang: en
+- $delegate:
+  - regatta
+  - pers-algbr
+  - pers-geomt
+  - pers-combi
+  - team
+
+- regatta:
+- pers-algbr:
+- pers-geomt:
+- pers-combi:
+- team:
+

@@ -31,4 +31,5 @@ lang:
 flow-problem-numeration:
   $style:
   - verbatim: '\makeatletter\def\problem@itemy#1{\item}\makeatother'
+    condition: {not: no-flow-numeration}
 

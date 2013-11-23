@@ -1,0 +1,1 @@
+../../../../ru/team/junior/8/problem.asy

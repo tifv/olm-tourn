@@ -1,0 +1,42 @@
+$regatta:
+  name: {translate: 'regatta'}
+  leagues: [junior, senior]
+junior: &regatta-league
+  $regatta$league:
+    name: {translate-metaname: }
+    subjects: [algbr, geomt, combi]
+    rounds: 4
+  algbr:
+    $regatta$subject:
+      name: {translate: 'algbr'}
+      index: 'a'
+  geomt:
+    $regatta$subject:
+      name: {translate: 'geomt'}
+      index: 'g'
+  combi:
+    $regatta$subject:
+      name: {translate: 'combi'}
+      index: 'c'
+  "1":
+    $regatta$round:
+      name: {translate: 'round-1'}
+      index: '1'
+      mark: 4
+  "2":
+    $regatta$round:
+      name: {translate: 'round-2'}
+      index: '2'
+      mark: 5
+  "3":
+    $regatta$round:
+      name: {translate: 'round-3'}
+      index: '3'
+      mark: 6
+  "4":
+    $regatta$round:
+      name: {translate: 'round-4'}
+      index: '4'
+      mark: 5
+senior: *regatta-league
+

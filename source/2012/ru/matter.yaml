@@ -10,13 +10,13 @@ $matter:
 section:
   $targetable: off
   $matter{contained}:
-  - verbatim: '\part*{2011}'
+  - verbatim: '\part*{2012}'
   $matter:
-  - verbatim: '\part*{Многоборье-2011}'
+  - verbatim: '\part*{Многоборье-2012}'
     condition: problems
-  - verbatim: '\part*{Многоборье-2011 (решения)}'
+  - verbatim: '\part*{Многоборье-2012 (решения)}'
     condition: solutions
-  - verbatim: '\part*{Многоборье-2011 (с решениями)}'
+  - verbatim: '\part*{Многоборье-2012 (с решениями)}'
     condition: complete
 
 $manner:
@@ -35,6 +35,5 @@ $manner$style:
 - style: .
   add flags: [print]
   condition: poster
-- style: /flow-problem-numeration
-  condition: {not: no-flow-numeration}
+- /flow-problem-numeration
 

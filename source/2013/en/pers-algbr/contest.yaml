@@ -1,14 +1,13 @@
 $contest:
-  name: {translate: 'combi'}
+  name: {translate: 'algbr'}
   leagues: [junior, senior]
-$style: [.., {'verbatim' : '\let\postword\oralpostword'}]
+$style: [.., {'verbatim' : '\let\postword\writtenpostword'}]
 junior:
   $contest$league:
     name: {translate-metaname: }
-    problems: 5
+    problems: 4
 senior:
   $contest$league:
     name: {translate-metaname: }
-    problems: 5
-
+    problems: 4
 

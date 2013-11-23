@@ -14,11 +14,8 @@ miscellany:
         \let\section\oldsection\oldtbc
       \endgroup}
   - verbatim: '\makeatother'
-  $delegate:
-  - delegate: ru
-    flags: [problems]
-  - delegate: ru
-    flags: [complete]
+  $delegate: [ru, en]
+
   ru:
     $style: [.., /lang/ru]
     $delegate:
@@ -31,7 +28,7 @@ miscellany:
     $delegate{solutions}:
     - .[no-delegate]
     $manner:
-    - - .[no-header]
+    - .[no-header]
     $matter:
     - verbatim:
         '\title{Многоборье 2011-2013}\date{}\author{}\maketitle'
@@ -46,20 +43,26 @@ miscellany:
     - /2011/ru[contained]
     - /2012/ru[contained]
     - /2013/ru[contained]
-#  en:
-#    $style: [/base, /en]
-#    $matter:
-#    - verbatim:
-#        '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'
-#    - /2011/en[problems,contained]
-#    - /2012/en[problems,contained]
-#    - /2013/en[problems,contained]
-#  sr:
-#    $style: [/base, /sr]
-#    $matter:
-#    - verbatim:
-#        '\title{Многоборье 2011-2013 (Српски)}\date{}\author{}\maketitle'
-#    - /2011/sr[problems,contained]
-#    - /2012/sr[problems,contained]
-#    - /2013/sr[problems,contained]
+
+  en:
+    $style: [.., /lang/en]
+    $delegate:
+    - .[problems]
+    #- .[complete]
+    $delegate{problems}:
+    - .[no-delegate]
+    $delegate{complete}:
+    - .[no-delegate]
+    $delegate{solutions}:
+    - .[no-delegate]
+    $manner:
+    - .[no-header]
+    $matter:
+    - verbatim:
+        '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'
+      condition: problems
+    - verbatim: '\tableofcontents'
+    - /2011/en[contained]
+    - /2012/en[contained]
+    - /2013/en[contained]
 
