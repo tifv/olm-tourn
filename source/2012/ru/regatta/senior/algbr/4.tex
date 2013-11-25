@@ -1,4 +1,17 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2012/ru/pers-algbr/junior/2\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:2012/ru/pers-algbr/junior/2\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2012/ru/pers-algbr/junior/2\endcsname
+    {\iftrue}}
+% nospell end
+
 \problem
+% duplicate of [2012/ru/pers-algbr/junior/2]
 Последовательность $\{ a_n \}$ определена рекуррентно:
 \[
     a_1 = \frac{1}{2}
@@ -8,14 +21,19 @@
 .\]
 Найдите сумму $a_1 + a_2 + \ldots + a_{2012}$.
 \solution
-\label{solution:2012/regatta/senior/algbr/4}%
+\label{solution:2012/ru/regatta/senior/algbr/4}%
 \emph{Ответ:} $2012 / 2013$.
+\ifsolutiondefined
+См.~решение задачи \ref{solution:2012/ru/pers-algbr/junior/2}.
+\else
+\definesolution
 Введем в рассмотрение последовательность $b_n = 1 / a_n$.
 Для неё рекуррентное соотношение переписывается в виде $b_n = b_{n - 1} + 2 n$.
 Получаем
 $b_n = 2 + 4 + \ldots + 2 n = n (n + 1)$,
 откуда
 \[a_n = \frac{1}{n (n + 1)} = \frac{1}{n} - \frac{1}{n + 1}.\]
-Складывая такие числа по всем $n$ от 1 до 2012 получаем, что сумма равна
+Складывая такие числа по всем $n$ от 1 до 2012, получим, что сумма равна
 $2012 / 2013$.
+\fi % \ifsolutiondefined
 \endproblem

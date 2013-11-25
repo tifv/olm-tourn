@@ -1,7 +1,75 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2012/ru/team/junior/10\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:2012/ru/team/junior/10\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2012/ru/team/junior/10\endcsname
+    {\iftrue}}
+% nospell end
+
 \problem\problemscore{6}
+% duplicate of [2012/ru/team/junior/10]
 В правильном семиугольнике $ABCDEFG$ стороны равны 1.
 Диагонали $AD$ и $CG$ пересекаются в точке $H$.
 Докажите, что $FH = \sqrt{2}$.
 \solution
-См. решение задачи \ref{solution:2012/team/junior/10} младшей лиги.
+\label{solution:2012/ru/team/senior/6}%
+\ifsolutiondefined
+См.~решение задачи \ref{solution:2012/ru/team/junior/10}.
+\else
+\definesolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{solution:2012/ru/team/senior/6}}
+    \label{fig:solution:2012/ru/team/senior/6}
+\end{figure}
+Рис.~\ref{fig:solution:2012/ru/team/senior/6}.
+Обозначим угол $x = \pi / 7$.
+Заметим, что $ABCD$ и $ABCG$~--- равнобедренные трапеции,
+так что $ABCH$~--- параллелограмм, а следовательно и ромб.
+Таким образом, $AH = HC = 1$.
+Пусть лучи $GA$, $CB$ пересекаются в точке $M$.
+Считая вписанные углы в семиугольнике получаем,
+что $\angle AMC = 3 x$, $\angle ACM = x$,
+так что треугольник $ACM$ равнобедренный, $AC = CM$.
+Далее, треугольники $HCM$, $HAF$ равны по двум сторонам и
+углу $2 x$ между ними, так что $HF = HM$ и
+$\angle FHM = \angle FHA + \angle AHM = \angle CHM + \angle AHM = 5 x$,
+так что можно построить правильный семиугольник $FHMLKJI$.
+Пусть отрезки $MJ$, $HK$ пересекаются в точке $N$.
+Тогда $NM = HM$
+(это равенство аналогично $AH = GA$, но в новом семиугольнике),
+$GM = CM$ из симметрии,
+$\angle NMG = \angle NMH - \angle GMH = \angle GMC - \angle GMH = \angle HMC$.
+Значит, треугольники $NGM$, $HCM$ равны по двум сторонам и углу между ними,
+так что $NG = HC = 1$ и $\angle NGM = \angle HCM = 2 x = \pi - \angle FGA$.
+Таким образом, $G$ есть середина $FN$ и $FN = 2$.
+Отношения $1 : FH$ и $FH : 2$ оказываются соответственными отношениями в
+двух наших правильных семиугольниках, так что они равны, что и требовалось
+доказать.
+\par
+\emph{Другое решение.}
+Как и в первом решении, начнем с наблюдения, что $ABCH$~--- параллелограмм,
+пусть $U$~--- общая середина его диагоналей, $V$~--- середина $BF$.
+Тогда $FH = 2 UV$ по теореме о средней линии треугольника $BHF$.
+Нам понадобится такой общий факт:
+если $X_1$, $X_2$, $X_3$, $X_4$ любые 4 точки плоскости,
+$M_{ij}$~--- середины соответствующих отрезков $X_iX_j$, то
+\[
+    4 M_{13} M_{24}^2
+=
+    X_1 X_2^2 + X_2 X_3^2 + X_3 X_4^2 + X_4 X_1^2 - X_1 X_3^2 - X_2 X_4^2
+.\] 
+Установить его можно, например, рассмотрев параллелограммы Вариньона
+$M_{ij} M_{jk} M_{kl} M_{li}$ для перестановок
+$(i, j, k, l) = (1, 2, 3, 4), (1, 3, 2, 4), (1, 2, 4, 3)$,
+написав для них равенства параллелограмма и вычтя из суммы двух третье.
+Или применяя декартовы координаты.
+Рассматривая четырехугольник $X_1 X_2 X_3 X_4 = ABCF$ мы видим, что
+$X_3 X_4 = X_4 X_2$, $X_1 X_3 = X_1 X_4$,
+так что $4 UV^2 = AB^2 + BC^2 = 2$, что и требовалось.
+\fi % \ifsolutiondefined
 \endproblem

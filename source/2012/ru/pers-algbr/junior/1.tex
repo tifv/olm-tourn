@@ -1,10 +1,26 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2012/ru/pers-algbr/junior/1\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:2012/ru/pers-algbr/junior/1\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2012/ru/pers-algbr/junior/1\endcsname
+    {\iftrue}}
+% nospell end
+
 \problem
+% duplicated in [2012/ru/regatta/senior/algbr/2]
 Найдите наименьшее натуральное число, дающее попарно различные остатки при
 делении на $2$, $3$, $4$, $5$, $6$, $7$, $8$, $9$, $10$.
 \solution
-\label{solution:2012/pers-algbr/junior/1}%
+\label{solution:2012/ru/pers-algbr/junior/1}%
 \emph{Ответ:} $1799$.
-\iflabelundefined{solution:2012/regatta/senior/algbr/2}%
+\ifsolutiondefined
+См.~решение задачи \ref{solution:2012/ru/regatta/senior/algbr/2}.
+\else
+\definesolution
 \begingroup\let\div\diamond
 Изучим все числа, которые обладают таким свойством.
 Обозначим рассматриваемое нами число с данным свойством через $N$, а остаток
@@ -24,13 +40,10 @@ $N \div 10 = 9$.
 2 и 5 уже заняты.
 Для остатка $N \div 7$ остаются 2 варианта: 0 и 6.
 В первом случае $N + 1$ делится на все числа от 2 до 10, а значит
-$N \geq [2, 3, \ldots, 10] - 1 > 2000$.
+$N \geq [2, 3, \ldots, 10] - 1 = 2519$.
 Во втором получаем, что $N + 1$ кратно $[2, 3, 4, 5, 6, 8, 9, 10] = 360$ и дает
 остаток 1 от деления на 7.
 Наименьшее такое число~--- это 1800.
 \endgroup
-\else%
-См. решение задачи \ref{solution:2012/regatta/senior/algbr/2} регаты старшей
-лиги.
-\fi
+\fi % \ifsolutiondefined
 \endproblem

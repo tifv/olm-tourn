@@ -1,16 +1,32 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2012/ru/team/junior/10\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:2012/ru/team/junior/10\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2012/ru/team/junior/10\endcsname
+    {\iftrue}}
+% nospell end
+
 \problem\problemscore{12}
+% duplicated in [2012/ru/team/senior/6]
 В правильном семиугольнике $ABCDEFG$ стороны равны 1.
 Диагонали $AD$ и $CG$ пересекаются в точке $H$.
 Докажите, что $FH = \sqrt{2}$.
 \solution
-[{\begin{figure}
-\centering
+\label{solution:2012/ru/team/junior/10}%
+\ifsolutiondefined
+См.~решение задачи \ref{solution:2012/ru/team/senior/6}.
+\else
+\definesolution
+\begin{figure}\centering
     \jeolmfigure[width=0.5\textwidth]{solution}
-\caption{к задаче \ref{solution:2012/team/junior/10}}
-\label{fig:solution:2012/team/junior/10}
-\end{figure}}]%
-\label{solution:2012/team/junior/10}%
-Рис. \ref{fig:solution:2012/team/junior/10}.
+    \caption{к задаче \ref{solution:2012/ru/team/junior/10}}
+    \label{fig:solution:2012/ru/team/junior/10}
+\end{figure}
+Рис.~\ref{fig:solution:2012/ru/team/junior/10}.
 Обозначим угол $x = \pi / 7$.
 Заметим, что $ABCD$ и $ABCG$~--- равнобедренные трапеции,
 так что $ABCH$~--- параллелограмм, а следовательно и ромб.
@@ -43,15 +59,17 @@ $\angle NMG = \angle NMH - \angle GMH = \angle GMC - \angle GMH = \angle HMC$.
 если $X_1$, $X_2$, $X_3$, $X_4$ любые 4 точки плоскости,
 $M_{ij}$~--- середины соответствующих отрезков $X_iX_j$, то
 \[
-    4 M_{13}M_{24}^2
+    4 M_{13} M_{24}^2
 =
-    X_1X_2^2 + X_2X_3^2 + X_3X_4^2 + X_4X_1^2 - X_1X_3^2 - X_2X_4^2
+    X_1 X_2^2 + X_2 X_3^2 + X_3 X_4^2 + X_4 X_1^2 - X_1 X_3^2 - X_2 X_4^2
 .\] 
-Установить его можно, например, рассмотрев параллелограммы Вариньона $M_{ij} M_{jk} M_{kl} M_{li}$ для перестановок
+Установить его можно, например, рассмотрев параллелограммы Вариньона
+$M_{ij} M_{jk} M_{kl} M_{li}$ для перестановок
 $(i, j, k, l) = (1, 2, 3, 4), (1, 3, 2, 4), (1, 2, 4, 3)$,
 написав для них равенства параллелограмма и вычтя из суммы двух третье.
 Или применяя декартовы координаты.
 Рассматривая четырехугольник $X_1 X_2 X_3 X_4 = ABCF$ мы видим, что
 $X_3 X_4 = X_4 X_2$, $X_1 X_3 = X_1 X_4$,
 так что $4 UV^2 = AB^2 + BC^2 = 2$, что и требовалось.
+\fi % \ifsolutiondefined
 \endproblem

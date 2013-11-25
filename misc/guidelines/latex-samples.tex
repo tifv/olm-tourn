@@ -38,13 +38,45 @@
 \par
 <Продолжение решения.>
 
-% Картинка
-\solution
-[{\begin{figure}\centering
-    \jeolmfigure[width=0.5\textwidth]{<figurename>}
-\caption{к задаче \ref{solution:<problem label>}.}
-\label{fig:solution:<problem label>}
-\end{figure}}]%
-\label{solution:<problem label>}
-Рис.~\ref{fig:solution:<problem label>}.
+% Картинка к решению
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{solution:<problem metapath>}}
+    \label{fig:solution:<problem metapath>}
+\end{figure}
+\fi
 
+% Ссылка на картинку из решения
+\solution
+\label{solution:<problem metapath>}
+Рис.~\ref{fig:solution:<problem metapath>}.
+
+% Дублирование задач: префикс задачи
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:<original metapath>\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:<original metapath>\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:<original metapath>\endcsname
+    {\iftrue}}
+% nospell end
+
+% Дублирование задач: маркер оригинала
+% duplicated in [<duplicate metapath>]
+
+% Дублирование задач: маркер копии
+% duplicate of [<original metapath>]
+
+% Дублирование задач: решение
+\label{solution:<problem metapath}%
+\emph{Ответ:} <ответ>.
+\ifsolutiondefined
+См.~решение задачи \ref{solution:<other problem metapath>}.
+\else
+\definesolution
+<Решение.>
+\fi % \ifsolutiondefined

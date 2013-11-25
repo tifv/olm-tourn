@@ -1,4 +1,17 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname}
+\expandafter\providecommand
+    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname
+    {\iffalse}
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname
+    {\iftrue}}
+% nospell end
+
 \problem
+% duplicated in [2012/ru/pers-geomt/senior/2]
 Вписанная окружность равнобедренного треугольника $ABC$ ($AB = BC$) касается
 его боковых сторон $BC$ и $AB$ в точках $E$ и $F$.
 Через точку $A$ проведен внутри угла $EAB$ луч, пересекающий вписанную
@@ -6,14 +19,17 @@
 Прямые $EP$ и $EQ$ пересекают прямую $AC$ в точках $P'$ и $Q'$.
 Докажите, что $P'A = Q'C$.
 \solution
-[{\begin{figure}
-\centering
+\label{solution:2012/ru/pers-geomt/junior/3}%
+\ifsolutiondefined
+См.~решение задачи \ref{solution:2012/ru/pers-geomt/senior/2}.
+\else
+\definesolution
+\begin{figure}\centering
     \jeolmfigure[width=0.5\textwidth]{solution}
-\caption{к задаче \ref{solution:2012/pers-geomt/junior/3}}
-\label{fig:solution:2012/pers-geomt/junior/3}
-\end{figure}}]%
-\label{solution:2012/pers-geomt/junior/3}%
-Рис.~\ref{fig:solution:2012/pers-geomt/junior/3}.
+    \caption{к задаче \ref{solution:2012/ru/pers-geomt/junior/3}}
+    \label{fig:solution:2012/ru/pers-geomt/junior/3}
+\end{figure}
+Рис.~\ref{fig:solution:2012/ru/pers-geomt/junior/3}.
 Пусть $D$~--- точка касания вписанной окружности со стороной $AC$,
 точка $Q$ лежит на дуге $FE$, не содержащей $D$,
 а точка $P$~--- на дуге $FD$, не содержащей $E$.
@@ -52,4 +68,5 @@ $P$ перейдет в $P'$, $Q$ перейдет в $Q'$, $D$ в себя, $F$
 удаленную точку прямой $AC$.
 Следовательно, так как двойное отношение останется гармоническим, $D$ будет
 серединой $P'Q'$.
+\fi % \ifsolutiondefined
 \endproblem

@@ -81,61 +81,55 @@
     {\def\problem@tourn@env{tourn-problems/#1}%
         \begin{\problem@tourn@env}}%
     {\end{\problem@tourn@env}}
-\newcommand\tournproblem[1]{\def\problem@tourn@number{\itemy{#1}}}
-\newenvironment{tourn-problems/problems}
-    {\begin{problems}\let\problem\problem@tourn@problem}%
-    {\end{problems}}%
-\newenvironment{tourn-problems/blank}
-    {\begin{problems}\let\problem\problem@tourn@problem}%
+\newenvironment{tourn-problems/problems}%
+    {\begin{problems}%
+        \newcommand{\ifproblem}\iftrue
+        \newcommand{\ifsolution}\iffalse
+        \let\problem\problem@tourn@problem}%
     {\end{problems}}%
 \newenvironment{tourn-problems/solutions}%
-    {\begin{problems}\let\problem\problem@tourn@solution}%
+    {\begin{problems}
+        \newcommand{\ifproblem}\iffalse
+        \newcommand{\ifsolution}\iftrue
+        \let\problem\problem@tourn@solution}%
     {\end{problems}}%
 \newenvironment{tourn-problems/complete}%
-    {\begin{problems}\let\problem\problem@tourn@complete}%
+    {\begin{problems}
+        \newcommand{\ifproblem}\iftrue
+        \newcommand{\ifsolution}\iftrue
+        \let\problem\problem@tourn@complete}%
     {\end{problems}}
 \newenvironment{tourn-problems/jury}%
-    {\begin{problems}\let\problem\problem@tourn@complete}%
-    {\end{problems}}%
+    {\begin{tourn-problems/complete}}%
+    {\end{tourn-problems/complete}}%
+\newenvironment{tourn-problems/blank}%
+    {\begin{tourn-problems/problems}}%
+    {\end{tourn-problems/problems}}%
+\newcommand\tournproblem[1]{\def\problem@tourn@number{\itemy{#1}}}
 
 % Selection/formatting 
 \long\def\problem@tourn@complete#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
-{\problem@tourn@fetched@preproblem}{\problem@tourn@fetched@presolution}%
 \problem@tourn@number\problem@tourn@fetched@problem
 \par\solution@delimiter\problem@tourn@fetched@solution\par
 \endgroup}
 \long\def\problem@tourn@problem#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
-{\problem@tourn@fetched@preproblem}%
 \problem@tourn@number\problem@tourn@fetched@problem\par
 \endgroup}
 \long\def\problem@tourn@solution#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
-{\problem@tourn@fetched@presolution}%
 \problem@tourn@number\problem@tourn@fetched@solution\par
 \endgroup}
 
 % Parsing/segregation
 \long\def\problem@tourn@parse#1\solution#2\endproblem{%
-    \@ifnextchar[%
-        {\problem@tourn@parse@preproblem}%
-        {\problem@tourn@parse@problem}#1\endproblem%
-    \@ifnextchar[%
-        {\problem@tourn@parse@presolution}%
-        {\problem@tourn@parse@solution}#2\endsolution%
+    \problem@tourn@parse@problem#1\endproblem%
+    \problem@tourn@parse@solution#2\endsolution%
 }
-\long\def\problem@tourn@parse@preproblem[#1]#2\endproblem{%
-    \long\def\problem@tourn@fetched@preproblem{#1}%
-    \long\def\problem@tourn@fetched@problem{#2}}
 \long\def\problem@tourn@parse@problem#1\endproblem{%
-    \long\def\problem@tourn@fetched@preproblem{}%
     \long\def\problem@tourn@fetched@problem{#1}}
-\long\def\problem@tourn@parse@presolution[#1]#2\endsolution{%
-    \long\def\problem@tourn@fetched@presolution{#1}%
-    \long\def\problem@tourn@fetched@solution{#2}}
 \long\def\problem@tourn@parse@solution#1\endsolution{%
-    \long\def\problem@tourn@fetched@presolution{}%
     \long\def\problem@tourn@fetched@solution{#1}}
 
 \newcommand\solution@delimiter{$\square$\quad}
