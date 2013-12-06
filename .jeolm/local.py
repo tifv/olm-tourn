@@ -92,15 +92,15 @@ class Driver(OriginalDriver):
 
     @fetch_metarecord
     def generate_matter_metabody(self, metapath, flags, metarecord,
-        *, date_set=None, seen_targets=frozenset()
+        *, date_set=None, seen_targets=frozenset(), matter=None
     ):
 
-        if '$tourn$key' not in metarecord or 'every-header' in flags:
+        if '$tourn$key' not in metarecord or matter is not None:
             if date_set is None:
                 date_set = set()
             yield from super().generate_matter_metabody(
                 metapath, flags, metarecord, date_set=date_set,
-                seen_targets=seen_targets )
+                seen_targets=seen_targets, matter=matter )
             return
 
         tourn_key = metarecord['$tourn$key']
@@ -338,7 +338,7 @@ class Driver(OriginalDriver):
                 self.find_name(league, metarecord['$lang']) )}
             yield {'verbatim' : self.substitute_jeolmtournheader_nospace()}
             yield {'verbatim' : self.substitute_regatta_blank_caption(
-                caption=self.find_name(regatta, metarecord.get('$lang')),
+                caption=self.find_name(regatta, metarecord['$lang']),
                 mark=round['mark'] )}
         yield from self.generate_tourn_problem_matter(
             metapath, flags, metarecord,

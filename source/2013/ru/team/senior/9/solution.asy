@@ -40,6 +40,7 @@ dot(Label("$I_A$", I_A, -ell.v));
 dot(Label("$I_C$", I_C, -ell.v));
 dot(Label("$A'$", Ap, SSE));
 dot(Label("$C'$", Cp, SSW));
+dot(Label("$O$", O, WSW));
 
 dot(O);
 

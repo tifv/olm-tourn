@@ -11,6 +11,8 @@ section:
   $targetable: off
   $matter{contained}:
   - verbatim: '\part*{2012}'
+  $matter{contained,book}:
+  - verbatim: '\chapter{2012}'
   $matter:
   - verbatim: '\part*{Многоборье-2012}'
     condition: problems
@@ -20,12 +22,12 @@ section:
     condition: complete
 
 $manner:
-- .[no-header]
+- - .[no-header]
 
 $delegate[poster]:
 - .[poster,complete,no-delegate]
 $manner{poster}:
-- .[no-header,no-year-section]
+- - .[no-header,no-year-section]
 $manner$options{poster}:
   font: 12pt
 

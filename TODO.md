@@ -3,3 +3,5 @@
 * Review source files to conform misc/guidelines.
   reviewed: 2011/, 2012/regatta, 2012/pers-algbr
 
+* Translate problem-sources
+

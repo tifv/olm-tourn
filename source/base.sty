@@ -3,8 +3,6 @@
 \usepackage[T2A]{fontenc}
 \usepackage[utf8x]{inputenc}
 
-\usepackage{mathabx}
-
 % default figures placement
 \def\fps@figure{bp}
 \def\fps@table{bp}
@@ -76,7 +74,7 @@
 %%%%%%%%%%
 % Problem/solution segregation
 
-% High-level dispatch
+% Dispatching environments
 \newenvironment{tourn-problems}[1]%
     {\def\problem@tourn@env{tourn-problems/#1}%
         \begin{\problem@tourn@env}}%
@@ -107,7 +105,7 @@
     {\end{tourn-problems/problems}}%
 \newcommand\tournproblem[1]{\def\problem@tourn@number{\itemy{#1}}}
 
-% Selection/formatting 
+% Selection of either problem of solution
 \long\def\problem@tourn@complete#1\endproblem{\begingroup
 \problem@tourn@parse#1\endproblem
 \problem@tourn@number\problem@tourn@fetched@problem
@@ -122,7 +120,7 @@
 \problem@tourn@number\problem@tourn@fetched@solution\par
 \endgroup}
 
-% Parsing/segregation
+% Parsing/segregation of solution and problem
 \long\def\problem@tourn@parse#1\solution#2\endproblem{%
     \problem@tourn@parse@problem#1\endproblem%
     \problem@tourn@parse@solution#2\endsolution%

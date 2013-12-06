@@ -11,6 +11,8 @@ section:
   $targetable: off
   $matter{contained}:
   - verbatim: '\part*{2013}'
+  $matter{contained,book}:
+  - verbatim: '\chapter{2013}'
   $matter:
   - verbatim: '\part*{Многоборье-2013}'
     condition: problems
@@ -20,12 +22,12 @@ section:
     condition: complete
 
 $manner:
-- .[no-header]
+- - .[no-header]
 
 $delegate[poster]:
 - .[poster,complete,no-delegate]
 $manner{poster}:
-- .[no-header,no-year-section]
+- - .[no-header,no-year-section]
 $manner$options{poster}:
   font: 12pt
 
@@ -35,6 +37,5 @@ $manner$style:
 - style: .
   add flags: [print]
   condition: poster
-- style: /flow-problem-numeration
-  condition: {not: no-flow-numeration}
+- /flow-problem-numeration
 

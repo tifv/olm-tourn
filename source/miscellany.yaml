@@ -2,18 +2,20 @@ miscellany:
   $style: 
   - ..
   - /flow-problem-numeration
-  - verbatim:
-      '\makeatletter\def\fps@figure{bhtp}\def\fps@table{bhtp}\makeatother'
+  - verbatim: |
+      \makeatletter
+      \def\fps@figure{bhtp}\def\fps@table{bhtp}
+      \makeatother
   # Replace all \section* with \section and \part* with \part
-  - verbatim: '\makeatletter'
-  - verbatim: '\let\oldpart\part\def\part{\@firstoftwo{\oldpart}}'
-  - verbatim: '\let\oldsection\section\def\section{\@firstoftwo{\oldsection}}'
-  - verbatim: '\let\oldtbc\tableofcontents'
-  - verbatim:
+  - verbatim: |
+      \makeatletter
+      \let\oldpart\part\def\part{\@firstoftwo{\oldpart}}
+      \let\oldsection\section\def\section{\@firstoftwo{\oldsection}}
+      \let\oldtbc\tableofcontents
       \def\tableofcontents{\begingroup
         \let\section\oldsection\oldtbc
       \endgroup}
-  - verbatim: '\makeatother'
+      \makeatother
   $delegate: [ru, en]
 
   ru:
@@ -28,7 +30,7 @@ miscellany:
     $delegate{solutions}:
     - .[no-delegate]
     $manner:
-    - .[no-header]
+    - - .[no-header]
     $matter:
     - verbatim:
         '\title{Многоборье 2011-2013}\date{}\author{}\maketitle'
@@ -56,7 +58,7 @@ miscellany:
     $delegate{solutions}:
     - .[no-delegate]
     $manner:
-    - .[no-header]
+    - - .[no-header]
     $matter:
     - verbatim:
         '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'

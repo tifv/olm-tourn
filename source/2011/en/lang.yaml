@@ -7,16 +7,6 @@
   - pers-geomt
   - pers-combi
   - team
-- $matter:
-  - verbatim: '\part*{2011}'
-    condition: contained
-  - verbatim: '\part*{2011 (English)}'
-    condition: {not: contained}
-  - regatta[contained]
-  - pers-algbr[contained]
-  - pers-geomt[contained]
-  - pers-combi[contained]
-  - team[contained]
 
 - regatta:
 - pers-algbr:
