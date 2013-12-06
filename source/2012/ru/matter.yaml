@@ -12,7 +12,7 @@ section:
   $matter{contained}:
   - verbatim: '\part*{2012}'
   $matter{contained,book}:
-  - verbatim: '\chapter{2012}'
+  - verbatim: '\chapter*{2012}'
   $matter:
   - verbatim: '\part*{Многоборье-2012}'
     condition: problems

@@ -1,0 +1,84 @@
+% Dispatching environments
+\newenvironment{tourn-problems}[1]%
+    {\def\problem@tourn@env{tourn-problems/#1}%
+        \begin{\problem@tourn@env}}%
+    {\end{\problem@tourn@env}}
+\newenvironment{tourn-problems/problems}%
+    {\begin{problems}%
+        \newcommand{\ifproblem}\iftrue
+        \newcommand{\ifsolution}\iffalse
+        \let\problem\problem@tourn@problem}%
+    {\end{problems}}%
+\newenvironment{tourn-problems/solutions}%
+    {\begin{problems}
+        \newcommand{\ifproblem}\iffalse
+        \newcommand{\ifsolution}\iftrue
+        \let\problem\problem@tourn@solution}%
+    {\end{problems}}%
+
+% Set problem number (no-op in book)
+\newcommand\tournproblem[1]{}
+\def\problem@tourn@number{\item}
+
+\newcommand\problemscore[1]{\textsf{(#1)}}
+
+% Selection of either problem of solution
+\long\def\problem@tourn@problem#1\endproblem{\begingroup
+\problem@tourn@parse#1\endproblem
+\problem@tourn@number\problem@tourn@fetched@problem\par
+\endgroup}
+\long\def\problem@tourn@solution#1\endproblem{\begingroup
+\problem@tourn@parse#1\endproblem
+\problem@tourn@number\problem@tourn@fetched@solution\par
+\endgroup}
+
+% Parsing/segregation of solution and problem
+\long\def\problem@tourn@parse#1\solution#2\endproblem{%
+    \problem@tourn@parse@problem#1\endproblem%
+    \problem@tourn@parse@solution#2\endsolution%
+}
+\long\def\problem@tourn@parse@problem#1\endproblem{%
+    \long\def\problem@tourn@fetched@problem{#1}}
+\long\def\problem@tourn@parse@solution#1\endsolution{%
+    \long\def\problem@tourn@fetched@solution{#1}}
+
+% Formatting environment
+\newenvironment{problems}{%
+% This solves the problem of vast space, that occures if the environment is
+% placed immediatly after a section start.
+\if@nobreak\vspace{-1.5ex}\fi
+% This macro is defined only inside the enviroment
+\let\itemy\problem@itemy
+\begin{list}{\problem@in@item}{%
+\leftmargin=2.45em\labelsep=\problem@space@length%
+\@nmbrlisttrue\def\@listctr{jeolmproblem}}%
+}{\end{list}}
+
+\newcommand\problem@itemy[1]{%
+\item[\problem@format{#1}{}]\problem@label{#1}\setcounter{jeolmsubproblem}{0}}
+
+% Numbering commands
+\newcounter{jeolmproblem}
+\newcommand\setproblem[1]{\setcounter{jeolmproblem}{#1}}
+\newcommand\resetproblem{\setcounter{jeolmproblem}{0}}
+\newcounter{jeolmsubproblem}
+
+\newcommand\problem@yx[2]{%
+    \problem@label{#1}\setcounter{jeolmsubproblem}{0}%
+    \problem@format{#1}{#2}}
+
+\newcommand\problem@in@item{\problem@yx{\arabic{jeolmproblem}}{}}
+
+% Labeling commands
+\newcommand\theproblem{}
+\newcommand\problem@label[1]{%
+    \global\edef\theproblem{#1}%
+    \edef\@currentlabel{\theproblem}}
+
+% Low-level formatting details
+\newlength\problem@space@length
+\problem@space@length=1em
+\newcommand\problem@space{\hspace{\problem@space@length}\ignorespaces}
+\newcommand\problem@format[2]{\textbf{#1.\rlap{\!#2}}}
+
+

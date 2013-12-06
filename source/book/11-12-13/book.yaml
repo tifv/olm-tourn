@@ -1,0 +1,43 @@
+$manner:
+- - .[no-header]
+$matter:
+- verbatim: \selectlanguage{russian}
+- title
+- verbatim: |
+    \begingroup
+    \let\oldchapter\chapter
+    \let\oldsection\section
+    \def\chapter*#1{\oldchapter*{#1}\addcontentsline{toc}{chapter}{#1}}
+    \def\section*#1{\oldsection*{#1}\addcontentsline{toc}{section}{#1}}
+- verbatim: |
+    \part{Условия задач}
+    \resetproblem
+- /2011/ru[problems,book,contained]
+- /2012/ru[problems,book,contained]
+- /2013/ru[problems,book,contained]
+- verbatim: |
+    \part{Решения задач}
+    \resetproblem
+- /2011/ru[solutions,book,contained]
+- /2012/ru[solutions,book,contained]
+- /2013/ru[solutions,book,contained]
+- verbatim: \selectlanguage{english}\fontencoding{T2A}
+- verbatim: |
+    \part{Problems}
+    \resetproblem
+- /2011/en[problems,book,contained]
+- /2012/en[problems,book,contained]
+- /2013/en[problems,book,contained]
+- verbatim:
+    \endgroup
+
+$style:
+- base
+- math
+- problems
+
+$manner$options:
+  font: 10pt
+  paper: a5paper
+  class: book
+
