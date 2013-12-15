@@ -1,22 +1,25 @@
 % nospell begin
 \def\ifsolutiondefined{%
-    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname}
+    \csname ifsolution:2012/ru/pers-geomt/junior/3.tex\endcsname}
 \expandafter\providecommand
-    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname
+    \csname ifsolution:2012/ru/pers-geomt/junior/3.tex\endcsname
     {\iffalse}
 \def\definesolution{%
     \expandafter\gdef
-    \csname ifsolution:<2012/ru/pers-geomt/junior/3.tex>\endcsname
+    \csname ifsolution:2012/ru/pers-geomt/junior/3.tex\endcsname
     {\iftrue}}
 % nospell end
 
-\ifsolution\ifsolutiondefined\else
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
 \begin{figure}\centering
     \jeolmfigure[width=0.5\textwidth]{solution}
-    \caption{к задаче \ref{solution:2012/ru/pers-geomt/junior/3}}
+    \caption{к решению задачи \ref{solution:2012/ru/pers-geomt/junior/3}}
     \label{fig:solution:2012/ru/pers-geomt/junior/3}
 \end{figure}
-\fi\fi
+\fi}
+\endgroup % figure
 
 \problem
 % duplicated in [2012/ru/pers-geomt/senior/2]
