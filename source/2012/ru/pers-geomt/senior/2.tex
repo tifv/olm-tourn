@@ -10,6 +10,14 @@
     {\iftrue}}
 % nospell end
 
+\ifsolution\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{solution:2012/ru/pers-geomt/senior/2}}
+    \label{fig:solution:2012/ru/pers-geomt/senior/2}
+\end{figure}
+\fi\fi
+
 \problem
 % duplicate of [2012/ru/pers-geomt/junior/3]
 Вписанная окружность равнобедренного треугольника $ABC$ ($AB = BC$) касается
@@ -24,32 +32,30 @@
 См.~решение задачи \ref{solution:2012/ru/pers-geomt/junior/3}.
 \else
 \definesolution
-\begin{figure}\centering
-    \jeolmfigure[width=0.5\textwidth]{solution}
-    \caption{к задаче \ref{solution:2012/ru/pers-geomt/senior/2}}
-    \label{fig:solution:2012/ru/pers-geomt/senior/2}
-\end{figure}
 Рис.~\ref{fig:solution:2012/ru/pers-geomt/senior/2}.
 Пусть $D$~--- точка касания вписанной окружности со стороной $AC$,
 точка $Q$ лежит на дуге $FE$, не содержащей $D$,
 а точка $P$~--- на дуге $FD$, не содержащей $E$.
 Тогда точка $Q'$ лежит на продолжении стороны $AC$ за точку $C$,
 а $P'$ лежит на продолжении стороны $AC$ за точку $A$.
-Докажем, что $\angle P'FA = \angle Q'EC$, тогда треугольники $Q'FA$ и $P'EC$
+Докажем, что $\angle P'FA = \angle Q'EC$, тогда треугольники $Q'EC$ и $P'FA$
 равны по стороне $FA = (AD = DC) = EC$
 (это следует того, что точка касания основания вписанной окружностью
 в равнобедренном треугольнике совпадает со серединой)
 и равных пар углов $\angle P'FA = \angle Q'EC$ и $\angle FAP' = \angle ECQ'$
-(последние углы дополняют до $180^o$ углы при основании равнобедренного
+(последние углы дополняют до $180^\circ$ углы при основании равнобедренного
 треугольника).
-Отсюда $Q'A = CP'$.
+Отсюда $Q'C = AP'$.
 Итак, покажем, что $\angle P'FA = \angle Q'EC$.
 Заметим, что около четырехугольника $P'FPA$ можно описать окружность, так как
 $\angle PP'A = \angle PEF = \angle AFP$
 (первое равенство следует из равенства вертикальных углов при параллельных
 прямых $FE$ и $P'A$ и секущей $PE$, а второе~--- как равенство угла между
 касательной и хордой и угла, опирающегося на эту хорду).
-Теперь $\angle Q'EC = \angle QEB = \angle QPE = \angle PP'A = \angle P'FA$
+Теперь
+\(
+    \angle Q' E C = \angle QEB = \angle QPE = \angle P' P A = \angle P' F A
+\)
 (первое и третье равенства~--- это равенства вертикальных углов,
 второе~--- равенство угла между касательной и хордой и угла, опирающегося на
 эту хорду, а четвертое~--- равенство углов, опирающихся на одну дугу $P'A$
