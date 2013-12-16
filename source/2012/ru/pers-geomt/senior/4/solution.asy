@@ -31,7 +31,7 @@ draw(IA--A1);
 
 draw(B--LA ^^ IC--LA ^^ IC--LB ^^ A--LB ^^ A--LC ^^ IB--LC);
 
-perpendicularmark(A1, unit(B-A1), dir=NE, size=0.5mr);
+perpendicularmark(A1, unit(IA-A1), dir=NE, size=0.5mr);
 
 dot(Label( "$A$", A, 1.2unit(unit(LC-A) + unit(LB-A)) ));
 dot(Label( "$B$", B, 1.2unit(unit(IA-B) + unit(LA-B)) ));
@@ -47,5 +47,5 @@ dot(Label(
     scale(0.6) * "$I_C$", IC,
     unit(unit(LB-IC) + unit(LA-IC))
 ));
-dot(A1);
+dot(Label("$A_1$", A1, 1.7 unit(IA-A1) / NE));
 

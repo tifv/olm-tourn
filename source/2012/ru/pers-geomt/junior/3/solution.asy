@@ -1,5 +1,6 @@
 import geometry;
 access jeolm;
+from jeolm access mark;
 
 // use /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
@@ -29,6 +30,9 @@ draw(inABC);
 draw(C--Qp--Q);
 draw(A--Pp--E);
 draw(Pp--F);
+
+mark(A--D, 1);
+mark(D--C, 1);
 
 dot(Label("$A$", A, S));
 dot(Label("$B$", B, N));
