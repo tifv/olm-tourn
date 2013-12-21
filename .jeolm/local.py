@@ -126,13 +126,9 @@ class Driver(OriginalDriver):
         flags = flags.union(('no-header',), overadd=False)
 
         matter = self.generate_tourn_matter(metapath, flags, metarecord)
-        pseudorecord = metarecord.copy()
-        self.clear_flagged_keys(pseudorecord, '$matter')
-        pseudorecord['$matter'] = matter
-        pseudorecord['$pseudo'] = True
-        yield from super().generate_matter_metabody(
-            metapath, flags, pseudorecord, date_set=set(),
-            seen_targets=seen_targets )
+        yield from self.generate_matter_metabody(
+            metapath, flags, metarecord, matter=matter,
+            date_set=set(), seen_targets=seen_targets, )
 
     def generate_tourn_matter(self, metapath, flags, metarecord):
         tourn_key = metarecord['$tourn$key']
