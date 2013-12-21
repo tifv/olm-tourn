@@ -3,10 +3,7 @@
 * Review source files to conform misc/guidelines.
   reviewed:
   - 2011/ru
-  - 2012/ru/regatta
-  - 2012/ru/pers-algbr
-  - 2012/ru/pers-combi
-  - 2012/ru/pers-geomt
+  - 2012/ru
 
 * Translate problem-sources
 

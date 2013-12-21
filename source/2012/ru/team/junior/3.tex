@@ -1,3 +1,11 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{solution:2012/ru/team/junior/3}}
+    \label{fig:solution:2012/ru/team/junior/3}
+\end{figure}
+\fi % \ifsolution
+
 \problem\problemscore{3}
 Бумажный треугольник со сторонами $a$, $b$, $c$ перегнули по прямой так,
 что вершина, противолежащая стороне длины~$c$, попала на эту сторону.
@@ -5,6 +13,9 @@
 примыкающие к линии сгиба.
 Найдите длины отрезков, на которые делит сторону $c$ попавшая туда вершина.
 \solution
+\label{solution:2012/ru/team/junior/3}
+\emph{Ответ:} $a \cdot c / (a + b)$, $b \cdot c / (a + b)$.
+Рис.~\ref{fig:solution:2012/ru/team/junior/3}.
 Пусть $KL$~--- линия сгиба, $C$~--- упомянутая вершина, $C'$~--- ее
 положение после перегиба.
 Отрезок $CC'$ составлен из высот равных треугольников $KCL$ и $KC'L$.
@@ -12,5 +23,4 @@
 треугольник $KCL$~--- равнобедренный.
 Поэтому $CC'$~--- биссектриса угла $C$, и делит сторону $c$ на отрезки,
 пропорциональные двум другим сторонам.
-\emph{Ответ:} $\dfrac{a c}{a + b}$, $\dfrac{b c}{a + b}$.
 \endproblem

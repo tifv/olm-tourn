@@ -16,7 +16,10 @@ var
 
     M = centroid(ABC);
 
+draw(ABC, linewidth(1));
+
 mark(M--A, 1);
+mark(B--C, tildeframe(1))
 
 markangle(A, M, C, radius=mr);
 
