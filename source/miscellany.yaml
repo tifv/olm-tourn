@@ -23,11 +23,11 @@ miscellany:
     $delegate:
     - .[problems]
     - .[complete]
-    $delegate{problems}:
+    $delegate[problems]:
     - .[no-delegate]
-    $delegate{complete}:
+    $delegate[complete]:
     - .[no-delegate]
-    $delegate{solutions}:
+    $delegate[solutions]:
     - .[no-delegate]
     $manner:
     - - .[no-header]
@@ -51,11 +51,11 @@ miscellany:
     $delegate:
     - .[problems]
     #- .[complete]
-    $delegate{problems}:
+    $delegate[problems]:
     - .[no-delegate]
-    $delegate{complete}:
+    $delegate[complete]:
     - .[no-delegate]
-    $delegate{solutions}:
+    $delegate[solutions]:
     - .[no-delegate]
     $manner:
     - - .[no-header]

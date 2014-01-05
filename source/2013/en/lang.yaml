@@ -1,16 +1,17 @@
-!!omap
-- $style: [.., /lang/en]
-- $lang: en
-- $delegate:
-  - regatta
-  - pers-algbr
-  - pers-combi
-  - pers-geomt
-  - team
+$include:
+- /lib/lang/en
+- /lib/lang/matter
 
-- regatta:
-- pers-algbr:
-- pers-combi:
-- pers-geomt:
-- team:
+section:
+  $targetable: off
+  $matter[contained]:
+  - verbatim: '\part*{2013}'
+  $matter[contained,book]:
+  - verbatim: '\chapter*{2013}'
+  $matter[-contained]:
+  - verbatim: '\part*{Многоборье-2013 (English)}'
+  $matter[-contained,solutions]:
+  - verbatim: '\part*{Многоборье-2013 (English, solutions)}'
+  $matter[-contained,complete]:
+  - verbatim: '\part*{Многоборье-2013 (English, with solutions)}'
 

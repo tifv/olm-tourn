@@ -1,0 +1,93 @@
+contest:
+  $delegate:
+  - contest/league for each league
+  $matter[problems|solutions|complete|jury]:
+  - *caption
+  - league for each league
+  $matter:
+  - .[complete]
+
+contest/league:
+  $matter[problems|solutions|complete]
+  - *caption
+  - problem for each problem
+  $matter[jury]:
+  - *caption[jury]
+  - problem[-jury,complete,with-criteria] for each problem
+  $matter[contest]:
+  - *caption[problems]
+  - problem[-contest,problems,without-problem-sources] for each problem
+  - postword
+  $delegate[-(problems|contest|solutions|complete|jury)]:
+    .[complete]
+  $matter:
+    .[complete]
+
+contest/league/problem:
+  $matter[problems|solutions|complete]
+  - *problem|solution|complete
+  $delegate[-(problems|solutions|complete)]:
+    .[complete]
+  $matter:
+  - .[complete]
+
+regatta:
+  $delegate:
+  - league for each league
+  $matter[problems|solutions|complete|jury]:
+  - *caption
+  - league for each league
+  $matter[contest]:
+  - league[contest] for each league
+  $matter:
+  - .[complete]
+
+regatta/league
+  $delegate:
+  - subject for each subject
+  $matter[problems|solutions|complete|jury]:
+  - *caption
+  - round for each round
+  $matter[contest] MATTER
+  - round[contest] for each round
+  $matter:
+  - .[complete]
+
+regatta/league/subject:
+  $matter[problems|solutions|complete]:
+  - *caption
+  - round for each round
+  $matter[jury]:
+  - *caption[jury]
+  - round[-jury,complete,with-criteria] for each round
+  $matter[contest]:
+  - round[-contest,blank,without-problem-sources] for each round
+  $delegate[-(problems|contest|solutions|complete|jury)]:
+  - .[complete]
+  $matter:
+  - .[complete]
+
+regatta/league/round:
+  $matter[problems|solutions|complete]:
+  - *caption
+  - ../subject/round for each subject
+  $matter[jury]:
+  - *caption[jury]
+  - ../subject/round[-jury,complete,with-criteria] for each subject
+  $matter[contest]:
+  - ../subject/round[-contest,blank,without-problem-sources] for each subject
+  $delegate[-(problems|contest|solutions|complete|jury)]:
+  - .[complete]
+  $matter:
+  - .[complete]
+
+regatta/league/subject/problem:
+  $matter[blank]:
+  - *blank
+  $matter[problems|solutions|complete]:
+  - *problem|solution|complete
+  $delegate[-(problems|solutions|complete)]:
+  - .[complete]
+  $matter:
+  - .[complete]
+

@@ -1,7 +1,7 @@
-$style: [.., year]
+$include:
+- /lib/year
+
 $delegate: &languages
 - ru
 - en
-
-$matter: []
 

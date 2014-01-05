@@ -1,5 +1,5 @@
 $matter:
-- matter: section
+- delegate: section
   condition: {not: no-year-section}
 - regatta[contained]
 - pers-algbr[contained]
@@ -7,35 +7,21 @@ $matter:
 - pers-geomt[contained]
 - team[contained]
 
-section:
-  $targetable: off
-  $matter{contained}:
-  - verbatim: '\part*{2013}'
-  $matter{contained,book}:
-  - verbatim: '\chapter*{2013}'
-  $matter:
-  - verbatim: '\part*{Многоборье-2013}'
-    condition: problems
-  - verbatim: '\part*{Многоборье-2013 (решения)}'
-    condition: solutions
-  - verbatim: '\part*{Многоборье-2013 (с решениями)}'
-    condition: complete
-
 $manner:
-- - .[no-header]
-
-$delegate[poster]:
-- .[poster,complete,no-delegate]
-$manner{poster}:
-- - .[no-header,no-year-section]
-$manner$options{poster}:
-  font: 12pt
-
+- .[no-header]
 $manner$style:
-- style: .
-  condition: {not: poster}
-- style: .
-  add flags: [print]
-  condition: poster
+- .
+- /flow-problem-numeration
+
+$delegate[poster,-complete,-problems,-solutions]:
+- .[complete]
+$delegate[poster]:
+- .[no-delegate]
+$manner[poster]:
+- .[no-header,no-year-section]
+$manner$options[poster]:
+  font: 12pt
+$manner$style[poster]:
+- .[print]
 - /flow-problem-numeration
 

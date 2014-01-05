@@ -1,10 +1,10 @@
 $style:
 - /base
 - /pgfpages
-$style{print}:
+$style[print]:
 - /base
 - /pgfpages[2on1]
-$style{tiled4}:
+$style[tiled4]:
 - package: geometry
   options: [a6paper, landscape]
 - /base
@@ -13,19 +13,7 @@ $style{tiled4}:
 base: # base.sty
   $targetable: off
 pgfpages:
-  $targetable: off
-  $style:
-  - package : pgfpages
-  - verbatim : '\pgfpagesuselayout{resize to}[a4paper]'
-  $style{2on1}:
-  - package : pgfpages
-  - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper,landscape]'
-  $style{2on1-portrait}:
-  - package : pgfpages
-  - verbatim : '\pgfpagesuselayout{2 on 1}[a4paper]'
-  $style{4on1}:
-  - package : pgfpages
-  - verbatim : '\pgfpagesuselayout{4 on 1}[a4paper,landscape]'
+  $import: [pgfpages]
 lang:
     $targetable: off
 flow-problem-numeration:
@@ -33,5 +21,5 @@ flow-problem-numeration:
   - verbatim: |
       \makeatletter\renewcommand\tournproblem[1]{%
         \def\problem@tourn@number{\item}}\makeatother
-    condition: {not: no-flow-numeration}
+  $style[no-flow-numeration]: []
 
