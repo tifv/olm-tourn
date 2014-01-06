@@ -44,7 +44,7 @@
     \jeolmfigure[width=0.5\textwidth]{solution}
     \caption{к задаче \ref{solution:<problem metapath>}}
     \label{fig:solution:<problem metapath>}
-\end{figure}
+\end{figure}%
 \fi % \ifsolution
 
 % Ссылка на картинку из решения
@@ -55,14 +55,14 @@
 % Дублирование задач: префикс задачи
 % nospell begin
 \def\ifsolutiondefined{%
-    \csname ifsolution:<original metapath>\endcsname}
+    \csname ifsolution:<original metapath>\endcsname}%
 \expandafter\providecommand
     \csname ifsolution:<original metapath>\endcsname
-    {\iffalse}
+    {\iffalse}%
 \def\definesolution{%
     \expandafter\gdef
     \csname ifsolution:<original metapath>\endcsname
-    {\iftrue}}
+    {\iftrue}}%
 % nospell end
 
 % Дублирование задач: маркер оригинала

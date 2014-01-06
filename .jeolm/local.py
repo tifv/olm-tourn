@@ -568,7 +568,7 @@ class Driver(GenericDriver):
         return body
 
     tourn_problem_template = (
-        r'\tournproblem{$number}' '\n'
+        r'\tournproblem{$number}%' '\n'
         r'\input{$filename}% $inpath' )
 
     @classmethod
@@ -627,7 +627,7 @@ class Driver(GenericDriver):
 
     regatta_number_template = r'$round_index$subject_index'
 
-    criteria_template = r'\emph{Критерии: $criteria}'
+    criteria_template = r'\emph{Критерии: $criteria}\par'
     problem_source_template = ( r''
         r'\nopagebreak'
         r'\vspace{-1ex}\begingroup'

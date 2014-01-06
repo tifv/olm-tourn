@@ -4,6 +4,7 @@
   reviewed:
   - 2011/ru
   - 2012/ru
+  - 2013/ru/regatta
 
 * Translate problem-sources
 

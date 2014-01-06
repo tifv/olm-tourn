@@ -1,13 +1,13 @@
 % nospell begin
 \def\ifsolutiondefined{%
-    \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname}
+    \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname}%
 \expandafter\providecommand
     \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname
-    {\iffalse}
+    {\iffalse}%
 \def\definesolution{%
     \expandafter\gdef
     \csname ifsolution:2013/ru/regatta/junior/algbr/4\endcsname
-    {\iftrue}}
+    {\iftrue}}%
 % nospell end
 
 \problem
@@ -25,8 +25,8 @@ $200$ сумм в рядах (строках и столбцах) различн
 \emph{Оценка.}
 Будем для удобства считать, что числа могут быть нулями
 (потом добавим к каждому числу по единице).
-Тогда сумма в каждом ряду хотя бы 0, и значит минимально возможные значения
-этих сумм от 0 до $199$, а минимально возможная сумма~--- это
+Тогда сумма в каждом ряду хотя бы $0$, и значит минимально возможные значения
+этих сумм от $0$ до $199$, а минимально возможная сумма~--- это
 $199 \cdot 200 / 4 = 9950$.
 \\
 \emph{Пример.}
@@ -44,8 +44,8 @@ $199 \cdot 200 / 4 = 9950$.
     \label{table:solution:2013/ru/regatta/junior/algbr/4}
 \end{table}%
 Покажем, что существует пример, когда реализуются ровно такие суммы.
-Для этого на главной диагонали расставим четные числа от нуля до 198, на второй
-диагонали единицы в клеточках через 1
+Для этого на главной диагонали расставим четные числа от нуля до $198$, на
+второй диагонали единицы в клеточках через 1
 (таблица \ref{table:solution:2013/ru/regatta/junior/algbr/4}).
 Остальные числа объявим нулями.
 Теперь, чтобы получился пример для исходной задачи, добавим к каждому числу в
