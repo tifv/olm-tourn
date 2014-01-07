@@ -18,19 +18,17 @@
     (y_1 - x_2) (y_1 - x_3) (y_1 - x_4)
 .\]
 \solution
-Пусть
+Пусть для $1 \leq m \leq 4$
 \begin{align*}&
     \sigma_m(x)
 =
-    \sum\limits_{1 \leq i_1 < \ldots < i_m \leq 4}
+    \sum\limits_{\mathllap{1 \leq} i_1 < \ldots < i_m \mathrlap{\leq 4}}
         x_{i_1} \ldots x_{i_m}
 ,\\&
     \sigma_m(y)
 =
-    \sum\limits_{1 \leq i_1 < \ldots < i_m \leq 4}
+    \sum\limits_{\mathllap{1 \leq} i_1 < \ldots < i_m \mathrlap{\leq 4}}
         y_{i_1} \ldots y_{i_m}
-\qquad
-    (1 \leq m \leq 4)
 \end{align*}
 --- элементарные симметрические многочлены от наборов $x$ и $y$, и
 \[
@@ -49,7 +47,7 @@
 Тогда из равенств $s_1(x) = s_1(y)$, $s_2(x) = s_2(y)$, $s_3(x) = s_3(y)$
 следует равенство элементарных симметрических многочленов
 от наборов $x$ и $y$:
-\begin{equation} \label{Newt}
+\begin{equation} \label{eq:2013/ru/pers-algbr/senior/3:newton}
     \sigma_1(x) = \sigma_1(y)
 ,\quad
     \sigma_2(x) = \sigma_2(y)
@@ -70,17 +68,17 @@
 ,\quad
     g(z) = (z - y_1) (z - y_2) (z - y_3) (z - y_4)
 .\]
-Из равенств~\eqref{Newt} и теоремы Виета следует, что многочлен
-$h(z) = f(z) - g(z)$ является константой.
+Из равенств~\eqref{eq:2013/ru/pers-algbr/senior/3:newton} и теоремы Виета
+следует, что многочлен $h(z) = f(z) - g(z)$ является константой.
 Значит, $-g(x_1) = h(x_1) = h(y_1) = f(y_1)$, то есть
-\begin{equation} \label{hh}
+\begin{equation}
     - (x_1 - y_1) (x_1-y_2) (x_1 - y_3) (x_1 - y_4)
 =
     (y_1 - x_1) (y_1 - x_2) (y_1 - x_3) (y_1 - x_4)
 .\end{equation}
 Если $x_1 \neq y_1$, то, сокращая на $(y_1 - x_1)$, приходим к нужному
 равенству
-\begin{equation} \label{Nuzh}
+\begin{equation} \label{eq:2013/ru/pers-algbr/senior/3:desired}
     (x_1 - y_2) (x_1 - y_3) (x_1 - y_4)
 =
     (y_1 - x_2) (y_1 - x_3) (y_1 - x_4)
@@ -93,10 +91,11 @@ $h(z) = f(z) - g(z)$ является константой.
 ,\\
     x_2^3 + x_3^3 + x_4^3 = y_2^3 + y_3^3 + y_4^3
 ,\end{gather*}
-как и раньше получаем равенство элементарных симметрических многочленов от
+как и раньше, получаем равенство элементарных симметрических многочленов от
 наборов $(x_2, x_3, x_4)$ и $(y_2, y_3, y_4)$.
 По теореме Виета эти два набора чисел являются корнями одного и того же
 кубического уравнения, то есть совпадают с точностью до перестановки.
-Следовательно, равенство~\eqref{Nuzh} будет справедливо и в этом случае.
+Следовательно, равенство~\eqref{eq:2013/ru/pers-algbr/senior/3:desired} будет
+справедливо и в этом случае.
 \endproblem
 % $problem-source: А.\,Устинов

@@ -5,6 +5,7 @@
   - 2011/ru
   - 2012/ru
   - 2013/ru/regatta
+  - 2013/ru/pers-algbr
 
 * Translate problem-sources
 

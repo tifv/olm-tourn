@@ -3,24 +3,28 @@
 $x > 0$ удовлетворяет неравенству $f(2 x) \leq  4 f(x + 1)$.
 Докажите, что для любого $x > 1$ выполнено
 \[
-    f(x) \leq f(4) x^2
+    f(x) \leq x^2 \cdot f(4)
 .\]
 \solution
 По условию задачи
-\begin{gather*}
+\begin{align*}
     f(x)
+\leq{}&
+    4^1 \cdot f\left( \frac{x}{2} + 1 \right)
 \leq
-    4^1 f\left(\frac{x}{2} + 1 \right)
-\leq
-    4^2 f\left(\frac{x^2}{2^2} + \frac{1}{2} + 1\right)
-\leq\ldots\\\ldots\leq
-    4^k f\left(
+    4^2 \cdot f\left( \frac{x^2}{2^2} + \frac{1}{2} + 1 \right)
+\leq\ldots\\\ldots\leq{}&
+    4^k
+    \cdot
+    f\left(
         \frac{x^k}{2^k} + \frac{1}{2^{k-1}} + \ldots + \frac{1}{2} + 1
     \right)
 \leq
-    4^k f\left(\frac{x^k}{2^k} + 2\right)
-.\end{gather*}
+    4^k \cdot f\left( \frac{x^k}{2^k} + 2 \right)
+.\end{align*}
 Выбрав $k$ из условия $2^k \leq x < 2^{k + 1}$, получаем, что $4^k \leq x^2$ и
-$f(x) \leq x^2 f(2 + 2) = f(4) x^2$.
+\[
+    f(x) \leq x^2 \cdot f(2 + 2) = x^2 \cdot f(4)
+.\]
 \endproblem
 % $problem-source: В.\,Быковский
