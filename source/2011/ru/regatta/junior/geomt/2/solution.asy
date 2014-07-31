@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -23,10 +25,10 @@ draw(C--S);
 draw(S--T);
 
 markangle(A, C, B, radius=0.7mr, n=1);
-markangle(C, B, A, radius=0.6mr, n=1);
-markangle(B, S, T, radius=0.6mr, n=1);
+markangle(C, B, A, radius=0.5mr, n=1);
+markangle(B, S, T, radius=0.5mr, n=1);
 
-markangle(S, T, B, radius=0.9mr, n=2);
+markangle(S, T, B, radius=0.8mr, n=2);
 markangle(B, A, C, radius=0.9mr, n=2);
 
 markangle(B, A, T, radius=1.4mr, n=3);

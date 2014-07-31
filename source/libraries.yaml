@@ -1,50 +1,45 @@
 lib:
-  $targetable: off
+  $target$able: off
+
   year:
     $style: [.., year]
     $matter: [/error]
+
+  lang-ru:
+    $style: [.., /lang/ru]
+    $lang: ru
+  lang-en:
+    $style: [.., /lang/en]
+    $lang: en
+  lang-sr:
+    $style: [.., /lang/sr]
+    $lang: sr
+
   lang:
-    ru:
-      $style: [.., /lang/ru]
-      $lang: ru
-    en:
-      $style: [.., /lang/en]
-      $lang: en
-    sr:
-      $style: [.., /lang/sr]
-      $lang: sr
-    matter: 
-      $delegate:
-      - regatta
-      - pers-algbr
-      - pers-geomt
-      - pers-combi
-      - team
+    $delegate:
+    - regatta
+    - pers-algbr
+    - pers-geomt
+    - pers-combi
+    - team
+    $matter:
+    - delegate: section
+      condition: {not: no-year-section}
+    - regatta[contained]
+    - pers-algbr[contained]
+    - pers-combi[contained]
+    - pers-geomt[contained]
+    - team[contained]
+    $build$matter:
+    - .[header]
+    $build$style:
+    - .[flow-numeration]
+    poster:
+      $delegate[-complete,-problems,-solutions]:
+      - .[complete]
       $matter:
-      - delegate: section
-        condition: {not: no-year-section}
-      - regatta[contained]
-      - pers-algbr[contained]
-      - pers-combi[contained]
-      - pers-geomt[contained]
-      - team[contained]
-      $manner:
-      - .[header]
-      $manner$style:
-      - .
-      - /flow-problem-numeration
-      poster:
-        $delegate[-complete,-problems,-solutions]:
-        - .[complete]
-        $matter:
-        - ..[no-header,no-year-section]
-        $manner$options:
-          font: 12pt
-        $manner$style:
-        - .[print]
-        - /flow-problem-numeration
-
-
-
-
+      - ..[no-header,no-year-section]
+      $build$style:
+      - font: 12pt
+      - .[print,flow-numeration]
 

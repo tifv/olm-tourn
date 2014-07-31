@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -18,6 +20,9 @@ draw(A--C, dashed);
 
 mark(B--(1.2C-0.2B), tildeframe(1));
 mark(B--(1.2D-0.2B), tildeframe(1));
+
+mark((1.2B-0.2C)--C, tildeframe(1));
+mark((1.2B-0.2D)--D, tildeframe(1));
 
 dot(Label("$A$", A, SW));
 dot(Label("$B$", B, NW));

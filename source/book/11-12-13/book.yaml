@@ -1,5 +1,5 @@
-$manner:
-- - .[no-header]
+$build$matter:
+- .[no-header]
 $matter:
 - verbatim: \selectlanguage{russian}
 - title
@@ -36,8 +36,9 @@ $style:
 - math
 - problems
 
-$manner$options:
-  font: 10pt
-  paper: a5paper
-  class: book
+$build$style:
+- document_class: book
+  options: [a5paper]
+- font: 10pt
+- .
 

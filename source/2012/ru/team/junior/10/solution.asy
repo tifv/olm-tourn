@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -16,16 +18,17 @@ var
     X = (F - alpha * H) / (1 - alpha),
 
     next2 = rotate(360.0 / 7, X),
-    I = next2 * F, J = next2 * I, K = next2 * J, L = next2 * K, M = next2 * L,
+    I = next2 * F, J = next2 * I, K = next2 * J,
+    L = next2 * K, M = next2 * L,
     N = extension(M, J, K, H),
 
     heptagon1 = A--B--C--D--E--F--G--cycle,
     heptagon2 = H--F--I--J--K--L--M--cycle;
 
-// plain.E, plain.N, plain.I !
+// plain.E, plain.N, plain.I
 
-fill(heptagon2, gray(0.8));
-fill(heptagon1, gray(0.6));
+fill(heptagon2, gray(0.85));
+fill(heptagon1, gray(0.7));
 
 draw(heptagon1, linewidth(1));
 draw(heptagon2);

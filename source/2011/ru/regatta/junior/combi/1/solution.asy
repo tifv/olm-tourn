@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 

@@ -12,13 +12,23 @@
 .\]
 \solution
 Заметим, что
-$(z + x) (z + y) = z^2 + x z + y z + x y = z (x + y + z) + x y = z + x y$.
+\[
+    (z + x) (z + y)
+=
+    z^2 + x z + y z + x y
+=
+    z (x + y + z) + x y = z + x y
+.\]
 Значит, для первого слагаемого мы имеем:
 \[
-    \frac{xy}{\sqrt{z+xy}} = \frac{xy}{\sqrt{(z+x)(z+y)}}
+    \frac{x y}{\sqrt{z + x y}}
+=
+    \frac{x y}{\sqrt{(z + x) (z + y)}}
 \leq
-    \frac{1}{2}(\frac{xy}{z+x}+\frac{xy}{z+y}).
-\]
-суммируя все такие неравенства мы получаем требуемое.
+    \frac{1}{2} \left(
+        \frac{xy}{z + x} + \frac{xy}{z + y}
+    \right)
+.\]
+Суммируя все такие неравенства, мы получаем требуемое.
 \endproblem
 % $problem-source: Д.\,Максимов

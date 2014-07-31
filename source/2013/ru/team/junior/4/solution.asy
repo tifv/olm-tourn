@@ -1,23 +1,25 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
 
 var
-    A = (0,0), B = (1,0.8), C = (2,0),
+    A = (-1,0), B = (0,0.8), C = (1,0),
     ABC = triangle(A, B, C),
     DC = parallel(C, unit(B-C)^2 / unit(A-C)),
     D = intersectionpoint(DC, line(A, B)),
-    H = projection(A, C) * B,
+    H = foot(ABC.VB),
     F = projection(B, H) * D,
     Dp = reflect(B, H) * D,
     E = F + unit(H-B) * sqrt(abs(C-D)^2 - abs(F-D)^2);
 
-draw(A--B--C--cycle, linewidth(1));
+draw(ABC, linewidth(1));
 draw(line(F, H));
 draw(D--B ^^ D--C ^^ D--E);
 draw(Dp--A ^^ Dp--B ^^ Dp--D);

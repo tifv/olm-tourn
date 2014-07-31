@@ -1,28 +1,32 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
 
 var
-    circ = circle((point)(0,0), 1),
+    circle = circle((point)(0,0), 1),
 
     A = dir(90), B = dir(-120), C = A * A / B, D = C * C / B,
     X = unit(D + C),
     O = extension(A, C, B, D),
     Y = extension(A, X, B, D), Z = extension(A, C, B, X);
 
-// gray
-draw(A--X--B, p=gray(0.5));
-perpendicularmark(Y, unit(A-Y), dir=NE, size=0.5mr, p=gray(0.5));
-perpendicularmark(Z, unit(A-Z), dir=NE, size=0.5mr, p=gray(0.5));
+pen gray = gray(0.7);
+draw(circle, gray+1);
 
-draw(circ);
 draw(A--B--C--D--cycle, linewidth(1));
 draw(A--C ^^ B--D);
 draw(X--O);
+
+draw(A--X--B);
+
+perpendicularmark(Y, unit(A-Y), dir=NE, size=0.5mr);
+perpendicularmark(Z, unit(A-Z), dir=NE, size=0.5mr);
 
 draw(
     arccircle(C, X, D),

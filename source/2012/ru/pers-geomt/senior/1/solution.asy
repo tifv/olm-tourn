@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -13,7 +15,7 @@ var
     M = midpoint(ABC.AB),
     Q = (2 C + B) / 3, Ap = 2 C - A;
 
-draw(A--B--C--cycle, linewidth(1));
+draw(ABC, linewidth(1));
 draw(Q--A);
 draw(C--M--Q);
 

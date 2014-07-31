@@ -1,6 +1,6 @@
 /** Some sizes common to most images in the project **/
 /* Proposed usage:
- * // use /commmon-sizes.asy as common-sizes.asy
+ * // access /commmon-sizes.asy as common-sizes.asy
  * access "commmon-sizes.asy" as sizes;
  */
 

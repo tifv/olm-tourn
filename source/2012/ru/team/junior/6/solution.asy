@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -38,7 +40,6 @@ dot(Label("$M_1$", M1, WNW));
 dot(Label("$N_1$", N1, ENE));
 dot(Label("$M_2$", M2, SSE));
 dot(Label("$N_2$", N2, NNE));
-
 
 dot(Label(scale(0.7) * "$K$", K, WNW));
 dot(Label(scale(0.7) * "$L$", L, ENE));

@@ -10,23 +10,29 @@
     {\iftrue}}%
 % nospell end
 
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к решению задачи \ref{2012/ru/team/junior/10:solution}}
+    \label{2012/ru/team/junior/10:solution:fig}
+\end{figure}%
+\fi}%
+\endgroup % figure
+
 \problem\problemscore{12}
 % duplicated in [2012/ru/team/senior/6]
 В правильном семиугольнике $ABCDEFG$ стороны равны 1.
 Диагонали $AD$ и $CG$ пересекаются в точке $H$.
 Докажите, что $FH = \sqrt{2}$.
 \solution
-\label{solution:2012/ru/team/junior/10}%
+\label{2012/ru/team/junior/10:solution}%
 \ifsolutiondefined
-См.~решение задачи \ref{solution:2012/ru/team/senior/6}.
+См.~решение задачи \ref{2012/ru/team/senior/6:solution}.
 \else
 \definesolution
-\begin{figure}\centering
-    \jeolmfigure[width=0.5\textwidth]{solution}
-    \caption{к решению задачи \ref{solution:2012/ru/team/junior/10}}
-    \label{fig:solution:2012/ru/team/junior/10}
-\end{figure}%
-Рис.~\ref{fig:solution:2012/ru/team/junior/10}.
+Рис.~\ref{2012/ru/team/junior/10:solution:fig}.
 Обозначим угол $x = \pi / 7$.
 Заметим, что $ABCD$ и $ABCG$~--- равнобедренные трапеции,
 так что $ABCH$~--- параллелограмм, а следовательно и ромб.
@@ -61,7 +67,8 @@ $M_{ij}$~--- середины соответствующих отрезков $X
 \[
     4 \cdot {M_{13} M_{24}}^2
 =
-    {X_1 X_2}^2 + {X_2 X_3}^2 + {X_3 X_4}^2 + {X_4 X_1}^2 - {X_1 X_3}^2 - {X_2 X_4}^2
+    {X_1 X_2}^2 + {X_2 X_3}^2 + {X_3 X_4}^2 + {X_4 X_1}^2
+    - {X_1 X_3}^2 - {X_2 X_4}^2
 .\]
 Установить его можно, например, рассмотрев параллелограммы Вариньона
 $M_{ij} M_{jk} M_{kl} M_{li}$ для перестановок

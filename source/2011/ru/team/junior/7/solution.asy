@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -21,10 +23,10 @@ var
     K = (A + B) / 2;
 
 pen circlepen = gray(0.7)+1;
-    draw(circumAPD, p=circlepen);
+draw(circumAPD, p=circlepen);
 clipdraw(circumAPC, p=circlepen);
 clipdraw(circumBQD, p=circlepen);
-    draw(circumBQC, p=circlepen);
+draw(circumBQC, p=circlepen);
 
 draw(A--B--C--D--cycle, linewidth(1));
 draw(D--K--C, dashed);
@@ -44,5 +46,4 @@ dot(Label("$Q$", Q, SSW));
 dot(Label("$X$", X, SW));
 dot(Label("$Y$", Y, ESE));
 dot(Label("$K$", K, S));
-
 

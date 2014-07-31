@@ -9,18 +9,27 @@
 % Решение задачи без ответа (на доказательство).
 \solution
 <Решение.>
-%Времена!
+
+% Времена в пределах одного решения должны быть согласованы
+% (в разумных пределах).
+
+% Геометрические обозначения с индексами должны быть разбиты пробелами,
+% со штрихами~--- нет.
+$A B_1 C = AB'C$.
 
 % Решение задачи с ответом
 \solution
 \emph{Ответ:} <ответ>.
+\par
 <Решение.>
 
 % Решение задачи с оценкой и примером.
 \solution
 \emph{Ответ:} <ответ>.
+\par
 \emph{Оценка.}
 <Оценка.>
+\par
 \emph{Пример:} <пример>.
 
 % Альтернативные решения
@@ -42,15 +51,15 @@
 \ifsolution
 \begin{figure}\centering
     \jeolmfigure[width=0.5\textwidth]{solution}
-    \caption{к задаче \ref{solution:<problem metapath>}}
-    \label{fig:solution:<problem metapath>}
+    \caption{к задаче \ref{<problem metapath>:solution}}
+    \label{<problem metapath>:solution:fig}
 \end{figure}%
 \fi % \ifsolution
 
 % Ссылка на картинку из решения
 \solution
-\label{solution:<problem metapath>}
-Рис.~\ref{fig:solution:<problem metapath>}.
+\label{<problem metapath>:solution}%
+Рис.~\ref{<problem metapath>:solution:fig}.
 
 % Дублирование задач: префикс задачи
 % nospell begin
@@ -66,16 +75,18 @@
 % nospell end
 
 % Дублирование задач: маркер оригинала
+\problem
 % duplicated in [<duplicate metapath>]
 
 % Дублирование задач: маркер копии
+\problem
 % duplicate of [<original metapath>]
 
 % Дублирование задач: решение
-\label{solution:<problem metapath}%
+\label{<problem metapath>:solution}%
 \emph{Ответ:} <ответ>.
 \ifsolutiondefined
-См.~решение задачи \ref{solution:<other problem metapath>}.
+См.~решение задачи \ref{<other problem metapath>:solution}.
 \else
 \definesolution
 <Решение.>

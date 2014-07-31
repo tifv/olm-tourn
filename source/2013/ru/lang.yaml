@@ -1,9 +1,9 @@
 $include:
-- /lib/lang/ru
-- /lib/lang/matter
+- /lib/lang-ru
+- /lib/lang
 
 section:
-  $targetable: off
+  $target$able: off
   $matter[contained]:
   - verbatim: '\part*{2013}'
   $matter[contained,book]:

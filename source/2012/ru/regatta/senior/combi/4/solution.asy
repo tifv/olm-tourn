@@ -1,6 +1,6 @@
 import three;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 currentprojection = perspective(65, 70, 80);
@@ -61,7 +61,7 @@ currentpen = black+opacity(0.25);
 mydraw_frame((0,0,0), (n,n,n));
 
 // Three bricks in perpendicular directions
-currentpen = blue + opacity(0.5);
+currentpen = blue + opacity(0.25);
 mydraw_fill((0, dx.y, dx.z), (n, dx.y+1, dx.z+1));
 mydraw_fill((dy.x, 0, dy.z), (dy.x+1, n, dy.z+1));
 mydraw_fill((dz.x, dz.y, 0), (dz.x+1, dz.y+1, n));

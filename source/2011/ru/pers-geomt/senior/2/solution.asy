@@ -1,9 +1,11 @@
 import three;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 from geometry access tildeframe;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -43,7 +45,7 @@ dot(Label("$B_1$", p(B1), NW));
 dot(Label("$C_1$", p(C1), NNW));
 dot(Label("$A_2$", p(A2), SSW));
 dot(Label("$B_2$", p(B2), NW));
-dot(scale(0.8) * Label("$C_2$", p(C2), 0.8NW));
+dot(scale(0.7) * Label("$C_2$", p(C2), 0.8NW));
 
 mark(p(D)--p(A2), 3);
 mark(p(A1)--p(A), 3);

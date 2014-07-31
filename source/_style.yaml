@@ -1,0 +1,23 @@
+$style:
+# begin override /_style
+- document_class: article
+  options: [a4paper]
+- font: 10pt
+- verbatim: |-
+    \usepackage[T2A]{fontenc}
+    \usepackage[utf8x]{inputenc}
+    \pagestyle{empty}
+- /_style/jeolm
+- /_style/optional
+# end override /_style
+- /_style/local
+- delegate: flow-numeration
+  condition: flow-numeration
+
+flow-numeration:
+  $target$able: off
+  $style:
+  - verbatim: |
+      \makeatletter\renewcommand\tournproblem[1]{%
+        \def\problem@tourn@number{\item}}\makeatother
+

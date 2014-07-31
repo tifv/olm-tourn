@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -20,13 +22,12 @@ var
 
     KLM = triangle(K, L, M);
 
+pen gray = gray(0.7);
 
-//markangle(A, M, C, radius=mr);
-
-draw(circumcircle(KLM), gray(0.5));
-draw(arccircle(K, A, M), gray(0.5));
-draw(arccircle(L, B, K), gray(0.5));
-draw(arccircle(M, C, L), gray(0.5));
+draw(circumcircle(KLM), gray+1);
+draw(arccircle(K, A, M), gray+1);
+draw(arccircle(L, B, K), gray+1);
+draw(arccircle(M, C, L), gray+1);
 
 draw(ABC, linewidth(1));
 draw(KLM);

@@ -1,11 +1,11 @@
-\usepackage{jeolm}
-\usepackage{jeolm-olymp}
-\usepackage[T2A]{fontenc}
-\usepackage[utf8x]{inputenc}
+\ProvidesPackage{tourn-local}
+\RequirePackage{jeolm}
+
+\RequirePackage{ifthen}
 
 % default figures placement
-\def\fps@figure{bhp}
-\def\fps@table{bhp}
+\def\fps@figure{hbp}
+\def\fps@table{hbp}
 
 % \ifdigits
 \newcommand\ifdigits[1]{\jeolm@if@digits1#1\jeolm@stop@digits\end@digits}

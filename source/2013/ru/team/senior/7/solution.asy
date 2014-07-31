@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -16,7 +18,7 @@ var
     M = projection(C, D) * O,
     N = projection(D, A) * O,
     R = abs(O - projection(A, B) * O),
-    circ = circle((point) O, R),
+    circle = circle((point) O, R),
     X = R * dir(100), Y = R * dir(-85),
     EF = parallel(X, unit(O-X) / I),
     GH = parallel(Y, unit(O-Y) / I),
@@ -27,7 +29,9 @@ var
     P = extension(K, X, N, Y),
     Q = extension(X, L, Y, M);
 
-draw(circ, gray(0.5));
+pen gray = gray(0.7);
+
+draw(circle, gray+1);
 draw(A--B--C--D--cycle, linewidth(1));
 draw(E--F ^^ G--H);
 draw(P--X--Q--Y--cycle);

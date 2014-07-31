@@ -1,7 +1,7 @@
 $include:
 - /lib/year
 
-$delegate: &languages
+$delegate:
 - ru
 - en
 

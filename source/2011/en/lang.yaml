@@ -1,17 +1,17 @@
 $include:
-- /lib/lang/en
-- /lib/lang/matter
+- /lib/lang-en
+- /lib/lang
 
 section:
-  $targetable: off
+  $target$able: off
   $matter[contained]:
   - verbatim: '\part*{2011}'
   $matter[contained,book]:
   - verbatim: '\chapter*{2011}'
   $matter[-contained]:
   - verbatim: '\part*{Многоборье-2011 (English)}'
-  $matter[-contained,solutions]:
-  - verbatim: '\part*{Многоборье-2011 (English, solutions)}'
-  $matter[-contained,complete]:
-  - verbatim: '\part*{Многоборье-2011 (English, with solutions)}'
+#  $matter[-contained,solutions]:
+#  - verbatim: '\part*{Многоборье-2011 (English, solutions)}'
+#  $matter[-contained,complete]:
+#  - verbatim: '\part*{Многоборье-2011 (English, with solutions)}'
 

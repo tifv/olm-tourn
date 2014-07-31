@@ -10,23 +10,29 @@
     {\iftrue}}%
 % nospell end
 
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к решению задачи \ref{2012/ru/team/senior/6:solution}}
+    \label{fig:2012/ru/team/senior/6:solution}
+\end{figure}%
+\fi}%
+\endgroup % figure
+
 \problem\problemscore{6}
 % duplicate of [2012/ru/team/junior/10]
 В правильном семиугольнике $ABCDEFG$ стороны равны 1.
 Диагонали $AD$ и $CG$ пересекаются в точке $H$.
 Докажите, что $FH = \sqrt{2}$.
 \solution
-\label{solution:2012/ru/team/senior/6}%
+\label{2012/ru/team/senior/6:solution}%
 \ifsolutiondefined
-См.~решение задачи \ref{solution:2012/ru/team/junior/10}.
+См.~решение задачи \ref{2012/ru/team/junior/10:solution}.
 \else
 \definesolution
-\begin{figure}\centering
-    \jeolmfigure[width=0.5\textwidth]{solution}
-    \caption{к решению задачи \ref{solution:2012/ru/team/senior/6}}
-    \label{fig:solution:2012/ru/team/senior/6}
-\end{figure}%
-Рис.~\ref{fig:solution:2012/ru/team/senior/6}.
+Рис.~\ref{fig:2012/ru/team/senior/6:solution}.
 Обозначим угол $x = \pi / 7$.
 Заметим, что $ABCD$ и $ABCG$~--- равнобедренные трапеции,
 так что $ABCH$~--- параллелограмм, а следовательно и ромб.

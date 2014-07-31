@@ -1,23 +1,27 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
 var
-    the_circle = circle((point) (0,0), 1),
+    circle = circle((point) (0,0), 1),
     r = 0.6,
     X = r * dir(100), Y = r * dir(40), Z = r * dir(-140),
-    A = intersectionpoints(the_circle, line(Y, X, extendA=false))[0],
-    B = intersectionpoints(the_circle, line(Z, X, extendA=false))[0],
-    C = intersectionpoints(the_circle, line(Z, Y, extendA=false))[0],
-    D = intersectionpoints(the_circle, line(X, Y, extendA=false))[0],
-    E = intersectionpoints(the_circle, line(X, Z, extendA=false))[0],
-    F = intersectionpoints(the_circle, line(Y, Z, extendA=false))[0];
+    A = intersectionpoints(circle, line(Y, X, extendA=false))[0],
+    B = intersectionpoints(circle, line(Z, X, extendA=false))[0],
+    C = intersectionpoints(circle, line(Z, Y, extendA=false))[0],
+    D = intersectionpoints(circle, line(X, Y, extendA=false))[0],
+    E = intersectionpoints(circle, line(X, Z, extendA=false))[0],
+    F = intersectionpoints(circle, line(Y, Z, extendA=false))[0];
 
-draw(the_circle, linewidth(1));
+// plain.E
+
+draw(circle, linewidth(1));
 draw(A--D ^^ B--E ^^ C--F);
 
 mark(A--X, 1);

@@ -28,7 +28,7 @@ $a_1$, $a_2$, \ldots, $a_n$ и $b_1$, $b_1$, \ldots, $b_m$
 \\
 \emph{Переход.}
 Если в неравенстве
-\begin{equation}\label{2013/ru/team/senior/10/condition}
+\begin{equation} \label{2013/ru/team/senior/10:solution:eq:condition}
     [a_1, a_2, \ldots, a_n] + [b_1, b_2, \ldots, b_m] \geq 1
 \end{equation}
 достигается равенство, то возьмем $n_1 = n$ и $m_1 = m$.
@@ -37,48 +37,55 @@ $a_1$, $a_2$, \ldots, $a_n$ и $b_1$, $b_1$, \ldots, $b_m$
 \[
     [a_1, a_2, \ldots, a_n] < \frac{1}{a_1 - 1}
 .\]
-Тогда из \eqref{2013/ru/team/senior/10/condition} получаем, что
+Тогда из \eqref{2013/ru/team/senior/10:solution:eq:condition} получаем, что
 $\frac{1}{a_1 - 1} + \frac{1}{b_1 - 1} > 1$, откуда следует, что хотя бы одно
 из чисел $a_1$, $b_1$ равно 2.
 Без ограничения общности считаем $a_1 = 2$.
 Если при этом $b_1 = 2$, то можно взять $n_1 = m_1 = 1$.
 Пусть далее $b_1 > 2$.
-Если $n = 1$, то $[a_1] = [2] = \frac{1}{2}$,
+Если $n = 1$, то $[a_1] = [2] = 1/2$,
 а $[b_1, b_2, \ldots, b_m] < \frac{1}{b_1 - 1} = 1/2$,
 и такие числа в сумме не превосходят 1.
 Противоречие со строгостью неравенства
-\eqref{2013/ru/team/senior/10/condition}~--- следовательно, далее считаем
-$n > 1$.
+\eqref{2013/ru/team/senior/10:solution:eq:condition}~---
+следовательно, далее считаем $n > 1$.
 В этом случае
-\begin{equation}\label{2013/ru/team/senior/10/current-statement}
+\begin{equation} \label{2013/ru/team/senior/10:solution:eq:current-statement}
     [2, a_2, \ldots, a_{n_1}] + [b_1, b_2, \ldots, b_{m_1}] = 1
 \end{equation}
 эквивалентно
-\begin{equation}\label{2013/ru/team/senior/10/previous-statement}
+\begin{equation} \label{2013/ru/team/senior/10:solution:eq:previous-statement}
     [a_2, \ldots, a_{n_1}] + [b_1 - 1, b_2, \ldots, b_{m_1}] = 1
 .\end{equation}
 Действительно, пусть $[a_2, \ldots, a_{n_1}] = \alpha$ и
 $[b_2, \ldots, b_{m_1}] = \beta$ (для $m_1 = 1$ можно считать $\beta = 0$).
-Тогда первое из равенств переписывается как
-$\frac{1}{2 - \alpha} + \frac{1}{b_1 - \beta} = 1$,
-а второе как $\alpha + \frac{1}{b_1 - 1 - \beta} = 1$.
+Тогда равенства
+\eqref{2013/ru/team/senior/10:solution:eq:current-statement} и
+\eqref{2013/ru/team/senior/10:solution:eq:previous-statement}
+переписываются соответственно как
+\[
+    \frac{1}{2 - \alpha} + \frac{1}{b_1 - \beta} = 1
+\quad\text{и}\quad
+    \alpha + \frac{1}{b_1 - 1 - \beta} = 1
+.\]
 Домножением на знаменатель и приведением подобных слагаемых несложно убедится,
 что это одно и то же условие.
-Следовательно, задача о нахождении $n_1$ и $m_1$ в выражении
-\eqref{2013/ru/team/senior/10/current-statement} сведена к такой же задаче для
-\eqref{2013/ru/team/senior/10/previous-statement}.
+Следовательно, задача о нахождении $n_1$ и $m_1$ в уравнении
+\eqref{2013/ru/team/senior/10:solution:eq:current-statement}
+сведена к такой же задаче для
+\eqref{2013/ru/team/senior/10:solution:eq:previous-statement}.
 Последнее возможно по предположению индукции, так как $n$ уменьшилось на 1.
 \par
 \emph{Другое решение.}
 Пусть
 \(
-    \frac{p_n}{q_n} = [a_1, a_2, \ldots, a_n]
+    p_n / q_n = [a_1, a_2, \ldots, a_n]
 \)
-(имеется в виду несократимая дробь).
-Будем также считать $\frac{p_0}{q_0} = \frac{0}{1}$.
+(слева несократимая дробь).
+Будем также считать $p_0 / q_0 = 0 / 1$.
 Воспользуемся утверждением, полностью аналогичным известному факту из теории
 <<обычных>> цепных дробей.
-\\
+\par
 \emph{Лемма.}
 Для всех $n > 0$ выполнено $p_n q_{n-1} - q_n p_{n-1} = 1$.
 \\
@@ -87,35 +94,43 @@ $\frac{1}{2 - \alpha} + \frac{1}{b_1 - \beta} = 1$,
 $p_n = a_n p_{n-1} - p_{n-2}$ и $q_n = a_n q_{n-1} - q_{n-2}$.
 Они проверяются для $n = 2$, а переход осуществляется сведением к дробям
 \(
-    \frac{p'_n}{q'_n} = [a_2, \ldots, a_n]
+    p'_n / q'_n = [a_2, \ldots, a_n]
 \) с помощью соотношений $p_n = q'_n$ и $q_n = a_1 q'_n - p'_n$.
 Теперь легко доказать утверждение леммы по индукции: база проверяется для $n = 1$,
 а переход осуществляется подстановкой указанных рекуррентных соотношений вместо
 $p_n$ и $q_n$.
-\\
+\par
 Теперь докажем утверждение задачи.
 Пусть
-$[a_1, \ldots, a_r] = \frac{a}{b}$, $[b_1, \ldots, b_s] = \frac{c}{d}$,
-$\frac{a}{b} + \frac{c}{d} > 1$ и $d \leq b$.
-Докажем, что если мы удалим $a_r$, то полученные дроби дадут в сумме не меньше $1$,
-откуда будет следовать утверждение задачи.
+$[a_1, \ldots, a_r] = a / b$, $[b_1, \ldots, b_s] = c / d$,
+$a / b + c / d > 1$ и $d \leq b$.
+Докажем, что если мы удалим $a_r$, то полученные дроби дадут в сумме
+не меньше $1$, откуда будет следовать утверждение задачи.
 Заметим, что случай $r = 1$ невозможен, иначе мы получим
-$\frac{a}{b} = \frac{1}{a_r}$ и
+$a / b = 1 / a_r$ и
 \(
-    \frac{c}{d} \leq 1 - \frac{1}{d}
+    c / d \leq 1 - 1 / d
 \leq
-    1 - \frac{1}{b} = 1 - \frac{a}{b}
-\). 
-\\
-Пусть тогда $\frac{p}{q} = [a_1, \ldots, a_{r-1}]$, и предположим, что
-$\frac{p}{q} + \frac{c}{d} < 1$.
+    1 - 1 / b = 1 - a / b
+\).
+Пусть тогда $p / q = [a_1, \ldots, a_{r-1}]$, и предположим, что
+$p / q + c / d < 1$.
 Тогда выполнено
-$\frac{p}{q} + \frac{c}{d} \leq 1 - \frac{1}{q d}$,
-$\frac{a}{b} + \frac{c}{d} \geq 1 + \frac{1}{b d}$,
+\[
+    \frac{p}{q} + \frac{c}{d}
+\leq
+    1 - \frac{1}{q d}
+,\quad
+    \frac{a}{b} + \frac{c}{d}
+\geq
+    1 + \frac{1}{b d}
+,\]
+%$p / q + c / d \leq 1 - 1 / (q d)$,
+%$a / b + c / d \geq 1 + 1 / (b d)$,
 и $a q - b p = 1$ (по лемме).
 Получаем
 \[
-    \frac{1}{b q} = \frac{a}{b} - \frac{p}{q}
+    \frac{1}{b q} = a / b - p / q
 \geq
     \frac{1}{b d} + \frac{1}{q d},
 \]

@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -10,8 +12,8 @@ var mr = sizes.markradius;
 var
     A = (2,5.60), B = (0,0), C = (9,0),
     ABC = triangle(A, B, C),
-    circABC = circumcircle(ABC),
-    O = circABC.C,
+    circumABC = circumcircle(ABC),
+    O = circumABC.C,
     H = orthocentercenter(ABC),
     H_A = O + A - H,
     H_B = O + B - H,
@@ -21,12 +23,14 @@ var
     cC = circumcircle(O, C, H_C),
     X = reflect(cB.C, cC.C) * O;
 
-draw(cA, gray(0.5));
+pen gray = gray(0.7);
+
+draw(cA, gray+1);
 //draw(cB, gray(0.8));
 //draw(cC, gray(0.8));
+draw(circumABC, gray+1);
 
-draw(A--B--C--cycle, linewidth(1));
-draw(circABC);
+draw(ABC, linewidth(1));
 draw(H--H_A);
 draw(X--O--A ^^ B--X);
 
@@ -43,3 +47,4 @@ dot(Label("$H$", H, NNW));
 dot(Label("$H_A$", H_A, NE));
 dot(Label("$X$", X, unit(X-O)));
 dot((H+H_A)/2);
+

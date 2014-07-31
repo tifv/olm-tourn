@@ -1,19 +1,24 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
 
 var
-    the_circle = circle((point)(0,0), 1),
-    O = the_circle.C,
+    circle = circle((point)(0,0), 1),
+    O = circle.C,
 
     A = dir(180), B = dir(30), C = dir(0), D = dir(-90),
     K = (B+D)/2, M = extension(A, C, B, D);
 
-draw(the_circle);
+pen gray = gray(0.7);
+
+draw(circle, gray+1);
+
 draw(A--B--C--D--cycle, linewidth(1));
 draw(A--C);
 draw(B--D);

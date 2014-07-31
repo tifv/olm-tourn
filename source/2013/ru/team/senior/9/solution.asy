@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -11,15 +13,17 @@ var
     A = (0,0), C = (5,0), B = (1,4),
     ABC = triangle(A, B, C),
     M = midpoint(ABC.AC),
-    circum = circumcircle(ABC), O = circum.C,
+    circumABC = circumcircle(ABC), O = circumABC.C,
     exA = excircle(ABC.BC), exC = excircle(ABC.AB),
     I_A = exA.C, I_C = exC.C, ell = line(I_A, I_C),
     Ap = projection(A, C) * I_A, Cp = projection(A, C) * I_C,
     App = projection(A, B) * I_A, Cpp = projection(B, C) * I_C,
-    L = O + circum.r * unit(O - M);
+    L = O + circumABC.r * unit(O - M);
 
-draw(circum, gray(0.5));
-draw(ell, gray(0.5));
+pen gray = gray(0.7);
+
+draw(circumABC, gray+1);
+draw(ell, gray+1);
 
 draw(ABC, linewidth(1));
 clipdraw(exA);

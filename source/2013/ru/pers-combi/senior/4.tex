@@ -1,11 +1,28 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2013/ru/pers-combi/junior/5\endcsname}%
+\expandafter\providecommand
+    \csname ifsolution:2013/ru/pers-combi/junior/5\endcsname
+    {\iffalse}%
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2013/ru/pers-combi/junior/5\endcsname
+    {\iftrue}}%
+% nospell end
+
 \problem
-% копия младших 5
+% duplicate of [2013/ru/pers-combi/junior/5]
 По кругу стоят несколько гирь, не все они одного веса, и веса не обязательно
 целые.
 В каждой тройке подряд стоящих гирь вес одной из них равен среднему
 арифметическому весов гирь в тройке.
-Докажите, что число гирь делится на 3.
+Докажите, что число гирь делится на~3.
 \solution
+\label{2013/ru/pers-combi/senior/4:solution}%
+\ifsolutiondefined
+См.~решение задачи \ref{2013/ru/pers-combi/junior/5:solution}.
+\else
+\definesolution
 Посчитаем все разности, вычитая из веса гири вес правого соседа.
 Пусть $d$~--- наименьшая по модулю разность весов.
 Если $d < 0$, сменим все знаки разностей, отразив круг симметрично.
@@ -18,6 +35,7 @@
 равна~0.
 С другой стороны, по модулю 3 все разности равны 1.
 Заменив все разности на 1, мы сумму по модулю 3 не изменим.
-Значит, эта сумма (то есть число гирь) делится на 3.
+Значит, эта сумма (то есть число гирь) делится на~3.
+\fi % \ifsolutiondefined
 \endproblem
 % $problem-source: А.\,Шаповалов

@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -37,7 +39,9 @@ var
     Y = chord(A2, circumATX, line(B1, A2).v),
     Z = chord(B2, circumBTX, line(A1, B2).v);
 
-draw(line(Y, Z), gray(0.5));
+pen gray = gray(0.7);
+
+draw(line(Y, Z), gray+1);
 
 draw(gamma1, linewidth(1));
 draw(gamma2, linewidth(1));

@@ -17,3 +17,20 @@
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\CC}{\mathbb{C}}
 
+% |\mathclap| and related definitions:
+%    \begin{macrocode}
+% For comparison, the existing overlap macros:
+% \def\llap#1{\hbox to 0pt{\hss#1}}
+% \def\rlap#1{\hbox to 0pt{#1\hss}}
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{%
+    \llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{%
+    \rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{%
+    \clap{$\mathsurround=0pt#1{#2}$}}
+%    \end{macrocode}
+

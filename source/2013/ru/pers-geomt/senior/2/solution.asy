@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -15,12 +17,14 @@ var
     B = (point) (O / (1, d/gamma.r)),
     a_circle = circle(O, abs(A-O)),
     CD_points = intersectionpoints(a_circle, omega),
-    C = CD_points[0], D = CD_points[1],
-    F = - O * unit(A-O)^2 / O^2, M = (O+A)/2;
+    C = CD_points[0],
+    D = CD_points[1],
+    F = - O * unit(A-O)^2 / O^2,
+    M = (O+A)/2;
 
-clipdraw(a_circle, gray(0.5));
-draw(omega);
-draw(gamma);
+clipdraw(a_circle);
+draw(omega, linewidth(1));
+draw(gamma, linewidth(1));
 
 draw(O--B ^^ O--A ^^ A--F);
 

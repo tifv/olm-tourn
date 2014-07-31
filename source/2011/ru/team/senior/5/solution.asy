@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -18,10 +20,11 @@ var
     piece1 = arc1outer--reverse(arc1inner)--cycle,
     piece2 = arc2--cycle;
 
-draw(circle1);
-draw(circle2);
+pen grayfill = gray(0.85);
 
-pen fillpen = gray(0.5);
-filldraw(piece1, fillpen=fillpen);
-filldraw(piece2, fillpen=fillpen);
+filldraw(piece1, fillpen=grayfill);
+filldraw(piece2, fillpen=grayfill);
+
+draw(circle1, linewidth(1));
+draw(circle2);
 

@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -42,6 +44,6 @@ for (int i = 0; i < 5; ++i) {
 dot((0,0));
 
 real r = 1.5;
-draw((-r,-r)--(-r,r)--(r,r)--(r,-r)--cycle, gray(0.5)+1+dashed);
+draw((-r,-r)--(-r,r)--(r,r)--(r,-r)--cycle, gray(0.5)+1+linetype(new real[] {4, 4}));
 label("$k=1$", (r,1), E, p=gray(0.5));
 

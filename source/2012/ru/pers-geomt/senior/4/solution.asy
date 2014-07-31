@@ -1,7 +1,9 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -21,9 +23,10 @@ var
     ell = line(LA, LB),
     circ = circumcircle(A, A1, IA);
 
-// Gray
-draw(ell, p=gray(0.5));
-clipdraw(circ, p=gray(0.5));
+pen gray = gray(0.7);
+
+draw(ell, gray+1);
+clipdraw(circ, gray+1);
 
 draw(ABC, linewidth(1));
 draw(exABC);

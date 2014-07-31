@@ -1,30 +1,39 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
 
 var
-    the_circle = circle((point)(0,0), 1),
-    A = dir(90), B = dir(0), C = dir(-100),
+    A = dir(90),
+    B = dir(0),
+    C = dir(-100),
     ABC = triangle(A, B, C),
+    circumABC = circumcircle(ABC),
     E = bisectorpoint(ABC.BC),
     M = unit(-B-C),
-    AE = line(A=A, B=E, extendA=false), ME = line(M, E),
-    D = ME.v^2 / M, X = AE.v^2 / A;
+    AE = line(A=A, B=E, extendA=false),
+    ME = line(M, E),
+    D = ME.v^2 / M,
+    X = AE.v^2 / A;
 
-draw(the_circle, gray(0.5)+1);
+pen gray = gray(0.7);
+draw(circumABC, gray+1);
 
-draw(A--B--C--cycle, linewidth(1));
+draw(ABC, linewidth(1));
+
 draw(AE);
 draw(ME);
 
 markangle(C, A, E, radius=mr);
 markangle(E, A, B, radius=1.2mr);
-// plain.N !
+
+// plain.E
 
 dot(Label("$A$", A, unit(A)));
 dot(Label("$B$", B, unit(B)));

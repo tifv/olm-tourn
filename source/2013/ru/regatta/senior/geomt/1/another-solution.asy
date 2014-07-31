@@ -1,19 +1,22 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
 
 var
     A = (0,0), B = (1,1), C = (2,0),
+    ABC = triangle(A, B, C),
     alpha = 25,
     M = (1-Tan(alpha), 0), N = (1+Tan(45-alpha), 0),
     D = C + (M - A) * I;
 
-draw(A--B--C--cycle, linewidth(1));
+draw(ABC, linewidth(1));
 draw(B--M ^^ B--N);
 draw(B--D--C ^^ N--D, dashed);
 
@@ -25,7 +28,7 @@ mark(C--D, 2);
 
 perpendicularmark(C, unit(D-C), dir=NE, size=0.5mr);
 
-// plain.N !
+// plain.N
 
 dot(Label("$A$", A, SW));
 dot(Label("$B$", B, plain.N));

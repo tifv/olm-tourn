@@ -1,7 +1,6 @@
-miscellany:
-  $style: 
-  - ..
-  - /flow-problem-numeration
+miscellany: !!omap
+- $style:
+  - ..[flow-numeration]
   - verbatim: |
       \makeatletter
       \def\fps@figure{bhtp}\def\fps@table{bhtp}
@@ -16,21 +15,17 @@ miscellany:
         \let\section\oldsection\oldtbc
       \endgroup}
       \makeatother
-  $delegate: [ru, en]
+- $delegate: [ru, en]
 
-  ru:
-    $style: [.., /lang/ru]
-    $delegate:
+- ru:
+    $style:
+    - ..
+    - /lang/ru
+    $delegate[-problems,-complete,-solutions]:
     - .[problems]
     - .[complete]
-    $delegate[problems]:
-    - .[no-delegate]
-    $delegate[complete]:
-    - .[no-delegate]
-    $delegate[solutions]:
-    - .[no-delegate]
-    $manner:
-    - - .[no-header]
+    $matter[-no-header]:
+    - .[no-header]
     $matter:
     - verbatim:
         '\title{Многоборье 2011-2013}\date{}\author{}\maketitle'
@@ -46,19 +41,15 @@ miscellany:
     - /2012/ru[contained]
     - /2013/ru[contained]
 
-  en:
-    $style: [.., /lang/en]
-    $delegate:
+- en:
+    $style:
+    - ..
+    - /lang/en
+    $delegate[-problems,-complete,-solutions]:
     - .[problems]
     #- .[complete]
-    $delegate[problems]:
-    - .[no-delegate]
-    $delegate[complete]:
-    - .[no-delegate]
-    $delegate[solutions]:
-    - .[no-delegate]
-    $manner:
-    - - .[no-header]
+    $matter[-no-header]:
+    - .[no-header]
     $matter:
     - verbatim:
         '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'

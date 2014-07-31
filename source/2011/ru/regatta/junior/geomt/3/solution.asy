@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -19,15 +21,19 @@ draw(B--D--X);
 
 markangle(D, X, B, radius=0.8mr, n=1, L="$4 \alpha$");
 
-markangle(A, C, B, radius=0.8mr, n=2, L=Label("$2 \alpha$", align=NW));
+markangle(
+    A, C, B,
+    radius=0.8mr, n=2,
+    L=Label("$2 \alpha$", align=unit(NW+WNW))
+);
 markangle(X, D, C, radius=0.8mr, n=2);
 
 markangle(D, B, A, radius=mr, n=3);
 markangle(C, B, D, radius=1.25mr, n=3, L="$\alpha$");
 
-mark(A--D, n=1);
-mark(D--X, n=1);
-mark(X--C, n=1);
+mark(A--D, scale(0.7) * stickframe(linewidth(0.5/0.7)));
+mark(D--X, scale(0.7) * stickframe(linewidth(0.5/0.7)));
+mark(X--C, scale(0.7) * stickframe(linewidth(0.5/0.7)));
 
 dot(Label("$A$", A, N));
 dot(Label("$B$", B, WSW));

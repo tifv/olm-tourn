@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -23,10 +25,12 @@ var
     Q = O + (P-O) * line(M, P).v ^ 2 / unit(P - O) ^ 2,
     Pp = A + C - P;
 
-clipdraw(circumABP, gray(0.5));
-draw(line(M, Q), gray(0.5));
+pen gray = gray(0.7);
 
-draw(A--B--C--cycle, linewidth(1));
+clipdraw(circumABP, gray+1);
+draw(line(M, Q), gray+1);
+
+draw(ABC, linewidth(1));
 draw(A--P ^^ B--P ^^ C--P);
 draw(Pp--A, dashed);
 draw(Q--A, dashed);

@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
@@ -23,7 +25,9 @@ var
     Pp = extension(A, C, P, E),
     Qp = extension(A, C, Q, E);
 
-draw(beam, gray(0.5));
+pen gray = gray(0.7);
+
+draw(beam, gray+1);
 
 draw(ABC, linewidth(1));
 draw(inABC);

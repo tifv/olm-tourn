@@ -1,8 +1,10 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 var mr = sizes.markradius;
@@ -14,8 +16,10 @@ var
     A1 = projection(ABC.BC) * A,
     B1 = projection(ABC.AC) * B;
 
-fill(A--O--B1--cycle, gray(0.7));
-fill(B--O--A1--cycle, gray(0.7));
+pen grayfill = gray(0.85);
+
+fill(A--O--B1--cycle, grayfill);
+fill(B--O--A1--cycle, grayfill);
 
 draw(A--B--C--cycle, linewidth(1));
 draw(A--O--B1 ^^ B--O--A1);

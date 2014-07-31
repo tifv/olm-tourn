@@ -1,13 +1,15 @@
 import geometry;
+
+// access /_style/jeolm.asy as jeolm.asy
 access jeolm;
 from jeolm access mark;
 
-// use /common-sizes.asy as common-sizes.asy
+// access /common-sizes.asy as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 
 var
-    the_circle = circle((point)(0,0), 1),
+    circle = circle((point)(0,0), 1),
 
     B = dir(20), D = dir(120), F = dir(250),
     BDF = triangle(B, D, F),
@@ -17,7 +19,10 @@ var
     C = - B * D / F,
     E = - D * F / B;
 
-draw(the_circle);
+pen gray = gray(0.7);
+
+draw(circle, gray+1);
+
 draw(BDF, dashed);
 draw(A--B--C--D--E--F--cycle, linewidth(1));
 draw(B--O);
