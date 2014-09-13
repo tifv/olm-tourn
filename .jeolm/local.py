@@ -1,8 +1,6 @@
 from collections import OrderedDict
 from functools import wraps
 
-#from pathlib import PurePosixPath
-
 from jeolm.driver.regular import (
     Driver as RegularDriver, DriverError,
     RecordPath, RecordNotFoundError )
@@ -77,6 +75,10 @@ class Driver(RegularDriver):
                     "Misused tourn flags {flags} in {target}"
                     .format(flags=misused_flags, target=target) )
             if not target.flags.intersection(tourn_flags):
+                logger.error(
+                    "<BOLD>One of tourn flags is required: {}<RESET>"
+                    .format(', '.join(sorted(self.all_tourn_flags)))
+                )
                 raise DriverError(
                     "No tourn flags in {target}"
                     .format(target=target) )
@@ -415,7 +417,7 @@ class Driver(RegularDriver):
         __slots__ = ['number']
 
         def __init__(self, problem, number):
-            super().__init__(inpath=problem)
+            super().__init__(metapath=problem)
             self.number = number
 
     # Extenstion
@@ -438,7 +440,7 @@ class Driver(RegularDriver):
             yield self.constitute_begin_tourn_problems(
                 target.flags.intersection(self.tourn_problem_flags) )
         yield {
-            'problem' : target.path.as_inpath(suffix='.tex'),
+            'problem' : target.path,
             'number' : number }
         if has_criteria:
             yield self.substitute_criteria(criteria=metarecord['$criteria'])
@@ -519,8 +521,8 @@ class Driver(RegularDriver):
     ##########
     # Record extension
 
-    def derive_attributes(self, parent_record, child_record, name):
-        super().derive_attributes(parent_record, child_record, name)
+    def _derive_attributes(self, parent_record, child_record, name):
+        super()._derive_attributes(parent_record, child_record, name)
         path = child_record['$path']
         child_record.setdefault('$lang', parent_record.get('$lang'))
         if '$contest$league' in parent_record:

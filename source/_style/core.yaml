@@ -1,3 +1,4 @@
+$target$able: off
 $style:
 - document_class: article
   options: [a4paper]
@@ -10,8 +11,10 @@ $style:
 - jeolm
 - optional
 
+jeolm:
+  $target$able: on
+
 optional:
-  $target$able: off
   $style:
   - delegate: geometry
     condition: -no-geometry
@@ -29,8 +32,8 @@ optional:
   geometry:
     $style:
     - verbatim: \usepackage{geometry}
-    - verbatim: \geometry{margin=2em,lmargin=2em,rmargin=2em}
     - set-paper-size
+    - verbatim: \geometry{margin=2em,lmargin=2em,rmargin=2em}
     - verbatim: \geometry{landscape}
       condition: landscape
     set-paper-size:
