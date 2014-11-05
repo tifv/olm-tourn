@@ -20,7 +20,7 @@ miscellany: !!omap
 - ru:
     $style:
     - ..
-    - /lang/ru
+    - /language/ru
     $delegate[-problems,-complete,-solutions]:
     - .[problems]
     - .[complete]
@@ -44,7 +44,7 @@ miscellany: !!omap
 - en:
     $style:
     - ..
-    - /lang/en
+    - /language/en
     $delegate[-problems,-complete,-solutions]:
     - .[problems]
     #- .[complete]

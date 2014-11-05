@@ -2,9 +2,10 @@
 - $contest:
     name: {translate: 'geomt'}
     leagues: [senior]
-- $style: [.., {'verbatim' : '\let\postword\writtenpostword'}]
-- senior:
-    $contest$league:
-      name: {translate-metaname: }
-      problems: 4
+- $delegate[contest]: [senior]
+- $delegate[jury]: [senior]
+
+- $include:
+  - /lib/pers-geomt-contest
+  - /lib/pers-geomt-senior
 

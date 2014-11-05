@@ -1,6 +1,4 @@
-$include:
-- /lib/lang-sr
-- /lib/lang
+$include: [/lib/language-sr]
 
 section:
   $target$able: off

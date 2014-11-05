@@ -1,14 +1,1 @@
-!!omap
-- $contest:
-    name: {translate: 'combi'}
-    leagues: [junior, senior]
-- $style: [.., {'verbatim' : '\let\postword\oralpostword'}]
-- junior:
-    $contest$league:
-      name: {translate-metaname: }
-      problems: 5
-- senior:
-    $contest$league:
-      name: {translate-metaname: }
-      problems: 5
-
+$include: [/lib/pers-combi]

@@ -1,28 +1,23 @@
 lib:
   $target$able: off
 
-  year:
-    $style: [.., year]
-    $matter: [/error]
+  ##########
+  # Year
 
-  lang-ru:
-    $style: [.., /lang/ru]
-    $lang: ru
-  lang-en:
-    $style: [.., /lang/en]
-    $lang: en
-  lang-sr:
-    $style: [.., /lang/sr]
-    $lang: sr
+  year: !!omap
+  - $style: [.., year]
 
-  lang:
-    $delegate:
+  ##########
+  # Language
+
+  language: !!omap
+  - $delegate:
     - regatta
     - pers-algbr
     - pers-geomt
     - pers-combi
     - team
-    $matter:
+  - $matter:
     - delegate: section
       condition: {not: no-year-section}
     - regatta[contained]
@@ -30,16 +25,230 @@ lib:
     - pers-combi[contained]
     - pers-geomt[contained]
     - team[contained]
-    $build$matter:
+  - $build$matter:
     - .[header]
-    $build$style:
+  - $build$style:
     - .[flow-numeration]
-    poster:
+  - poster:
       $delegate[-complete,-problems,-solutions]:
       - .[complete]
       $matter:
       - ..[no-header,no-year-section]
       $build$style:
-      - font: 12pt
-      - .[print,flow-numeration]
+      - .[flow-numeration]
+
+  language-ru: !!omap
+  - $style: [.., /language/ru]
+  - $language: ru
+  - $include: [/lib/language]
+  language-en: !!omap
+  - $style: [.., /language/en]
+  - $language: en
+  - poster:
+      $delegate[-complete,-problems,-solutions]:
+      - .[problems]
+  - $include: [/lib/language]
+  language-sr: !!omap
+  - $style: [.., /language/sr]
+  - $language: sr
+  - poster:
+      $delegate[-complete,-problems,-solutions]:
+      - .[problems]
+  - $include: [/lib/language]
+
+  ##########
+  # Regatta
+
+  regatta: !!omap
+  - $regatta:
+      name: {translate: 'regatta'}
+      leagues: [junior, senior]
+  - $delegate[contest]: [junior, senior]
+  - $delegate[jury]: [junior, senior]
+  - $include:
+    - /lib/regatta-contest
+    - /lib/regatta-leagues
+
+  regatta-contest: !!omap
+  - $regatta:
+      name: {translate: 'regatta'}
+      leagues: [junior, senior]
+  - $delegate[contest]: [junior, senior]
+  - $delegate[jury]: [junior, senior]
+  - $style[contest,print]:
+    - .[resize-to,-print]
+
+
+  regatta-leagues:
+    $include:
+    - /lib/regatta-senior
+    - /lib/regatta-junior
+
+  regatta-junior: !!omap
+  - junior: !!omap
+    - $regatta$league:
+        name: {translate: 'junior'}
+        subjects: [algbr, geomt, combi]
+        rounds: 4
+    - $include: [/lib/regatta-league]
+
+  regatta-senior: !!omap
+  - senior: !!omap
+    - $regatta$league:
+        name: {translate: 'senior'}
+        subjects: [algbr, geomt, combi]
+        rounds: 4
+    - $include: [/lib/regatta-league]
+
+  regatta-league: !!omap
+  - $delegate[contest]: [algbr, geomt, combi]
+  - $delegate[jury]: [algbr, geomt, combi]
+  - $include:
+    - /lib/regatta-league-subjects
+    - /lib/regatta-league-rounds
+
+  regatta-league-subjects: !!omap
+  - algbr:
+      $regatta$subject:
+        name: {translate: 'algbr'}
+        index: 'a'
+  - geomt:
+      $regatta$subject:
+        name: {translate: 'geomt'}
+        index: 'g'
+  - combi:
+      $regatta$subject:
+        name: {translate: 'combi'}
+        index: 'c'
+
+  regatta-league-rounds: !!omap
+  - '1':
+      $regatta$round:
+        name: {translate: 'round-1'}
+        index: '1'
+        mark: 4
+  - '2':
+      $regatta$round:
+        name: {translate: 'round-2'}
+        index: '2'
+        mark: 5
+  - '3':
+      $regatta$round:
+        name: {translate: 'round-3'}
+        index: '3'
+        mark: 6
+  - '4':
+      $regatta$round:
+        name: {translate: 'round-4'}
+        index: '4'
+        mark: 5
+
+  ##########
+  # Contest
+
+  pers-algbr:
+    $include:
+    - /lib/pers-algbr-contest
+    - /lib/pers-algbr-leagues
+
+  pers-algbr-contest: !!omap
+  - $contest:
+      name: {translate: 'algbr'}
+      leagues: [junior, senior]
+  - $style:
+    - ..
+    - verbatim: '\let\postword\writtenpostword'
+  - $include: [/lib/contest]
+
+  pers-algbr-leagues:
+    $include:
+    - /lib/pers-algbr-senior
+    - /lib/pers-algbr-junior
+
+  pers-algbr-junior:
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 4
+
+  pers-algbr-senior:
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 4
+
+  pers-geomt:
+    $include:
+    - /lib/pers-geomt-contest
+    - /lib/pers-geomt-leagues
+
+  pers-geomt-contest: !!omap
+  - $contest:
+      name: {translate: 'geomt'}
+      leagues: [junior, senior]
+  - $style:
+    - ..
+    - verbatim: '\let\postword\writtenpostword'
+  - $include: [/lib/contest]
+
+  pers-geomt-leagues:
+    $include:
+    - /lib/pers-geomt-senior
+    - /lib/pers-geomt-junior
+
+  pers-geomt-junior:
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 4
+
+  pers-geomt-senior:
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 4
+
+  pers-combi: !!omap
+  - $include:
+    - /lib/pers-combi-contest
+    - /lib/pers-combi-leagues
+
+  pers-combi-contest: !!omap
+  - $contest:
+      name: {translate: 'combi'}
+      leagues: [junior, senior]
+  - $style:
+    - ..
+    - verbatim: '\let\postword\oralpostword'
+  - $include: [/lib/contest]
+
+  pers-combi-leagues:
+    $include:
+    - /lib/pers-combi-senior
+    - /lib/pers-combi-junior
+
+  pers-combi-junior:
+    junior:
+      $contest$league:
+        name: {translate: 'junior'}
+        problems: 5
+
+  pers-combi-senior:
+    senior:
+      $contest$league:
+        name: {translate: 'senior'}
+        problems: 5
+
+  team-contest: !!omap
+  - $contest:
+      name: {translate: 'team'}
+      leagues: [junior, senior]
+  - $style:
+    - ..
+    - verbatim: '\let\postword\teampostword'
+  - $include: [/lib/contest]
+
+  contest: !!omap
+  - $delegate[contest]: [junior, senior]
+  - $delegate[jury]: [junior, senior]
 

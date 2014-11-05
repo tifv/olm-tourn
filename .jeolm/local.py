@@ -1,6 +1,8 @@
 from collections import OrderedDict
 from functools import wraps
 
+import jeolm.flags
+
 from jeolm.driver.regular import (
     Driver as RegularDriver, DriverError,
     RecordPath, RecordNotFoundError )
@@ -39,7 +41,7 @@ class Driver(RegularDriver):
 
     @staticmethod
     def target_flags_jury_to_complete(target):
-        return self.flags_delta(
+        return target.flags_delta(
             difference={'jury'},
             union={'complete', 'with-criteria'} )
 
@@ -86,47 +88,6 @@ class Driver(RegularDriver):
         return wrapper
 
     # Extension
-    @fetching_metarecord
-    @processing_target_aspect(aspect='delegators [tourn]', wrap_generator=True)
-    def generate_delegators(self, target, metarecord):
-        try:
-            yield from super().generate_delegators(target, metarecord)
-        except self.NoDelegators:
-            if '$tourn$key' not in metarecord:
-                raise
-            else:
-                yield from self.generate_tourn_delegators(target, metarecord)
-        else:
-            return
-
-    @ensure_tourn_flags
-    def generate_tourn_delegators(self, target, metarecord):
-        tourn_key = metarecord['$tourn$key']
-        tourn_flags = self.get_tourn_flags(tourn_key)
-        if tourn_key in {'$contest', '$regatta'}:
-            for leaguekey in metarecord[tourn_key]['leagues']:
-                yield target.path_derive(leaguekey)
-        elif tourn_key == '$regatta$league':
-            by_subject = ( 'by-subject' in target.flags or
-                'by-round' not in target.flags )
-            target = target.flags_difference(('by-subject', 'by-round',))
-            league = metarecord['$regatta$league']
-            if by_subject:
-                for subjectkey in league['subjects']:
-                    yield target.path_derive(subjectkey)
-            else:
-                for roundnum in range(1, 1 + league['rounds']):
-                    yield target.path_derive(str(roundnum))
-        elif tourn_key in self.undelegating_keys:
-            raise self.NoDelegators
-        else:
-            raise RuntimeError(tourn_key)
-
-    undelegating_keys = frozenset((
-        '$contest$league', '$contest$problem',
-        '$regatta$subject', '$regatta$round', '$regatta$problem' ))
-
-    # Extenstion
     @processing_target_aspect(aspect='matter metabody [tourn]', wrap_generator=True)
     @classifying_items(aspect='metabody', default='verbatim')
     def generate_matter_metabody(self, target, metarecord,
@@ -154,9 +115,9 @@ class Driver(RegularDriver):
             if no_league:
                 yield self.constitute_leaguedef(None)
             else:
-                league = self.find_league(metarecord)
+                league = self._find_league(metarecord)
                 yield self.constitute_leaguedef(
-                    self.find_name(league, metarecord['$lang']) )
+                    self._find_name(league, metarecord['$language']) )
                 if not single_problem:
                     target = target.flags_union({'league-contained'})
             if single_problem:
@@ -166,11 +127,11 @@ class Driver(RegularDriver):
                 yield self.substitute_jeolmtournheader()
                 target = target.flags_union({'no-header'})
 
-        yield from self.generate_tourn_metabody(target, metarecord)
+        yield from self._generate_tourn_metabody(target, metarecord)
 
     @processing_target_aspect(aspect='tourn metabody', wrap_generator=True)
     @classifying_items(aspect='metabody', default=None)
-    def generate_tourn_metabody(self, target, metarecord):
+    def _generate_tourn_metabody(self, target, metarecord):
         tourn_key = metarecord['$tourn$key']
         tourn_flags = target.flags.intersection(
             self.get_tourn_flags(tourn_key) )
@@ -180,32 +141,32 @@ class Driver(RegularDriver):
         args = [target, metarecord]
         kwargs = dict()
         if tourn_key in self.contest_keys:
-            kwargs.update(contest=self.find_contest(metarecord))
+            kwargs.update(contest=self._find_contest(metarecord))
         elif tourn_key in self.regatta_keys:
-            kwargs.update(regatta=self.find_regatta(metarecord))
+            kwargs.update(regatta=self._find_regatta(metarecord))
         else:
             raise RuntimeError(tourn_key)
         if tourn_key in self.subleague_keys:
-            kwargs.update(league=self.find_league(metarecord))
+            kwargs.update(league=self._find_league(metarecord))
 
         method = getattr(self,
-            'generate' + tourn_key.replace('$', '_') + '_matter' )
+            '_generate' + tourn_key.replace('$', '_') + '_matter' )
 #        if tourn_key == '$contest':
-#            method = self.generate_contest_matter
+#            method = self._generate_contest_matter
 #        elif tourn_key == '$regatta':
-#            method = self.generate_regatta_matter
+#            method = self._generate_regatta_matter
 #        elif tourn_key == '$contest$league':
-#            method = self.generate_contest_league_matter
+#            method = self._generate_contest_league_matter
 #        elif tourn_key == '$regatta$league':
-#            method = self.generate_regatta_league_matter
+#            method = self._generate_regatta_league_matter
 #        elif tourn_key == '$regatta$subject':
-#            method = self.generate_regatta_subject_matter
+#            method = self._generate_regatta_subject_matter
 #        elif tourn_key == '$regatta$round':
-#            method = self.generate_regatta_round_matter
+#            method = self._generate_regatta_round_matter
 #        elif tourn_key == '$contest$problem':
-#            method = self.generate_contest_problem_matter
+#            method = self._generate_contest_problem_matter
 #        elif tourn_key == '$regatta$problem':
-#            method = self.generate_regatta_problem_matter
+#            method = self._generate_regatta_problem_matter
 #        else:
 #            raise RuntimeError(tourn_key)
 
@@ -213,11 +174,11 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_contest_matter(self, target, metarecord,
+    def _generate_contest_matter(self, target, metarecord,
         *, contest
     ):
         yield self.constitute_section(
-            self.find_name(contest, metarecord['$lang']),
+            self._find_name( contest, metarecord['$language']),
             flags=target.flags )
         target = target.flags_union({'contained'}, overadd=False)
         target = target.flags_union(self.increase_containment(target.flags))
@@ -227,12 +188,12 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_regatta_matter(self, target, metarecord,
+    def _generate_regatta_matter(self, target, metarecord,
         *, regatta
     ):
         if 'contest' not in target.flags:
             yield self.constitute_section(
-                self.find_name(regatta, metarecord['$lang']),
+                self._find_name(regatta, metarecord['$language']),
                 flags=target.flags )
             target = target.flags_union({'contained'}, overadd=False)
             target = target.flags_union(self.increase_containment(target.flags))
@@ -242,7 +203,7 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_contest_league_matter(self, target, metarecord,
+    def _generate_contest_league_matter(self, target, metarecord,
         *, contest, league
     ):
         if 'contest' in target.flags:
@@ -254,13 +215,13 @@ class Driver(RegularDriver):
             has_postword = False
         if 'league-contained' in target.flags:
             yield self.constitute_section(
-                self.find_name(contest, metarecord['$lang']),
+                self._find_name(contest, metarecord['$language']),
                 #league_name,
                 flags=target.flags )
         else:
-            league_name = self.find_name(league, metarecord['$lang'])
+            league_name = self._find_name(league, metarecord['$language'])
             yield self.constitute_section(
-                self.find_name(contest, metarecord['$lang']),
+                self._find_name(contest, metarecord['$language']),
                 league_name,
                 flags=target.flags )
 
@@ -277,19 +238,19 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_regatta_league_matter(self, target, metarecord,
+    def _generate_regatta_league_matter(self, target, metarecord,
         *, regatta, league
     ):
         if 'contest' not in target.flags:
             if 'league-contained' in target.flags:
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     #league_name,
                     flags=target.flags )
             else:
-                league_name = self.find_name(league, metarecord['$lang'])
+                league_name = self._find_name(league, metarecord['$language'])
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     league_name,
                     flags=target.flags )
                 target = target.flags_union(('league-contained',))
@@ -307,23 +268,23 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_regatta_subject_matter(self, target, metarecord,
+    def _generate_regatta_subject_matter(self, target, metarecord,
         *, regatta, league
     ):
-        subject = self.find_regatta_subject(metarecord)
+        subject = self._find_regatta_subject(metarecord)
         if 'contest' not in target.flags:
             if 'league-contained' in target.flags:
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     #league_name,
-                    self.find_name(subject, metarecord['$lang']),
+                    self._find_name(subject, metarecord['$language']),
                     flags=target.flags )
             else:
-                league_name = self.find_name(league, metarecord['$lang'])
+                league_name = self._find_name(league, metarecord['$language'])
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     league_name,
-                    self.find_name(subject, metarecord['$lang']),
+                    self._find_name(subject, metarecord['$language']),
                     flags=target.flags )
         else:
             target = self.target_flags_contest_to_blank(target)
@@ -341,23 +302,23 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_regatta_round_matter(self, target, metarecord,
+    def _generate_regatta_round_matter(self, target, metarecord,
         *, regatta, league
     ):
-        regatta_round = self.find_regatta_round(metarecord)
+        regatta_round = self._find_regatta_round(metarecord)
         if 'contest' not in target.flags:
             if 'league-contained' in target.flags:
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     #league_name,
-                    self.find_name(regatta_round, metarecord['$lang']),
+                    self._find_name(regatta_round, metarecord['$language']),
                     flags=target.flags )
             else:
-                league_name = self.find_name(league, metarecord['$lang'])
+                league_name = self._find_name(league, metarecord['$language'])
                 yield self.constitute_section(
-                    self.find_name(regatta, metarecord['$lang']),
+                    self._find_name(regatta, metarecord['$language']),
                     league_name,
-                    self.find_name(regatta_round, metarecord['$lang']),
+                    self._find_name(regatta_round, metarecord['$language']),
                     flags=target.flags )
         else:
             target = self.target_flags_contest_to_blank(target)
@@ -375,35 +336,35 @@ class Driver(RegularDriver):
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_contest_problem_matter(self, target, metarecord,
+    def _generate_contest_problem_matter(self, target, metarecord,
         *, contest, league
     ):
-        yield from self.generate_tourn_problem_matter(
+        yield from self._generate_tourn_problem_matter(
             target, metarecord,
             number=target.path.name )
 
     @classifying_items(aspect='metabody', default='verbatim')
     @ensure_tourn_flags
-    def generate_regatta_problem_matter(self, target, metarecord,
+    def _generate_regatta_problem_matter(self, target, metarecord,
         *, regatta, league
     ):
-        subject = self.find_regatta_subject(metarecord)
-        regatta_round = self.find_regatta_round(metarecord)
+        subject = self._find_regatta_subject(metarecord)
+        regatta_round = self._find_regatta_round(metarecord)
         if 'blank' in target.flags:
             assert 'itemized' not in target.flags, target
             assert 'league-contained' not in target.flags, target
             yield self.constitute_leaguedef(
-                self.find_name(league, metarecord['$lang']) )
+                self._find_name(league, metarecord['$language']) )
             yield self.substitute_jeolmtournheader_nospace()
             yield self.substitute_regatta_blank_caption(
-                caption=self.find_name(regatta, metarecord['$lang']),
+                caption=self._find_name(regatta, metarecord['$language']),
                 mark=regatta_round['mark'] )
         if 'blank' in target.flags:
             subtarget = target.flags_union({'problems'})
         else:
             subtarget = target
         assert subtarget.flags.intersection(self.tourn_problem_flags), subtarget
-        yield from self.generate_tourn_problem_matter(
+        yield from self._generate_tourn_problem_matter(
             subtarget, metarecord,
             number=self.substitute_regatta_number(
                 subject_index=subject['index'],
@@ -428,7 +389,7 @@ class Driver(RegularDriver):
         return super().classify_resolved_metabody_item(item, default=default)
 
     @classifying_items(aspect='metabody', default='verbatim')
-    def generate_tourn_problem_matter(self, target, metarecord,
+    def _generate_tourn_problem_matter(self, target, metarecord,
         *, number
     ):
         has_criteria = ( 'with-criteria' in target.flags and
@@ -452,67 +413,67 @@ class Driver(RegularDriver):
         for required_package in metarecord.get('$required$packages', ()):
             yield {'required_package' : required_package}
 
-    def find_contest(self, metarecord):
+    def _find_contest(self, metarecord):
         contest_key = metarecord['$contest$key']
         if contest_key == '$contest':
             return metarecord[contest_key]
         elif contest_key in {'$contest$league', '$contest$problem'}:
-            return self.find_contest(self[metarecord['$path'].parent])
+            return self._find_contest(self[metarecord['$path'].parent])
         else:
             raise AssertionError(contest_key, metarecord)
 
-    def find_regatta(self, metarecord):
+    def _find_regatta(self, metarecord):
         regatta_key = metarecord['$regatta$key']
         if regatta_key == '$regatta':
             return metarecord[regatta_key]
         elif regatta_key in { '$regatta$league',
             '$regatta$subject', '$regatta$round', '$regatta$problem'
         }:
-            return self.find_regatta(self[metarecord['$path'].parent])
+            return self._find_regatta(self[metarecord['$path'].parent])
         else:
             raise AssertionError(regatta_key, metarecord)
 
-    def find_league(self, metarecord):
+    def _find_league(self, metarecord):
         tourn_key = metarecord['$tourn$key']
         if tourn_key in {'$contest$league', '$regatta$league'}:
             return metarecord[tourn_key]
         elif tourn_key in { '$contest$problem',
             '$regatta$subject', '$regatta$round', '$regatta$problem'
         }:
-            return self.find_league(self[metarecord['$path'].parent])
+            return self._find_league(self[metarecord['$path'].parent])
         else:
             raise AssertionError(tourn_key, metarecord)
 
-    def find_regatta_subject(self, metarecord):
+    def _find_regatta_subject(self, metarecord):
         regatta_key = metarecord['$regatta$key']
         if regatta_key == '$regatta$subject':
             return metarecord['$regatta$subject']
         elif regatta_key == '$regatta$problem':
-            return self.find_regatta_subject(self[metarecord['$path'].parent])
+            return self._find_regatta_subject(self[metarecord['$path'].parent])
         else:
             raise AssertionError(regatta_key, metarecord)
 
-    def find_regatta_round(self, metarecord):
+    def _find_regatta_round(self, metarecord):
         regatta_key = metarecord['$regatta$key']
         if regatta_key == '$regatta$round':
             return metarecord['$regatta$round']
         elif regatta_key == '$regatta$problem':
             metapath = metarecord['$path']
-            return self.find_regatta_round(
+            return self._find_regatta_round(
                 self[metapath.parent.parent/metapath.name] )
         else:
             raise AssertionError(regatta_key, metarecord)
 
-    def find_name(self, entity, lang):
+    def _find_name(self, entity, language):
         name = entity['name']
         if isinstance(name, str):
             return name
         elif isinstance(name, dict):
             (key, value), = name.items()
-            if key == 'translate-metaname':
-                key, value = 'translate', entity['metaname']
+#            if key == 'translate-metaname':
+#                key, value = 'translate', entity['metaname']
             if key == 'translate':
-                return self.translations[value][lang]
+                return self.translations[value][language]
             else:
                 raise ValueError(name)
         else:
@@ -524,7 +485,7 @@ class Driver(RegularDriver):
     def _derive_attributes(self, parent_record, child_record, name):
         super()._derive_attributes(parent_record, child_record, name)
         path = child_record['$path']
-        child_record.setdefault('$lang', parent_record.get('$lang'))
+        child_record.setdefault('$language', parent_record.get('$language'))
         if '$contest$league' in parent_record:
             child_record['$contest$problem'] = {}
         if '$regatta$subject' in parent_record:
@@ -586,11 +547,12 @@ class Driver(RegularDriver):
 
     @classmethod
     def constitute_section(cls, *names, flags):
+        # XXX introduce language argument and use $translations instead
         try:
             select, = flags.intersection(
                 ('problems', 'solutions', 'complete', 'jury',) )
         except ValueError as exc:
-            assert isinstance(flags, FlagContainer), type(flags)
+            assert isinstance(flags, jeolm.flags.FlagContainer), type(flags)
             exc.args += (flags.as_set(),)
             raise
         caption = names[-1]
@@ -644,8 +606,8 @@ class Driver(RegularDriver):
     problem_source_template = ( r''
         r'\nopagebreak'
         r'\vspace{-1ex}\begingroup'
-            r'\hfill\itshape\small($source)'
-        r'\endgroup'
+            r'\hfill\itshape\small($source' '%\n'
+        r')\endgroup'
     )
 
     ##########

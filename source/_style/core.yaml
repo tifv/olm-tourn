@@ -8,6 +8,15 @@ $style:
     \usepackage[utf8]{inputenc}
     \usepackage[russian]{babel}
     \pagestyle{empty}
+# LuaLaTeX version
+#- verbatim: |-
+#    \usepackage{fontspec}
+#    \setmainfont{CMU Serif}
+#    \setsansfont{CMU Sans Serif}
+#    \setmonofont{CMU Typewriter Text}
+#    \usepackage{polyglossia}
+#    \setdefaultlanguage{russian}
+#    \pagestyle{empty}
 - jeolm
 - optional
 

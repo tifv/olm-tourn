@@ -1,4 +1,5 @@
 $translations:
+
   junior:
     ru: Младшая лига
     en: Junior League
@@ -7,6 +8,7 @@ $translations:
     ru: Старшая лига
     en: Senior League
     sr: Стариjи узраст
+
   algbr:
     ru: Алгебра и теория чисел
     en: Algebra and Number Theory
@@ -19,6 +21,7 @@ $translations:
     ru: Комбинаторика и логика
     en: Combinatorics and Logic
     sr: Комбинаторика и логика
+
   regatta:
     ru: Регата
     en: Regatta
@@ -27,6 +30,7 @@ $translations:
     ru: Командная олимпиада
     en: Team Contest
     sr: Екипно такмичење
+
   round-1:
     ru: Первый тур
     en: First Round
@@ -43,4 +47,14 @@ $translations:
     ru: Четвертый тур
     en: Fourth Round
     sr: Четврти круг
+
+  solutions:
+    ru: решения
+    en: solutions
+  complete:
+    ru: с решениями
+    en: with solutions
+  jury:
+    ru: версия для жюри
+    en: jury version
 

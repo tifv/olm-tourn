@@ -1,5 +1,5 @@
 contest:
-  $delegate[problems,contest,solutions,complete,jury]:
+  $delegate[contest,jury]:
   - contest/league for each league
   $matter[problems|solutions|complete|jury]:
   - *caption
@@ -22,7 +22,7 @@ contest/league/problem:
   - *problem|solution|complete
 
 regatta:
-  $delegate[problems,contest,solutions,complete,jury]:
+  $delegate[contest,jury]:
   - league for each league
   $matter[problems|solutions|complete|jury]:
   - *caption
@@ -31,7 +31,7 @@ regatta:
   - league for each league
 
 regatta/league
-  $delegate[problems,contest,solutions,complete,jury]:
+  $delegate[contest,jury]:
   - subject for each subject
   $matter[problems|solutions|complete|jury]:
   - *caption
