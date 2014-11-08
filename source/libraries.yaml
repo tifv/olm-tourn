@@ -55,6 +55,13 @@ lib:
       $delegate[-complete,-problems,-solutions]:
       - .[problems]
   - $include: [/lib/language]
+  language-sr-latin: !!omap
+  - $style: [.., /language/sr-latin]
+  - $language: sr-latin
+  - poster:
+      $delegate[-complete,-problems,-solutions]:
+      - .[problems]
+  - $include: [/lib/language]
 
   ##########
   # Regatta

@@ -1,0 +1,11 @@
+!!omap
+- $contest:
+    name: {translate: 'geomt'}
+    leagues: [senior]
+- $delegate[contest]: [senior]
+- $delegate[jury]: [senior]
+
+- $include:
+  - /lib/pers-geomt-contest
+  - /lib/pers-geomt-senior
+

@@ -1,0 +1,29 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/regatta/junior/geomt/3:solution}}
+    \label{2014/ru/regatta/junior/geomt/3:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+В~выпуклом четырехугольнике $ABCD$ биссектрисы углов $A$ и~$C$ параллельны
+и~пересекают диагональ~$BD$ в~двух различных точках $P$ и~$Q$, при этом
+$BP = DQ$.
+Докажите, что четырехугольник~$ABCD$~--- параллелограмм.
+\solution
+\label{2014/ru/regatta/junior/geomt/3:solution}%
+Пусть $AP$ и~$CQ$~--- отрезки биссектрис, и~$AP > CQ$.
+Продлим отрезок $QC$ за~точку $C$ так, чтобы полученный отрезок $QE$ был
+равен $AP$
+(рис.~\ref{2014/ru/regatta/junior/geomt/3:solution:fig}).
+Тогда треугольники $APD$ и~$QBE$ равны по~двум сторонам и~углу между ними.
+Поэтому $\angle PAD = \angle BEQ$, $AD = BE$ и~аналогично
+$\angle PAB = \angle DEQ$, $AB = DE$.
+Значит, $BADE$ параллелограмм.
+Если точки $C$ и~$E$ не~совпадают, то~треугольники $BEC$ и~$CED$ равны
+по~стороне и~двум углам.
+Тогда треугольник $BCD$ равнобедренный и~$Q$~--- середина стороны $BD$.
+Но~тогда точка $P$ должна совпадать с~точкой $Q$, что противоречит условию.
+\endproblem
+% $problem-source: А.\,Шаповалов

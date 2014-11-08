@@ -1,0 +1,35 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/regatta/senior/geomt/3:solution}}
+    \label{2014/ru/regatta/senior/geomt/3:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+Внутри равнобедренного треугольника $ABC$ ($AC = BC$) выбрали такую точку~$N$, 
+что $2 \angle ANB = 180^\circ + \angle ACB$.
+Прямая, проходящая через точку~$C$ и~параллельная $AN$, пересекает прямую~$BN$
+в~точке~$D$.
+Биссектрисы углов $CAN$ и~$ABN$ пересекаются в~точке~$P$.
+Докажите, что прямые $DP$ и~$AN$ перпендикулярны.
+\solution\label{2014/ru/regatta/senior/geomt/3:solution}
+Заметим, что из~равенства $2 \angle ANB = 180^\circ + \angle ACB$ следует, что
+$\angle CAN=\angle ABN$ и~$\angle NAB=\angle NBC$.
+Так как $CD \parallel AN$,
+то~$\angle DCA = \angle CAN = \angle ABN = \angle ABD$.
+Следовательно, $D$ лежит на~описанной окружности треугольника $ABC$.
+\par
+Пусть $E$~--- середина дуги~$AB$ описанной окружности треугольника $ABC$
+(рис.~\ref{2014/ru/regatta/senior/geomt/3:solution:fig}).
+Так как $CD \parallel AN$, то~достаточно доказать, что $\angle CDP = 90^\circ$,
+то~есть что $DP$ проходит через $E$, или что $DP$~--- биссектриса угла $ADB$.
+Из~вписанности четырехугольника $ABCD$ следует, что
+$\angle DAC = \angle DBC = \angle NBC = \angle NAB$.
+Тогда $\angle DAP = \angle DAC + \angle CAP = \angle NAB + \angle PAN$.
+Это означает, что $AP$~--- биссектриса угла $DAB$.
+С~другой стороны, $BP$~--- биссектриса угла $ABD$.
+Тогда $P$~--- точка пересечения биссектрис треугольника $DAB$, что означает,
+что $DP$~--- биссектриса угла $ADB$.
+\endproblem
+% $problem-source: Middle European 2013

@@ -1,0 +1,46 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution-sequence}
+\\[1ex]
+    \jeolmfigure[width=0.5\textwidth]{solution-angles}
+    \caption{к задаче \ref{2014/ru/regatta/junior/geomt/2:solution}}
+    \label{2014/ru/regatta/junior/geomt/2:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+Из~точки $A_0$ под углом в~$7^\circ$ проведены черный и~красный лучи, после
+чего построена ломаная $A_{0} A_{1} \ldots A_{20}$
+(возможно, самопересекающаяся, но~все вершины различны), у~которой все звенья
+имеют длину~1, все четные вершины лежат на~черном луче, а~нечетные~---
+на~красном.
+Вершина с~каким номером наиболее удалена от~вершины $A_0$?
+\solution
+\label{2014/ru/regatta/junior/geomt/2:solution}%
+\emph{Ответ:} $A_{13}$.
+\par
+Рис.~\ref{2014/ru/regatta/junior/geomt/2:solution:fig}.
+Заметим, что если $180^\circ - \angle A_{i} A_{i-1} A_0 < 90^\circ$,
+то~$A_{i+1}$ находится дальше от~$A_0$, чем $A_{i-1}$, при этом треугольник
+$A_{i-1} A_{i} A_{i+1}$ равнобедренный и
+\[
+    180^\circ - \angle A_{i+1} A_i A_0
+=
+    \angle A_i A_{i+1} A_0 + 7^\circ
+=
+    (180^\circ-\angle A_i A_{i-1} A_0) + 7^\circ
+.\]
+Следовательно, величина $180^\circ-\angle A_{i} A_{i-1} A_0$ за~одну итерацию
+увеличивается на $7^\circ$ (а при $i = 2$ она равна $14^\circ$.)
+Увеличиваться она может до тех пор, пока не станет больше $90^\circ$~---
+после этого точки начнут приближаться к $A_0$.
+Это произойдет при $i = 13$ ($7^\circ \cdot 13 = 91^\circ$).
+Осталось заметить, что $A_0 A_{12} < A_0 A_{13}$.
+Действительно, это равносильно тому, что 
+\(
+    84^\circ = \angle A_0 A_{13} A_{12}
+<
+    \angle A_0 A_{12} A_{13} = 89^\circ
+\).
+\endproblem
+% $problem-source: старый конкурс Кенгуру

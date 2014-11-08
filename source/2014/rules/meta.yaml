@@ -1,0 +1,11 @@
+$style:
+- /[no-geometry]
+- verbatim: |-
+    \usepackage[margin=2em]{geometry}
+    \usepackage[russian]{babel}
+$build$matter:
+- - .[no-header]
+$matter:
+- logo
+- team
+- pers

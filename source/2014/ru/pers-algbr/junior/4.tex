@@ -1,0 +1,90 @@
+\problem
+Для натуральных чисел $n$, $k$ докажите неравенство
+\[
+    1 + \frac{1}{2} + \ldots + \frac{1}{n k}
+<
+    \left(
+        1 + \frac{1}{2} + \ldots + \frac{1}{n}
+    \right)
+    +
+    \left(
+        1 + \frac{1}{2} + \dots + \frac{1}{k}
+    \right)
+    -
+    \frac{1}{2}
+\;.\]
+\solution
+Требуется доказать, что $A > 1 / 2$, где
+\begin{align*}
+    A
+={}&
+    \left(
+        1 - \frac{1}{k + 1} - \ldots - \frac{1}{2 k}
+    \right)
+    +
+    \left(
+        \frac{1}{2} - \frac{1}{2 k + 1} - \ldots - \frac{1}{3 k}
+    \right)
+    +\ldots\\&{}\ldots+
+    \left(
+        \frac{1}{n - 1} - \frac{1}{(n - 1) k + 1} - \ldots - \frac{1}{n k}
+    \right)
+    +
+    \frac{1}{n}
+\;.\end{align*}
+\par
+Обозначим $j$-е слагаемое, $j = 1, 2, \ldots, n - 1$, через $x_j$.
+Имеем
+\begin{align*}
+    x_j
+={}&
+    \left(
+        \frac{1}{j k} - \frac{1}{j k + 1}
+    \right)
+    +
+    \left(
+        \frac{1}{j k} - \frac{1}{j k + 2}
+    \right)
+    + \ldots+
+    \left(
+        \frac{1}{j k} - \frac{1}{j k + k}
+    \right)
+=\\={}&
+    \frac{1}{j k (j k + 1)}
+    +
+    \frac{2}{j k (j k + 2)}
+    +\ldots+
+    \frac{k}{j k (j k + k)}
+\geq
+    \frac{1 + 2 + \ldots + k}{j k (j k + k)}
+\geq\\\geq{}&
+    \frac{1}{2 j (j + 1)}
+=
+    \frac{1}{2 j} - \frac{1}{2 (j + 1)}
+\end{align*}
+\par
+Суммируя, получаем 
+\begin{align*}
+    A
+={}&
+    x_1 + \ldots + x_{n-1} + \frac{1}{n}
+\geq\\\geq{}&
+    \left(
+        \frac{1}{2 \cdot 1} - \frac{1}{2 \cdot 2}
+    \right)
+    +
+    \left(
+        \frac{1}{2 \cdot 2} - \frac{1}{2 \cdot 3}
+    \right)
+    + \ldots +
+    \left(
+        \frac{1}{2 (n - 1)} - \frac{1}{2 n}
+    \right)
+    +
+    \frac{1}{n}
+=\\={}&
+    \frac{1}{2} + \frac{1}{2n}
+\;,\end{align*}
+что и~требовалось.
+\endproblem
+% $problem-source: олимпиада матмеха СПбГУ 2014

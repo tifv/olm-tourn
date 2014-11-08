@@ -1,0 +1,51 @@
+%\ifsolution
+%\begin{figure}\centering
+%    \jeolmfigure%[width=0.5\textwidth]{solution}
+%    \caption{к задаче \ref{2014/ru/team/senior/5:solution}}
+%    \label{2014/ru/team/senior/5:solution:fig}
+%\end{figure}%
+%\fi % \ifsolution
+%
+\problem\problemscore{7}
+Сферы $S_1$, $S_2$ и~$S_3$ касаются друг друга внешним образом и~касаются
+некоторой плоскости в~точках~$A$, $B$ и~$C$.
+Сфера~$S$ касается сфер $S_1$, $S_2$ и~$S_3$ внешним образом и~касается данной
+плоскости в~точке~$D$.
+Докажите, что проекции точки~$D$ на~стороны треугольника $ABC$ являются
+вершинами правильного треугольника.
+\solution
+\label{2014/ru/team/senior/5:solution}%
+Обозначим через $r_1$, $r_2$, $r_3$ и~$r$ радиусы сфер
+$S_1$, $S_2$, $S_3$ и~$S$, соответственно.
+Как легко видеть, $AB = 2 \sqrt{r_1 r_2}$, $BC = 2 \sqrt{r_2 r_3}$,
+$AD = 2 \sqrt{r_1 r}$, $DC = 2 \sqrt{r_3 r}$.
+%Рис.~\ref{2014/ru/team/senior/5:solution:fig}.
+Значит, $AB / CB = AD / CD$.
+Обозначим проекции точки~$D$ на~стороны $AB$, $BC$ и~$CA$ через $X$, $Y$ и~$Z$.
+Заметим, четырехугольник $AXDZ$~--- вписанный, а~$AD$~--- диаметр описанной
+вокруг $AXDZ$ окружности.
+Тогда по~теореме синусов $XZ = AD \cdot \sin(\angle A)$.
+Аналогично, $YZ = CD \cdot \sin(\angle{C})$.
+Поэтому
+\(
+    \frac{XZ}{YZ}
+=
+    \frac{
+        AD \cdot \sin(\angle A)
+    }{
+        CD \cdot \sin(\angle C)
+    }
+=
+    \frac{
+        AB \cdot \sin(\angle A)
+    }{
+        CB \cdot \sin(\angle C)
+    }
+=
+    1
+\),
+где последнее равенство следует из~теоремы синусов для треугольника $ABC$.
+Итак, $XZ = YZ$.
+Аналогично $YZ = YX$.
+\endproblem
+% $problem-source: фольклор

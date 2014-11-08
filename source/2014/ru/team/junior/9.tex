@@ -1,0 +1,65 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2014/ru/team/junior/9\endcsname}%
+\expandafter\providecommand
+    \csname ifsolution:2014/ru/team/junior/9\endcsname
+    {\iffalse}%
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2014/ru/team/junior/9\endcsname
+    {\iftrue}}%
+% nospell end
+
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.25\textwidth]{solution-n2}
+    \qquad
+    \jeolmfigure[width=0.25\textwidth]{solution-n3}
+    \caption{к решению задачи \ref{2014/ru/team/junior/9:solution}}
+    \label{2014/ru/team/junior/9:solution:fig}
+\end{figure}%
+\fi}%
+\endgroup % figure
+
+\problem\problemscore{9}
+\label{2014/ru/team/junior/9:problem}%
+% duplicated in [2014/ru/team/senior/7]
+Для каких $n$ выпуклый $n$-угольник можно разрезать на~выпуклые шестиугольники?
+\solution
+\label{2014/ru/team/junior/9:solution}%
+\emph{Ответ:} $n = 6$ и~$n \geq 8$.
+\par
+\ifsolutiondefined
+См.~решение задачи \ref{2014/ru/team/senior/7:solution}.
+\else
+\definesolution
+Если $n \geq 9$, то~задачу о~разбиении $n$-угольника можно свести к~задаче
+о~разбиении $(n-2)$- или $(n-3)$-угольника, отрезав один шестиугольник
+(рис.~\ref{2014/ru/team/junior/9:solution:fig}).
+Поэтому задача разрешима для любого $n \geq 8$
+(и, очевидно, разрешима для $n = 6$).
+Докажем, что при $n = 3$, $4$, $5$, $7$ задача неразрешима.
+\par
+Заметим, что среднее арифметическое всех углов шестиугольников равно
+$120^{\circ}$.
+В~то~же время в~каждой внутренней вершине, в~которой сходятся вершины хотя~бы
+трех шестиугольников, оно не~больше $120^{\circ}$, в~каждой вершине, лежащей
+на~стороне (разбиваемого многоугольника или одного из~шестиугольников)~---
+не~больше $90^{\circ}$.
+Если $n \leq 5$, то~среднее значение углов шестиугольников по~вершинам
+разбиваемого многоугольника меньше $120^{\circ}$~--- всё это в~совокупности
+дает противоречие.
+Если $n = 7$ и~хотя~бы из~одной вершины разбиваемого многоугольника
+выходят отрезки внутрь, верно то~же самое: сумма углов в~семи вершинах равна
+$5 \cdot 180^{\circ}$,
+а~их~количество не~меньше~8, итого среднее меньше $120^{\circ}$.
+Наконец, если $n = 7$ и~из~вершин семиугольника не~выходит отрезков внутрь,
+то~есть хотя~бы две стороны семиугольника, на~которых отмечены вершины
+шестиугольников разбиения, среднее по~этим двум точкам и~вершинам
+не~больше чем $(5 \cdot 180^{\circ} + 2 \cdot 180^{\circ}) / 11 < 120^{circ}$,
+дальше то~же самое.
+\fi % \ifsolutiondefined
+\endproblem
+% $problem-source: В.\,Быковский, А.\,Устинов

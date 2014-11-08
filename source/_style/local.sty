@@ -22,7 +22,7 @@
 \newcounter{problem@score}
 \newcommand\problemscore[1]{%
     \ifdigits{#1}\addtocounter{problem@score}{#1}\fi
-    \textsf{(#1)}}
+    \textsf{(#1)}\hspace{0.5em}\ignorespaces}
 \newcommand\problemscoresum{\arabic{problem@score}\setcounter{problem@score}{0}}
 
 \newcommand\jeolmpostword[1]{%

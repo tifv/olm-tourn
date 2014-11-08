@@ -1,0 +1,11 @@
+!!omap
+- $regatta:
+    name: {translate: 'regatta'}
+    leagues: [senior]
+- $delegate[contest]: [senior]
+- $delegate[jury]: [senior]
+
+- $include:
+  - /lib/regatta-contest
+  - /lib/regatta-senior
+

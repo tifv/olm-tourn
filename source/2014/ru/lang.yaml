@@ -1,0 +1,15 @@
+$include: [/lib/language-ru]
+
+section:
+  $target$able: off
+  $matter[contained]:
+  - verbatim: '\part*{2014}'
+  $matter[contained,book]:
+  - verbatim: '\chapter*{2014}'
+  $matter[-contained]:
+  - verbatim: '\part*{Многоборье-2014}'
+  $matter[-contained,solutions]:
+  - verbatim: '\part*{Многоборье-2014 (решения)}'
+  $matter[-contained,complete]:
+  - verbatim: '\part*{Многоборье-2014 (с решениями)}'
+

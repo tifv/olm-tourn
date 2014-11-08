@@ -1,0 +1,1 @@
+../../junior/6/solution.asy

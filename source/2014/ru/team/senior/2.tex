@@ -1,0 +1,36 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2014/ru/team/junior/3\endcsname}%
+\expandafter\providecommand
+    \csname ifsolution:2014/ru/team/junior/3\endcsname
+    {\iffalse}%
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2014/ru/team/junior/3\endcsname
+    {\iftrue}}%
+% nospell end
+
+\problem\problemscore{5}
+% duplicate of [2014/ru/team/junior/3]
+В~строке в~некотором порядке записаны числа $1, 2, \ldots, n$.
+Пару чисел назовем \emph{лункой}, если эти числа стоят рядом, либо между ними
+есть только числа, меньшие каждого из~них.
+Каково наибольшее количество лунок?
+(Одно число может входить в~несколько лунок.)
+\solution
+\label{2014/ru/team/senior/2:solution}%
+\emph{Ответ:} $2 n - 3$.
+\ifsolutiondefined
+См.~решение задачи \ref{2014/ru/team/junior/3:solution}.
+\else
+\definesolution
+В~каждой лунке проведем стрелку от~меньшего числа к~большему.
+Заметим, что из~каждого числа~$k$ в~одну сторону не~могут выходить 2~стрелки:
+число на~конце более короткой окажется меньше $k$.
+Итак, из~чисел $1, 2, \ldots, n - 2$ выходит не~более чем по~2 стрелки,
+а~из~числа $n - 1$~--- не~более одной, итого~--- не~более $2 n - 3$.
+Это достигается: поставим 1 в~середину, и~будем добавлять по~порядку числа
+$2, 3, \ldots, n$ по~краям, строго чередуя края.
+\fi % \ifsolutiondefined
+\endproblem
+% $problem-source: А.\,Лебедев, А.\,Шаповалов

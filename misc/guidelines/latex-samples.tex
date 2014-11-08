@@ -91,3 +91,16 @@ $A B_1 C = AB'C$.
 \definesolution
 <Решение.>
 \fi % \ifsolutiondefined
+
+% Дублирование задач: картинка к решению
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к решению задачи \ref{<problem metapath>:solution}}
+    \label{<problem metapath>:solution:fig}
+\end{figure}%
+\fi}%
+\endgroup % figure
+

@@ -1,0 +1,34 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[height=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/pers-geomt/senior/3:solution}}
+    \label{2014/ru/pers-geomt/senior/3:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+Точка $D$~--- середина биссектрисы~$BL$ треугольника $ABC$.
+На~отрезках $AD$, $DC$ выбраны точки $E$, $F$ соответственно так, что углы
+$\angle BEC$ и~$\angle BFA$~--- прямые.
+Докажите, что точки $A$, $E$, $F$, $C$ лежат на~одной окружности.
+\solution
+\label{2014/ru/pers-geomt/senior/3:solution}%
+Рис.~\ref{2014/ru/pers-geomt/senior/3:solution:fig}.
+Пусть точка~$K$ на~продолжении отрезка~$AB$ за~точку~$B$ такова, что $BK = BC$.
+Имеем $2 \angle ABL = \angle ABC = \angle BKC + \angle BCK = 2 \angle BKC$, так
+что $KC \parallel BL$ и~треугольники $ABL$ и~$AKC$ гомотетичны с~центром $A$.
+При этой гомотетии точка~$D$~--- середина $BL$~--- переходит в~середину $KC$
+точку~$M$, так что $D$ лежит на~отрезке~$AM$.
+Четырехугольник $BMCE$ вписан в~окружность с~диаметром~$BC$, так что
+\(
+    \angle DEC = \angle MEC = \angle MBC
+=
+    90^{\circ} - \angle CBD = 90^{\circ} - \frac{1}{2} \angle ABC
+\).
+Значит,
+$\angle AEC = 180^{\circ} - \angle DEC = 90^{\circ} + \frac{1}{2} \angle ABC$.
+Аналогично, $\angle AFC = 90^{\circ} + \frac{1}{2} \angle ABC$,
+а~равенство углов $\angle AEC = \angle AFC$ как раз и~равносильно тому, что
+точки $A$, $C$, $F$, $E$ лежат на~одной окружности.
+\endproblem
+% $problem-source: Украина 2014, задача 10.8

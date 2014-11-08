@@ -1,0 +1,51 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/pers-geomt/junior/4:solution}}
+    \label{2014/ru/pers-geomt/junior/4:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+На~гипотенузе~$AB$ прямоугольного треугольника $ABC$ выбраны такие точки
+$M$ и~$N$, что $AM < AN$.
+Прямая, проходящая через $M$ и~перпендикулярная $CN$, пересекает прямую~$AC$
+в~точке~$P$.
+Прямая, проходящая через $N$ и~перпендикулярная $CM$, пересекает прямую~$BC$
+в~точке $Q$.
+Докажите, что описанные окружности треугольников $APM$ и~$BNQ$ и прямая~$PQ$
+имеют общую точку.
+\solution
+\label{2014/ru/pers-geomt/junior/4:solution}%
+Рис.~\ref{2014/ru/pers-geomt/junior/4:solution:fig}.
+Пусть $D$~--- вторая точка пересечения окружностей, описанных вокруг треугольников
+$ACN$ и~$BCM$.
+Тогда
+\begin{align*}
+    \angle ADM
+={}&
+    \angle ADC - \angle MDC
+=
+    \angle ANC - \angle MBC
+=\\={}&
+    \angle NCB
+=
+    90^\circ - \angle ACN
+=
+    \angle APM
+\,.\end{align*}
+Следовательно, точки $A$, $M$, $P$ и~$D$ лежат на~одной окружности.
+Аналогично, точки $B$, $N$, $Q$ и $D$ лежат на одной окружности.
+С другой стороны,
+\begin{align*}
+    \angle PDQ
+={}&
+    \angle PDM + \angle MDC +\angle CDN + \angle NDQ
+=\\={}&
+    \angle CAM + \angle MBC +\angle CAN + \angle NBC
+=
+    180^\circ
+\,.\end{align*}
+Это означает, что точки $P$, $D$ и $Q$ лежат на одной прямой.
+\endproblem
+% $problem-source: Iran 2014

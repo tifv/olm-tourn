@@ -1,0 +1,12 @@
+!!omap
+- junior:
+    $contest$league:
+      name: {translate: 'junior'}
+      problems: 9
+- senior:
+    $contest$league:
+      name: {translate: 'senior'}
+      problems: 9
+
+- $include: [/lib/team-contest]
+

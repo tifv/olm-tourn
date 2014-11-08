@@ -397,6 +397,9 @@ class Driver(RegularDriver):
         has_problem_source = (
             'without-problem-sources' not in target.flags and
             '$problem-source' in metarecord )
+        has_problem_source_www = (
+            'without-problem-sources' not in target.flags and
+            '$problem-source$www' in metarecord )
         if 'itemized' not in target.flags:
             yield self.constitute_begin_tourn_problems(
                 target.flags.intersection(self.tourn_problem_flags) )
@@ -408,6 +411,11 @@ class Driver(RegularDriver):
         if has_problem_source:
             yield self.substitute_problem_source(
                 source=metarecord['$problem-source'] )
+        if has_problem_source and has_problem_source_www:
+            yield {'verbatim' : r'\par'}
+        if has_problem_source_www:
+            yield self.substitute_problem_source_www(
+                source=metarecord['$problem-source$www'] )
         if 'itemized' not in target.flags:
             yield self.substitute_end_tourn_problems()
         for required_package in metarecord.get('$required$packages', ()):
@@ -608,6 +616,12 @@ class Driver(RegularDriver):
         r'\vspace{-1ex}\begingroup'
             r'\hfill\itshape\small($source' '%\n'
         r')\endgroup'
+    )
+    problem_source_www_template = ( r''
+        r'\nopagebreak'
+        r'\vspace{-1ex}\begingroup'
+            r'\hfill\itshape\small $source' '%\n'
+        r'\endgroup'
     )
 
     ##########

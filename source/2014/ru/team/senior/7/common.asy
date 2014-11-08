@@ -1,0 +1,1 @@
+../../junior/9/common.asy

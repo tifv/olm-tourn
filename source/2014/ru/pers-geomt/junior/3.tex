@@ -1,0 +1,34 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/pers-geomt/junior/3:solution}}
+    \label{2014/ru/pers-geomt/junior/3:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+В~трапеции $ABCD$ сторона~$AB$ параллельна $CD$, $AB > CD$, а~прямая~$BD$
+делит угол $\angle ADC$ пополам.
+Прямая, проходящая через $C$ параллельно $AD$, пересекает отрезки $BD$ и~$AB$
+в~точках $E$ и~$F$ соответственно.
+Точка~$O$~--- центр описанной окружности треугольника $BEF$.
+Предположим, что $\angle ACO = 60^{\circ}$.
+Докажите, что $CF = AF + FO$.
+\solution
+\label{2014/ru/pers-geomt/junior/3:solution}%
+Рис.~\ref{2014/ru/pers-geomt/junior/3:solution:fig}.
+Заметим, что из~параллельности следует, что
+$\angle CDE = \angle EBF = \angle ADE = \angle DEC$.
+Тогда $AF = DC = CE$ и~$EF = FB$.
+С~другой стороны, $OF = OE$, поэтому треугольники $OEF$ и $OFB$ равны
+и~$\angle OFB = \angle OFE = \angle OEF$.
+Следовательно, $\angle AFO = \angle CEO$ и~треугольник $AFO$ равен
+треугольнику $CEO$ по~двум сторонам и~углу между ними.
+Это означает, что $AO = OC$, $\angle COE = \angle AOF$ и, так как
+$\angle ACO = 60^\circ$, то~треугольник $AOC$ равносторониий и
+$\angle COA = 60^\circ$.
+Тогда $\angle EOF = \angle COA + \angle AOF - \angle COE = 60^\circ$,
+и~треугольник $ABC$ также равносторонний, откуда $EF = FO$.
+Поэтому $AF + FO = CE + EF = CF$.
+\endproblem
+% $problem-source: Middle European 2012

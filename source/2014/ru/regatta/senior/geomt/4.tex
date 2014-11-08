@@ -1,0 +1,29 @@
+\ifsolution
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к задаче \ref{2014/ru/regatta/senior/geomt/4:solution}}
+    \label{2014/ru/regatta/senior/geomt/4:solution:fig}
+\end{figure}%
+\fi % \ifsolution
+
+\problem
+На~сторонах $BC$, $CA$ и~$AB$ остроугольного треугольника $ABC$ выбраны
+точки $A_1$, $B_1$ и~$C_1$ соответственно.
+Описанные окружности треугольников  $A B_1 C_1$, $B C_1 A_1$ и~$C A_1 B_1$
+пересекаются в~точке~$P$ внутри треугольника $ABC$.
+Точки $O_1$, $O_2$ и~$O_3$~--- центры этих окружностей.
+Докажите, что $4 S(O_1 O_2 O_3) \geq S(ABC)$.
+\solution\label{2014/ru/regatta/senior/geomt/4:solution}
+Так~как $O_1 O_2 \perp P C_1$ и~$O_1 O_3 \perp P B_1$,
+то~$\angle O_2 O_1 O_3 = 180^\circ - \angle B_1 P C_1 = \angle BAC$. 
+Аналогично,
+$\angle O_1 O_3 O_2 = \angle ACB$ и~$\angle O_3 O_2 O_1 = \angle ABC$. 
+Тогда треугольники $ABC$ и~$O_1 O_2 O_3$ подобны.
+Рис.~\ref{2014/ru/regatta/senior/geomt/4:solution:fig}.
+Пусть $k = AB / O_1 O_2$. 
+Пусть $M$ и~$N$~--- проекции точек $O_1$ и~$O_2$ на~прямую~$AB$.
+Заметим, что $M$~--- середина~$A C_1$, а~$N$~--- середина $C_1B$. 
+Тогда $AB = 2 MN \leq 2 O_1 O_2$ и~$k \leq 2$. 
+С~другой стороны, $S(ABC) = k^2 S(O_1 O_2 O_3) \leq 4 S(O_1 O_2 O_3)$. 
+\endproblem
+% $problem-source: А.\,Смирнов по мотивам Macedonia 2014

@@ -1,0 +1,26 @@
+\problem
+Найдите все функции $f \colon \mathbb{R} \to \mathbb{R}$, которые для всех
+действительных $x$ удовлетворяют соотношениям
+\[
+    \underbrace{f(f(f \ldots f}_{13}(x)\ldots)) = -x
+,\qquad
+    \underbrace{f(f(f\ldots f}_{8}(x)\ldots)) = x
+\,.\]
+\solution
+С~одной стороны, из~первого соотношения следует, что
+\[
+    \underbrace{f(f(f\ldots f}_{65}(x)\ldots))
+=
+    (-1)^5 x = -x
+\,.\]
+С~другой стороны, из~второго соотношения следует, что
+\[
+    \underbrace{f(f(f\ldots f}_{65}(x)\ldots))
+=
+    f\bigl(\underbrace{f(f(f\ldots f}_{64}(x)\ldots))\bigr)
+=
+    f(x)
+.\]
+Значит, $f(x) = -x$.
+\endproblem
+% $problem-source: А.\,Устинов

@@ -1,0 +1,11 @@
+!!omap
+- $contest:
+    name: {translate: 'algbr'}
+    leagues: [senior]
+- $delegate[contest]: [senior]
+- $delegate[jury]: [senior]
+
+- $include:
+  - /lib/pers-algbr-contest
+  - /lib/pers-algbr-senior
+

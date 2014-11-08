@@ -1,0 +1,11 @@
+$include: [/lib/language-sr-latin]
+
+section:
+  $target$able: off
+  $matter[contained]:
+  - verbatim: '\part*{2014}'
+  $matter[contained,book]:
+  - verbatim: '\chapter*{2014}'
+  $matter[-contained]:
+  - verbatim: '\part*{Многоборье-2014 (Српски)}'
+

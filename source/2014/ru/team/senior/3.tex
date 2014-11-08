@@ -1,0 +1,59 @@
+% nospell begin
+\def\ifsolutiondefined{%
+    \csname ifsolution:2014/ru/team/junior/6\endcsname}%
+\expandafter\providecommand
+    \csname ifsolution:2014/ru/team/junior/6\endcsname
+    {\iffalse}%
+\def\definesolution{%
+    \expandafter\gdef
+    \csname ifsolution:2014/ru/team/junior/6\endcsname
+    {\iftrue}}%
+% nospell end
+
+\begingroup % figure
+\ifsolution\def\solutioninclude#1{#1}\else\def\solutioninclude#1{}\fi
+\solutioninclude{\ifsolutiondefined\else
+\begin{figure}\centering
+    \jeolmfigure[width=0.5\textwidth]{solution}
+    \caption{к решению задачи \ref{2014/ru/team/senior/3:solution}}
+    \label{2014/ru/team/senior/3:solution:fig}
+\end{figure}%
+\fi}%
+\endgroup % figure
+
+\problem\problemscore{6}
+% duplicate of [2014/ru/team/junior/6]
+Точка~$I_b$~--- центр вневписанной окружности треугольника $ABC$, касающейся
+стороны~$AC$.
+Другая вневписанная окружность касается стороны~$AB$ в~точке~$C_1$.
+Докажите, что точки $B$, $C$, $C_1$ и~середина отрезка~$B I_b$ лежат на~одной
+окружности.
+\solution
+\label{2014/ru/team/senior/3:solution}%
+\ifsolutiondefined
+См.~решение задачи \ref{2014/ru/team/junior/6:solution}.
+\else
+\definesolution
+Рис.~\ref{2014/ru/team/senior/3:solution:fig}.
+Пусть $M$~--- середина $B I_b$.
+Опустим из~точки~$M$ перпендикуляры $MA'$ и~$MC'$ на~стороны $BC$ и~$BA$.
+Так как $M$ лежит на~биссектрисе угла $B$, то~$MA' = MC'$.
+Опустим из~точки~$I_b$ перпендикуляры $I_b A_2$ и~$I_b C_2$ на~стороны $BC$
+и~$BA$.
+Тогда $2 BA' = B A_2 = B C_2 = 2 B C' = p$, где $2 p = a + b + c$.
+Это означает, что $C_1 C' = |BC' - B C_1| = |p / 2 - (p - a)| = |a - p / 2|$
+и~$CA' = |a - p / 2|$, то~есть, что $C_1 C' = C A'$.
+Следовательно, треугольник $C_1 C' M$ равен треугольнику $CA'M$ по~двум
+сторонам и~углу между ними.
+Тогда
+\(
+    \angle B C_1 M + \angle BCM
+=
+    180^\circ - \angle M C_1 C' + \angle BCM
+=
+    180^\circ
+\),
+что означает, что точки $B$, $C$, $C_1$ и~$M$ лежат на~одной окружности.
+\fi % \ifsolutiondefined
+\endproblem
+% $problem-source: по мотивам олимпиады матмеха СПбГУ 2014
