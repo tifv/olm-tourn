@@ -20,11 +20,15 @@ lib:
   - $matter:
     - delegate: section
       condition: {not: no-year-section}
-    - regatta[contained]
-    - pers-algbr[contained]
-    - pers-combi[contained]
-    - pers-geomt[contained]
-    - team[contained]
+    - .[contained,no-year-section]
+  - $matter[contained]:
+    - delegate: section
+      condition: {not: no-year-section}
+    - regatta
+    - pers-algbr
+    - pers-combi
+    - pers-geomt
+    - team
   - $build$matter:
     - .[header]
   - $build$style:
@@ -38,25 +42,29 @@ lib:
       - .[flow-numeration]
 
   language-ru: !!omap
-  - $style: [.., /language/ru]
+  - $style:
+    - ..[russian]
   - $language: ru
   - $include: [/lib/language]
   language-en: !!omap
-  - $style: [.., /language/en]
+  - $style:
+    - ..[english]
   - $language: en
   - poster:
       $delegate[-complete,-problems,-solutions]:
       - .[problems]
   - $include: [/lib/language]
   language-sr: !!omap
-  - $style: [.., /language/sr]
+  - $style:
+    - ..[serbian-cyrillic]
   - $language: sr
   - poster:
       $delegate[-complete,-problems,-solutions]:
       - .[problems]
   - $include: [/lib/language]
   language-sr-latin: !!omap
-  - $style: [.., /language/sr-latin]
+  - $style:
+    - ..[serbian-latin]
   - $language: sr-latin
   - poster:
       $delegate[-complete,-problems,-solutions]:
@@ -164,7 +172,7 @@ lib:
       leagues: [junior, senior]
   - $style:
     - ..
-    - verbatim: '\let\postword\writtenpostword'
+    - verbatim: '\let\briefing\writtenbriefing'
   - $include: [/lib/contest]
 
   pers-algbr-leagues:
@@ -195,7 +203,7 @@ lib:
       leagues: [junior, senior]
   - $style:
     - ..
-    - verbatim: '\let\postword\writtenpostword'
+    - verbatim: '\let\briefing\writtenbriefing'
   - $include: [/lib/contest]
 
   pers-geomt-leagues:
@@ -226,7 +234,7 @@ lib:
       leagues: [junior, senior]
   - $style:
     - ..
-    - verbatim: '\let\postword\oralpostword'
+    - verbatim: '\let\briefing\oralbriefing'
   - $include: [/lib/contest]
 
   pers-combi-leagues:
@@ -252,7 +260,7 @@ lib:
       leagues: [junior, senior]
   - $style:
     - ..
-    - verbatim: '\let\postword\teampostword'
+    - verbatim: '\let\briefing\teambriefing'
   - $include: [/lib/contest]
 
   contest: !!omap

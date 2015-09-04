@@ -1,6 +1,12 @@
 $delegate:
 - pers-geomt
 $matter:
+- delegate: section
+  condition: {not: no-year-section}
+- .[contained,no-year-section]
+$matter[contained]:
+- delegate: section
+  condition: {not: no-year-section}
 - pers-geomt
 $include: [/lib/language-sr]
 

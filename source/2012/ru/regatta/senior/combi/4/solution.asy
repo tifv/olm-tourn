@@ -1,6 +1,6 @@
 import three;
 
-// access /common-sizes.asy as common-sizes.asy
+// access /common-sizes/ as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 currentprojection = perspective(65, 70, 80);

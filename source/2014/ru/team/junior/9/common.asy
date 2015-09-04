@@ -1,6 +1,6 @@
 import geometry;
 
-// access /common-sizes.asy as common-sizes.asy
+// access /common-sizes/ as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(0.5sizes.size);
 

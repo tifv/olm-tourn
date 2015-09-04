@@ -15,12 +15,14 @@ $matter:
 - /2011/ru[problems,book,contained]
 - /2012/ru[problems,book,contained]
 - /2013/ru[problems,book,contained]
+- /2014/ru[problems,book,contained]
 - verbatim: |
     \part{Решения задач}
     \resetproblem
 - /2011/ru[solutions,book,contained]
 - /2012/ru[solutions,book,contained]
 - /2013/ru[solutions,book,contained]
+- /2014/ru[solutions,book,contained]
 - verbatim: \selectlanguage{english}\fontencoding{T2A}
 - verbatim: |
     \part{Problems}
@@ -28,6 +30,7 @@ $matter:
 - /2011/en[problems,book,contained]
 - /2012/en[problems,book,contained]
 - /2013/en[problems,book,contained]
+- /2014/en[problems,book,contained]
 - verbatim:
     \endgroup
 

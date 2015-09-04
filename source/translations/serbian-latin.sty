@@ -1,38 +1,22 @@
 \ProvidesPackage{language-sr-latin}
 
-\usepackage[serbian]{babel}
-
 \newcommand\regattablankcaption{%
 \regattablankcaptiontemplate{Team name}{Score}{Maximal}}
 
-\newcommand\writtenpostword{\jeolmpostword{%
+\newcommand\writtenbriefing{\jeolmbriefing{%
 Pojedinačno pismeno takmičenje.  Vreme za rad: 240 minuta.\\
 Svaki tačno rešen zadatak vredi 7 poena.}}
 
-\newcommand\oralpostword{\jeolmpostword{%
+\newcommand\oralbriefing{\jeolmbriefing{%
 Pojedinačno usmeno takmičenje.  Vreme za rad: 240 minuta.\\
 Svaki tačno rešen zadatak vredi 1 poen.  Nepotpuna rešenja vrede 0 poena.\\
 Na svakom zadatku dozvoljena su tri pokušaja.}}
 
-\newcommand\teampostword{\jeolmpostword{%
+\newcommand\teambriefing{\jeolmbriefing{%
 Ekipno usmeno takmičenje.  Vreme za rad: 240 minuta.\\
 Vrednost svakog zadatka je prikazana u zagradi.
 Maksimalni ukupni broj poena je \problemscoresum.\\
 Svaki neuspešan pokušaj odbrane rešenja zadatka smanjuje poene na tom zadatku
 za 1.\\
 Svaki takmičar može da brani rešenja najviše tri različita zadatka.}}
-
-\providecommand\jeolmheader{
-{\Large\vspace{4ex}}\par%
-\begingroup\small\sffamily
-\strut\hfill%
-{\bfseries Командно-личный турнир <<Математическое многоборье>>}%
-\hfill\strut\\[0.3ex]%
-\strut\hfill
-{\itshape г.\,Москва}%
-\hfill\strut{\large\bfseries\\[0.3ex]
-\rule[0.5ex]{\textwidth}{0.5pt}}
-\endgroup
-\vspace{-\parskip}
-\@ifnextchar*{\@gobble}{{\Large\vspace{-4ex}}}}
 

@@ -1,13 +1,14 @@
 \problem\problemscore{6}
 Let $p > 3$ be a prime number.
-Prove that the following sum is divisible by  $p$:
+Prove that the following sum is divisible by $p$:
 \[
-    \left(
-        \sum_{2 \leq i < j < k \leq p-1}
-            i j k
-    \right)
-    + 1
-.\]
+    1 +
+    \sum_{\substack{
+        i < j < k \\
+        \mathclap{2 \leq i, j, k \leq (p - 1)}
+    }}
+        i j k
+\, . \]
 \solution
 <FIXME: Missing English solution.>
 \endproblem

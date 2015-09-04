@@ -25,55 +25,68 @@
     \textsf{(#1)}\hspace{0.5em}\ignorespaces}
 \newcommand\problemscoresum{\arabic{problem@score}\setcounter{problem@score}{0}}
 
-\newcommand\jeolmpostword[1]{%
+\newcommand\jeolmbriefing[1]{%
 \vspace{1ex}%
 \begin{center}\small\sffamily #1 \end{center}}
 
-\let\postword\relax
+\let\briefing\relax
 
 % Miscellaneous templates
 
 % \jeolmhrule
 \newlength{\jeolmhrule@width}%
 \newlength{\jeolmhrule@textwidth}%
-\newcommand\jeolmhrule[1]{\begingroup\let\sp\quad
-\settowidth{\jeolmhrule@textwidth}{\hbox{\strut\sp#1\sp\strut}}%
-\jeolmhrule@width=0.5\textwidth%
-\addtolength{\jeolmhrule@width}{-0.5\jeolmhrule@textwidth}%
-\rule[0.5ex]{\jeolmhrule@width}{0.5pt}%
-\sp#1\sp
-\rule[0.5ex]{\jeolmhrule@width}{0.5pt}
+\newcommand\jeolmhrule[1]{\begingroup
+    \settowidth{\jeolmhrule@textwidth}{\hbox{\null\quad#1\quad\null}}%
+    \jeolmhrule@width=0.5\textwidth%
+    \addtolength{\jeolmhrule@width}{-0.5\jeolmhrule@textwidth}%
+    \rule[0.5ex]{\jeolmhrule@width}{0.5pt}%
+    \quad#1\quad
+    \rule[0.5ex]{\jeolmhrule@width}{0.5pt}
 \endgroup}
 
-% \jeolmtournheader template
-\newcommand\jeolmtournheadertemplate[3]{%
-{\Large\vspace{4ex}}\par%
-\begingroup\small\sffamily
-\strut\hfill{\bfseries#1}\hfill\strut\\[0.3ex]%
-\strut\hfill{\itshape#3}\qquad{#2}\hfill\strut{\large\bfseries\\[0.3ex]%
-\ifx\jeolmleague\relax\rule[0.5ex]{\textwidth}{0.5pt}\else
-    \jeolmhrule{\jeolmleague}\fi}%
-\endgroup
-\vspace{-\parskip}
-\@ifnextchar*{\@gobble}{{\Large\vspace{-4ex}}}}
+% \jeolmheader
+\renewcommand\jeolmheader{%
+    \par\begingroup\small\sffamily%
+        \leavevmode\null\hfill%
+            {\bfseries\jeolmevent}%
+        \hfill\null\\\null\hfill%
+        \ifx\jeolmdaterange\relax\else%
+            {\itshape\jeolmdaterange}%
+        \qquad\fi%
+            {\jeolmcity}%
+        \hfill\null\\%
+        \begingroup\large\bfseries%
+            \ifx\jeolmleague\relax%
+                \rule[0.5ex]{\textwidth}{0.5pt}%
+            \else%
+                \jeolmhrule{\jeolmleague}%
+            \fi\linebreak[0]%
+        \endgroup%
+    \endgroup%
+    \@nobreaktrue%
+}
+\def\jeolmevent{Whatever}
+\def\jeolmcity{Wherever}
+\let\jeolmdaterange\relax
 \let\jeolmleague\relax
 
-\let\jeolmheader\relax
-
-% \regattacaption template
+% \regattablankcaption template
+% {"Team name"}{"Score"}{"Maximum"}{caption}{max mark}
 \newcommand\regattablankcaptiontemplate[5]{%
-\parbox{0.66\textwidth}{
-\vspace{1ex}
-\textbf{\Large{#4}}
-\par\vspace{2ex}
-\textbf{#1:}\ \hbox to 10em{\hrulefill}
-\vspace{1ex}}%
-\parbox{0.33\textwidth}{
-\setlength{\fboxsep}{2em}
-\texttt{#2{:}\ }\fbox{\phantom{S}}
-\par\vspace{1ex}
-\texttt{#3{:}\ #5}}%
-\vspace{3ex}}
+    \parbox{0.66\textwidth}{%
+    \vspace{1ex}%
+    \textbf{\Large{#4}}%
+    \par\vspace{2ex}%
+    \textbf{#1:}\ \hbox to 10em{\hrulefill}%
+    \vspace{1ex}}%
+    \parbox{0.33\textwidth}{%
+    \setlength{\fboxsep}{2em}%
+    \texttt{#2{:}\ }\fbox{\phantom{S}}%
+    \par\vspace{1ex}%
+    \texttt{#3{:}\ #5}}%
+    \vspace{3ex}%
+}
 
 %%%%%%%%%%
 % Problem/solution segregation
@@ -109,30 +122,25 @@
     {\end{tourn-problems/problems}}%
 \newcommand\tournproblem[1]{\def\problem@tourn@number{\itemy{#1}}}
 
-% Selection of either problem of solution
-\long\def\problem@tourn@complete#1\endproblem{\begingroup
-\problem@tourn@parse#1\endproblem
-\problem@tourn@number\problem@tourn@fetched@problem
-\par\solution@delimiter\problem@tourn@fetched@solution\par
+% Selection of either problem or solution
+\long\def\problem@tourn@complete#1\solution#2\endproblem{\begingroup
+    \problem@tourn@number#1\par
+    \solution@delimiter#2\par
 \endgroup}
-\long\def\problem@tourn@problem#1\endproblem{\begingroup
-\problem@tourn@parse#1\endproblem
-\problem@tourn@number\problem@tourn@fetched@problem\par
+    \long\def\problem@tourn@problem#1\solution#2\endproblem{\begingroup
+    \problem@tourn@number#1\par
 \endgroup}
-\long\def\problem@tourn@solution#1\endproblem{\begingroup
-\problem@tourn@parse#1\endproblem
-\problem@tourn@number\problem@tourn@fetched@solution\par
+    \long\def\problem@tourn@solution#1\solution#2\endproblem{\begingroup
+    \problem@tourn@number#2\par
 \endgroup}
 
-% Parsing/segregation of solution and problem
-\long\def\problem@tourn@parse#1\solution#2\endproblem{%
-    \problem@tourn@parse@problem#1\endproblem%
-    \problem@tourn@parse@solution#2\endsolution%
+\def\solution@delimiter{%
+    \ifx\mdlgwhtsquare\undefined%
+        % amsmath way
+        \def\solution@delimiter{$\square$\quad}%
+    \else%
+        % unicode-math way
+        \def\solution@delimiter{$\mdlgwhtsquare$\quad}%
+    \fi\solution@delimiter
 }
-\long\def\problem@tourn@parse@problem#1\endproblem{%
-    \long\def\problem@tourn@fetched@problem{#1}}
-\long\def\problem@tourn@parse@solution#1\endsolution{%
-    \long\def\problem@tourn@fetched@solution{#1}}
-
-\newcommand\solution@delimiter{$\square$\quad}
 

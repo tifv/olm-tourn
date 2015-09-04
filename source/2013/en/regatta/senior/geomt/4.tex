@@ -6,8 +6,6 @@
 \end{figure}%
 \fi % \ifsolution
 
-% $required$packages:
-% - mathabx # \wideparen
 
 \problem
 A nonisosceles triangle $ABC$ is inscribed in a circle $\Gamma$.
@@ -18,6 +16,8 @@ Show that the circumcentre of triangle $AED$ coincides with the intersection
 point of the tangent to $\Gamma$ at $D$ and the line $BC$.
 \solution
 \label{2013/en/regatta/senior/geomt/4:solution}%
+\ifx\wideparen\undefined\else\let\widearc\wideparen\fi
+\ifx\overparen\undefined\else\let\widearc\overparen\fi
 Fig. \ref{2013/en/regatta/senior/geomt/4:solution:fig}.
 Assuming $AB < AC$ we get that point $D$ on the arc $BC$ is closer to $B$ than
 to $C$.
@@ -25,17 +25,17 @@ The intersection point $O$ of the tangent at $D$ and the line $BC$ lies in the
 same semiplane with respect to line $DE$ as $A$.
 Then
 \(
-    \angle ODE = \frac{1}{2} \wideparen{DBM}
+    \angle ODE = \frac{1}{2} \widearc{DBM}
 =
-    \frac{1}{2} (\wideparen{BD} + \wideparen{BM})
+    \frac{1}{2} (\widearc{BD} + \widearc{BM})
 =
-    \frac{1}{2} (\wideparen{BD} + \wideparen{MC})
+    \frac{1}{2} (\widearc{BD} + \widearc{MC})
 =
     \angle OED
 \).
 Thus, it is enough to show that $\angle DOE = 2\angle DAE$.
 This equality is obvious since
-$\angle DOE = \frac{1}{2} (\wideparen{CD} - \wideparen{BD}) = \wideparen{DX}$,
+$\angle DOE = \frac{1}{2} (\widearc{CD} - \widearc{BD}) = \widearc{DX}$,
 where by $X$ we denote the intersection point of $AE$ with $\Gamma$.
 \endproblem
 % $problem-source: Italy TST 2002

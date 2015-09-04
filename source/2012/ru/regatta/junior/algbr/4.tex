@@ -1,19 +1,27 @@
 \problem
 Найдите все такие натуральные $m$, что
-$\{ \sqrt{m} \} = \{ \sqrt{m+2011} \}$.
+\(
+    \bigl\{ \sqrt{m} \, \bigr\}
+=
+    \bigl\{ \sqrt{m+2011} \, \bigr\}
+\).
 \solution
 \emph{Ответ:} $1005^2$.
 \par
 Перепишем уравнение в виде
-$\sqrt{m} - [\sqrt{m}] = \sqrt{m + 2011} - [\sqrt{m + 2011}]$,
-откуда
 \(
+    \sqrt{m} - \bigl[ \sqrt{m} \, \bigr]
+=
+    \sqrt{m + 2011} - \bigl[ \sqrt{m + 2011} \, \bigr]
+\),
+откуда
+\[
     \sqrt{m + 2011} - \sqrt{m}
 =
-    [\sqrt{m + 2011}] - [\sqrt{m}]
+    \bigl[ \sqrt{m + 2011} \, \bigr] - \bigl[ \sqrt{m} \, \bigr]
 =
-    p \in \NN
-\).
+    p \in \mathbb{N}
+\, . \]
 Возводя равенство $\sqrt{m + 2011} = \sqrt{m} + p$ в квадрат, имеем
 $2011 = p^2 + 2 p \sqrt{m}$.
 Отсюда ясно, что число $\sqrt{m}$ рациональное, а значит, и целое.

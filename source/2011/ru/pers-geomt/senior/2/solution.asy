@@ -1,11 +1,11 @@
 import three;
 
-// access /_style/jeolm.asy as jeolm.asy
+// access /_style/jeolm/ as jeolm.asy
 access jeolm;
 from jeolm access mark;
 from geometry access tildeframe;
 
-// access /common-sizes.asy as common-sizes.asy
+// access /common-sizes/ as common-sizes.asy
 access "common-sizes.asy" as sizes;
 size(sizes.size);
 

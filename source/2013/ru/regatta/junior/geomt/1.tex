@@ -6,26 +6,25 @@
 \end{figure}%
 \fi % \ifsolution
 
-% $required$packages:
-% - mathabx # \wideparen
-
 \problem
 Точки $M$, $N$, $P$~--- середины сторон $AB$, $CD$ и $DA$ вписанного
 четырехугольника $ABCD$.
 Известно, что $\angle MPD = 150^\circ$, $\angle BCD = 140^\circ$.
 Найдите угол $\angle PND$. 
-\solution%
+\solution
 \label{2013/ru/regatta/junior/geomt/1:solution}%
+\ifx\wideparen\undefined\else\let\widearc\wideparen\fi
+\ifx\overparen\undefined\else\let\widearc\overparen\fi
 \emph{Ответ:} $110^\circ$.
 \par
 Рис.~\ref{2013/ru/regatta/junior/geomt/1:solution:fig}.
 Средняя линия $PN$ параллельна $AC$, поэтому
-$\angle PND = \angle ACD = \frac{1}{2} \wideparen{AD}$.
+$\angle PND = \angle ACD = \frac{1}{2} \widearc{AD}$.
 С другой стороны,
-$\frac{1}{2} \wideparen{AB} = \angle ADB = \angle APM = 30^\circ$
-и $\frac{1}{2} \wideparen{BCD} = 180^\circ - \angle BCD = 40^\circ$.
+$\frac{1}{2} \widearc{AB} = \angle ADB = \angle APM = 30^\circ$
+и $\frac{1}{2} \widearc{BCD} = 180^\circ - \angle BCD = 40^\circ$.
 Поскольку
-$\wideparen{AD} + \wideparen{AB} + \wideparen{BCD} = 360^\circ$,
+$\widearc{AD} + \widearc{AB} + \widearc{BCD} = 360^\circ$,
 то $\angle PND = 110^\circ$.
 \endproblem
 % $problem-source: Д.\,Максимов

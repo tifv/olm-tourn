@@ -6,9 +6,6 @@
 \end{figure}%
 \fi % \ifsolution
 
-% $required$packages:
-% - mathabx # \wideparen
-
 \problem
 Неравнобедренный треугольник $ABC$ вписан в окружность $\Gamma$.
 Биссектриса угла $A$ пересекает отрезок $BC$ в точке $E$.
@@ -18,26 +15,28 @@
 пересечения касательной к $\Gamma$ в точке $D$ и прямой $BC$.
 \solution
 \label{2013/ru/regatta/senior/geomt/4:solution}%
+\ifx\wideparen\undefined\else\let\widearc\wideparen\fi
+\ifx\overparen\undefined\else\let\widearc\overparen\fi
 Рис.~\ref{2013/ru/regatta/senior/geomt/4:solution:fig}.
 Предположим, что $AB < AC$, тогда точка $D$ располагается на дуге $BC$ ближе к
 точке $B$, чем к $C$.
 Тогда $O$~--- точка пересечения касательной в точке $D$ и прямой $BC$, лежит в
 той же полуплоскости относительно $DE$, что и точка $A$.
 Тогда
-\(
+\[
     \angle ODE
 =
-    \frac{1}{2} \wideparen{DBM}
+    \frac{1}{2} \widearc{DBM}
 =
-    \frac{1}{2}(\wideparen{BD} + \wideparen{BM})
+    \frac{1}{2} \bigl( \widearc{BD} + \widearc{BM} \bigr)
 =
-    \frac{1}{2} (\wideparen{BD} + \wideparen{MC})
+    \frac{1}{2} \bigl( \widearc{BD} + \widearc{MC} \bigr)
 =
     \angle OED
-\).
+. \, \]
 Следовательно, достаточно проверить, что $\angle DOE = 2\angle DAE$.
 Это равенство следует из
-$\angle DOE = \frac{1}{2} (\wideparen{CD}-\wideparen{BD}) = \wideparen{DX}$,
+$\angle DOE = 1 / 2 (\widearc{CD}-\widearc{BD}) = \widearc{DX}$,
 где $X$~--- точка пересечения $AE$ с окружностью.
 \endproblem
 % $problem-source: Italy TST 2002

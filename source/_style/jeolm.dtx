@@ -1,65 +1,12 @@
 % \iffalse
 %
-%<package|driver>\NeedsTeXFormat{LaTeX2e}[2009/09/24]
+%<package>\NeedsTeXFormat{LaTeX2e}[2009/09/24]
 %<*gobble>
 \ProvidesFile{jeolm.dtx}
 %</gobble>
 %<package>\ProvidesPackage{jeolm}
-%<driver>\ProvidesFile{jeolm.drv}
-%
-%<*driver>
-\documentclass{ltxdoc}
-
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[russian,english]{babel}
-\usepackage[braces]{colordoc}
-
-\usepackage{jeolm}
-
-\makeatletter
-\c@IndexColumns = 2
-\makeatother
-
-\EnableCrossrefs
-\CodelineIndex
-
-\begin{document}
-\DocInput{jeolm.dtx}
-\end{document}
-%</driver>
-%
-%<*batchfile>
-\input docstrip.tex
-\keepsilent
-\askforoverwritefalse
-\nopreamble
-\nopostamble
-\generate{\file{jeolm.sty}{\from{jeolm.dtx}{package}}}
-\endbatchfile
-%</batchfile>
-%<batchfile>\endinput
 %
 % \fi
-%
-% \CheckSum{0}
-%
-% \CharacterTable
-%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%   Digits        \0\1\2\3\4\5\6\7\8\9
-%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%   Dollar        \$     Percent       \%     Ampersand     \&
-%   Acute accent  \'     Left paren    \(     Right paren   \)
-%   Asterisk      \*     Plus          \+     Comma         \,
-%   Minus         \-     Point         \.     Solidus       \/
-%   Colon         \:     Semicolon     \;     Less than     \<
-%   Equals        \=     Greater than  \>     Question mark \?
-%   Commercial at \@     Left bracket  \[     Backslash     \\
-%   Right bracket \]     Circumflex    \^     Underscore    \_
-%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%   Right brace   \}     Tilde         \~}
-%
 %
 % \GetFileInfo{jeolm.sty}
 %
@@ -69,8 +16,8 @@
 %
 % \maketitle
 %
-% \DoNotIndex{\def,\edef}
-% \DoNotIndex{\fi,\par,\z@}
+% \DoNotIndex{\let,\def,\edef}
+% \DoNotIndex{\fi,\par}
 % \DoNotIndex{\DeclareOption,\ProcessOptions,\RequirePackage}
 %
 % \section{Introduction}
@@ -81,9 +28,14 @@
 %
 % \section{Usage}
 %
+% \subsection{Swap Greek variants}
+%
+% Command |\swapvar| allos one to exchange variant and normal greek letters.
+% For example, |\swapvar{kappa}| will exchange |\kappa| and |\varkappa|,
+% and |\swapvar[up]{phi}| will exchange |\upphi| and |\upvarphi|.
+%
 % \subsection{Figures}
 %
-% \DescribeMacro{\jeolmfiguremap}
 % \DescribeMacro{\jeolmfigure}
 % Macro |\jeolmfiguremap|\marg{alias}\marg{realname} will set a map from its
 % first argument to the second.
@@ -99,19 +51,18 @@
 % \DescribeMacro{\problem}
 % The basic macro for problem numbering is
 % |\problem|.
-% It will step the counter and format it just like this:
-% \quad
+% It will step the counter and format it, including a space before following text:
 % \problem For |\problem|.
 %
 % \DescribeMacro{\problemx}
-% Marking a problem (e.\,g. as hard) should be done with the
-% |\problemx|\marg{mark} macro, just like this:
+% Marking a problem (e.~g. as hard) should be done with the
+% |\problemx|\marg{mark} macro:
 % \\
-% \problemx{*} For |\problemx{*}|.
-% \quad
-% or this:
-% \quad
-% \problemx{$^\circ$} For |\problemx{$^\circ$}|.
+% \problemx{*}
+% For |\problemx{*}|.
+% \qquad
+% \problemx{$^\circ$}
+% For |\problemx{$^\circ$}|.
 %
 % \DescribeMacro{\resetproblem}
 % Macro |\resetproblem| will restart problem numeration, and
@@ -124,23 +75,35 @@
 % a counter.
 % Argument does not need to be a number, for example:
 % \\
-% \problemy{2.3} For |\problemy{2.3}|.
+% \problemy{2.3}
+% For |\problemy{2.3}|, mentioning next problem:
+% \ref{a problem} for |\ref{a problem}|.
 % \qquad
-% \problemyx{2.3}{*} For |\problemyx{2.3}{*}|.
+% \problemyx{2a}{**}\label{a problem}\relax
+% For |\problemyx{2a}{**}\label{a problem}|.
 % \\
 % Macro |\problemyx|\marg{problem number}\marg{mark} combines features of
 % |\problemy| and |\problemx|.
 %
-% \DescribeMacro{\sp}
-% \DescribeMacro{\spx}
+% \DescribeMacro{\subproblem}
 % To indicate sub-problems, macro
 % |\subproblem| is used, with
 % |\subproblemx|\marg{mark} counterpart:
 % \\
 % \problem
-% \subproblem for |\subproblem|;
+% \subproblem
+% for |\subproblem|;
 % \quad
-% \subproblemx{*} for |\subproblemx{*}|.
+% \subproblemx{*}
+% for |\subproblemx{*}|.
+% \\
+% \subproblemy{m}\label{a subproblem}\relax
+% for |\subproblemy{m}\label{a subproblem}|
+% \\
+% \subproblemyx{n}{*}
+% for |\subproblemyx{n}{*}|.
+% \\
+% Mentioning previous subproblem: \ref{a subproblem} for |\ref{a subproblem}|.
 % \\
 % Macros |\sp| and |\spx| are corresponding |\let| aliases for |\subproblem|
 % and |\subproblemx|.
@@ -156,10 +119,10 @@
 % \begin{problems}
 % \item
 % For |\item|.
-% \item\label{some problem}%
-% For another |\item|.
+% \item\label{some problem}\relax
+% For |\item\label{some problem}|.
 % \item
-% Mentioning previous problem: \ref{some problem}.
+% Mentioning previous problem: \ref{some problem} for |\ref{some problem}|.
 % \itemx{*}
 % For |\itemx{*}|.
 % \itemy{21}
@@ -170,14 +133,14 @@
 % \itemy{2.1}
 % For |\itemy{2.1}|, mentioning next problem:
 % \ref{another problem} for |\ref{another problem}|.
-% \itemyx{2.2}{*}\label{another problem}%
-% For |\itemyx{2.2}{*}\label{another problem}%|.
+% \itemyx{2.2}{*}\label{another problem}\relax
+% For |\itemyx{2.2}{*}\label{another problem}|.
 % \end{problems}
 %
 % \subsection{Statements}
 %
-% Problems are not the only structural elements of course.
-% Others include |\definition|, |\theorem|, |\lemma|, and some more.
+% Other than problems, structural elements include
+% |\definition|, |\theorem|, |\lemma|, and |\statement|.
 %
 % The basic command is |\claim|\marg{caption}.
 %
@@ -185,15 +148,16 @@
 % For |\theorem|.
 %
 % \theoremof{ван Обеля}
-% For |\theoremof{ван Обеля}|, referencing next theorem \ref{a theorem}.
-%
-% \theoremnum\label{a theorem}%
-% For |\theoremnum|.
+% For |\theoremof{ван Обеля}|.
 %
 % \claim{Лемма Фату}
 % For |\claim{Лемма Фату}|.
 %
-% \StopEventually{\newpage\PrintIndex}
+% Note that the dot at the end of the caption is generated by the macro.
+% These commands should be used outside of |problems| environment.
+% This way they will outstand from the problem list.
+%
+% \StopEventually{}
 %
 % \section{Implementation}
 %
@@ -201,59 +165,38 @@
 %<*package>
 %    \end{macrocode}
 %
-% \subsection{Some imports}
-%
-% Not really used in this package, but very common.
 %    \begin{macrocode}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
-\RequirePackage{mathrsfs}
-\RequirePackage{multicol}
-\RequirePackage{graphicx}
-\RequirePackage{anyfontsize}
 %    \end{macrocode}
 %
 % \subsection{Some definitions}
 %
-% Russian-specific or just convenient (re)definitions.
-%
+% Infamous Russian <<divided by>> relation.
 %    \begin{macrocode}
-\let\geq\geqslant
-\let\leq\leqslant
-\let\eps\varepsilon
-\let\originalphi\phi
-\let\phi\varphi
-\let\ov\overline
+\newlength\@kratno@height
+\newcommand\@kratno@template[2]{\setlength{\@kratno@height}{#2pt}%
+\mathrel{%
+    \rlap{\raisebox{-0.25\@kratno@height}{$\mathsurround=0pt#1\cdot$}}%
+    \rlap{\raisebox{ 0.00\@kratno@height}{$\mathsurround=0pt#1\cdot$}}%
+          \raisebox{ 0.25\@kratno@height}{$\mathsurround=0pt#1\cdot$}%
+    }}
+\newcommand\kratno{\mathchoice%
+    {\@kratno@template{\displaystyle}{\tf@size}}%
+    {\@kratno@template{\textstyle}{\tf@size}}%
+    {\@kratno@template{\scriptstyle}{\sf@size}}%
+    {\@kratno@template{\scriptscriptstyle}{\ssf@size}}%
+}
 %    \end{macrocode}
 %
+% Allow exchanging greek letters with their variants.
 %    \begin{macrocode}
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\QQ}{\mathbb{Q}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\CC}{\mathbb{C}}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\DeclareMathOperator{\Arg}{Arg}
-\DeclareMathOperator{\Ln}{Ln}
-\DeclareMathOperator{\const}{const}
-\DeclareMathOperator{\ord}{ord}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator*{\esssup}{ess\,sup}
-\DeclareMathOperator*{\osc}{osc}
-\newcommand{\ud}{\mathrm{d}}
-\newcommand{\pd}{\partial}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\let\originalRe\Re
-\let\originalIm\Im
-\let\Re\undefined
-\let\Im\undefined
-\DeclareMathOperator{\Re}{Re}
-\DeclareMathOperator{\Im}{Im}
+\newcommand\swapvar[2][]{\begingroup
+\expandafter\let\expandafter\swap\csname #2#1\endcsname
+\expandafter\let\expandafter\varswap\csname #2var#1\endcsname
+\global\expandafter\let\csname #2#1\endcsname\varswap
+\global\expandafter\let\csname #2var#1\endcsname\swap
+\endgroup}
 %    \end{macrocode}
 %
 % This macro will work only on the second run, when the label is substituted.
@@ -262,12 +205,29 @@
 \def\iflabelundefined#1{\expandafter\ifx\csname r@#1\endcsname\relax}
 %    \end{macrocode}
 %
-% |\mathclap| and related definitions:
-%    \begin{macrocode}
+% \subsubsection{Centering-overlap}
+%
+% Provide |\clap| complement to the |\rlap| and |\llap| commands.
+%
 % For comparison, the existing overlap macros:
+%    \begin{verbatim}
 % \def\llap#1{\hbox to 0pt{\hss#1}}
 % \def\rlap#1{\hbox to 0pt{#1\hss}}
+%    \end{verbatim}
+%
+% \begin{macro}{\clap}
+% Define |\clap| similarly.
+%    \begin{macrocode}
 \def\clap#1{\hbox to 0pt{\hss#1\hss}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathllap}
+% \begin{macro}{\mathrlap}
+% \begin{macro}{\mathclap}
+% Define |\clap|, |\rlap| and |\llap| equivalents for math mode (not
+% that they didn't work before).
+%    \begin{macrocode}
 \def\mathllap{\mathpalette\mathllapinternal}
 \def\mathrlap{\mathpalette\mathrlapinternal}
 \def\mathclap{\mathpalette\mathclapinternal}
@@ -278,9 +238,13 @@
 \def\mathclapinternal#1#2{%
     \clap{$\mathsurround=0pt#1{#2}$}}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \subsection{Package options}
 %
+% No options present.
 %    \begin{macrocode}
 \ProcessOptions
 %    \end{macrocode}
@@ -300,24 +264,49 @@
 % \end{macro}
 % \end{macro}
 %
+% \subsection{Labels}
+%
+% \begin{macro}{\jeolmlabel}
+% \begin{macro}{\jeolmref}
+% \begin{environment}{jeolmlabelspace}
+% Redirect labels, allowing multiple inclusion of source files (provided that
+% these files use |\jeolmlabel| and |\jeolmref| instead of normal commands).
+%    \begin{macrocode}
+\newcommand\jeolmlabel[1]{\label{#1}}
+\newcommand\jeolmref[1]{\ref{#1}}
+\newenvironment{jeolmlabelspace}[1]{%
+    \renewcommand\jeolmlabel[1]{\label{#1:##1}}%
+    \renewcommand\jeolmref[1]{\ref{#1:##1}}%
+}{}
+%    \end{macrocode}
+% \end{environment}
+% \end{macro}
+% \end{macro}
+%
 % \subsection{Headers}
 %
-% \begin{macro}{\jeolmheadertemplate}
 % \begin{macro}{\jeolmheader}
-% Macro |\jeolmheader| is not defined here, but used by jeolm driver.
-% It is advised to define it as
-% |\jeolmheadertemplate|\marg{institution}\marg{daterange}\marg{group}.
+% Macro |\jeolmheader| is used by jeolm driver.
+% If redefined, it must stay a macro without arguments.
 %    \begin{macrocode}
-\newcommand\jeolmheadertemplate[3]{%
-    {\Large\vspace{4ex}}\par%
-    \begingroup\small\sffamily%
-        \strut\hfill{\bfseries#1}\hfill\strut\nopagebreak\\%
-        \strut\hfill{\itshape#2}\qquad{#3}%
-        \ifx\jeolmdate\relax\else\qquad{\itshape\jeolmdate}\fi%
-        \hfill\strut\nopagebreak\\%
-        \rule[1ex]{\textwidth}{0.5pt} %
+\newcommand\jeolmheader{%
+    \par\begingroup\small\sffamily%
+        \leavevmode\null\hfill%
+            {\bfseries\jeolminstitution}%
+        \hfill\null\\\null\hfill%
+            {\itshape\jeolmdaterange}%
+        \qquad
+            {\jeolmgroup}%
+        \ifx\jeolmdate\relax\else\qquad%
+            {\itshape\jeolmdate}%
+        \fi%
+        \hfill\null\\\rule[1ex]{\textwidth}{0.5pt}\linebreak[0]%
     \endgroup%
-    {\vspace{-1ex}\Large\vspace{-4ex}\vspace{-\parskip}}}
+    \@nobreaktrue
+}
+\def\jeolminstitution{Wherever}
+\def\jeolmgroup{Whatever}
+\def\jeolmdaterange{Whenever}
 \let\jeolmdate\relax
 %    \end{macrocode}
 % \end{macro}
@@ -328,12 +317,11 @@
 % \subsubsection{Public definitions}
 %
 % \begin{macro}{\problem}
-% These macros boil down to |\problem@x| and |\problem@yx|, which are defined
-% later.
+% These macros boil down to |\problem@yx|, which is defined later.
 %    \begin{macrocode}
 \newcommand\problem{\problemx{}}
 \newcommand\problemx[1]{\stepcounter{jeolmproblem}%
-    \problemyx{\arabic{jeolmproblem}}{#1}}
+    \problemyx{\problem@numbering{jeolmproblem}}{#1}}
 \newcommand\problemy[1]{\problemyx{#1}{}}
 \newcommand\problemyx[2]{\problem@yx{#1}{#2}\problem@space}
 %    \end{macrocode}
@@ -341,10 +329,15 @@
 %
 % \begin{macro}{\subproblem}
 % \begin{macro}{\sp}
-% These macros boil down to |\subproblem@x|, which is defined later.
+% These macros boil down to |\subproblem@yx|, which is defined later.
 %    \begin{macrocode}
 \newcommand\subproblem{\subproblemx{}}
-\newcommand\subproblemx[1]{\subproblem@x{#1}\subproblem@space}
+\newcommand\subproblemx[1]{\stepcounter{jeolmsubproblem}%
+    \subproblemyx{\subproblem@numbering{jeolmsubproblem}}{#1}}
+\newcommand\subproblemy[1]{\subproblemyx{#1}{}}
+\newcommand\subproblemyx[2]{%
+    \subproblem@yx{#1}{#2}%
+    \ifmmode\subproblem@space@math\else\subproblem@space\fi}
 \let\sp\subproblem
 \let\spx\subproblemx
 %    \end{macrocode}
@@ -355,42 +348,49 @@
 %
 % \begin{macro}{\setproblem}
 % \begin{macro}{\resetproblem}
-% Underlying counters.
+% Underlying counter for |\problem| and friends.
 %    \begin{macrocode}
 \newcounter{jeolmproblem}
 \newcommand\setproblem[1]{\setcounter{jeolmproblem}{#1}}
 \newcommand\resetproblem{\setcounter{jeolmproblem}{0}}
-\newcounter{jeolmsubproblem}
+\newcommand\problem@numbering{\arabic}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\resetsubproblem}
+% Underlying counter for |\subproblem| and friends.
+%    \begin{macrocode}
+\newcounter{jeolmsubproblem}
+\newcommand\resetsubproblem{\setcounter{jeolmsubproblem}{0}}
+\newcommand\subproblem@numbering{\alph}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\problem@yx}
-% This macro boils down to |\problem@label| and |\problem@format|, which are
-% defined later.
+% This macro boils down to |\problem@label| and |\problem@format|,
+% which are defined later.
 % The former allows |\label| to be used to reference the problem, while the
 % latter produces the visible output.
 %    \begin{macrocode}
 \newcommand\problem@yx[2]{%
-    \problem@label{#1}\setcounter{jeolmsubproblem}{0}%
+    \problem@label{#1}\resetsubproblem
     \problem@format{#1}{#2}}
 %    \end{macrocode}
 % In items of |problem| environment, counter increment and labeling is
 % managed by |\item| command itself.
 %    \begin{macrocode}
-\newcommand\problem@in@item{\problem@yx{\arabic{jeolmproblem}}{}}
-\newcommand\problemx@in@item[1]{\problem@yx{\arabic{jeolmproblem}}{#1}}
+\newcommand\problem@in@item{\problemx@in@item{}}
+\newcommand\problemx@in@item[1]{\problem@yx{\problem@numbering{jeolmproblem}}{#1}}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\subproblem@x}
+% \begin{macro}{\subproblem@yx}
 % This macro boils down to |\subproblem@label| and |\subproblem@format|,
 % which are defined later.
 % The former allows |\label| to be used to reference the subproblem, while the
 % latter produces the visible output.
 %    \begin{macrocode}
-\newcommand\subproblem@x[1]{%
-\stepcounter{jeolmsubproblem}\subproblem@yx{\alph{jeolmsubproblem}}{#1}}
 \newcommand\subproblem@yx[2]{\subproblem@label{#1}\subproblem@format{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
@@ -398,7 +398,6 @@
 % \subsubsection{Labeling}
 %
 % \begin{macro}{\problem@label}
-% \begin{macro}{\subproblem@label}
 % Manage labeling by directly setting |\@currentlabel|.
 %    \begin{macrocode}
 \newcommand\theproblem{}
@@ -406,7 +405,10 @@
     \global\edef\theproblem{#1}%
     \edef\@currentlabel{\theproblem}}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\subproblem@label}
+% Label of subproblem will include the number of problem.
 %    \begin{macrocode}
 \newcommand\thesubproblem{}
 \newcommand\subproblem@label[1]{%
@@ -414,21 +416,39 @@
     \edef\@currentlabel{\thesubproblem}}
 %    \end{macrocode}
 % \end{macro}
-% \end{macro}
 %
 % \subsubsection{Formatting}
 %
 % \begin{macro}{\problem@format}
-% \begin{macro}{\subproblem@format}
+% \begin{macro}{\problem@space}
 %    \begin{macrocode}
 \newlength\problem@space@length
 \problem@space@length=1em
 \newcommand\problem@space{\hspace{\problem@space@length}\ignorespaces}
-\newcommand\problem@format[2]{\textbf{#1.\rlap{\!#2}}}
+\newcommand\problem@format[2]{\begingroup\bfseries
+    #1.\rlap{\!#2}%
+\endgroup}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\subproblem@format}
+% \begin{macro}{\subproblem@space}
+%    \begin{macrocode}
 \newlength\subproblem@space@length
+\newlength\@subproblem@letter@width
 \subproblem@space@length=0.5em
 \newcommand\subproblem@space{\hspace{\subproblem@space@length}\ignorespaces}
-\newcommand\subproblem@format[2]{{\bfseries({\ttfamily#1}#2)}}
+\newcommand\subproblem@space@math{\mspace{20mu}}
+\newcommand\subproblem@format[2]{\text{\begingroup\bfseries
+\settowidth{\@subproblem@letter@width}{m}%
+(%
+    \hspace{0.5\@subproblem@letter@width}%
+    \clap{#1\rlap{#2}}%
+    \hspace{0.5\@subproblem@letter@width}%
+    \phantom{#2}%
+)%
+\endgroup}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -463,9 +483,9 @@
 \item%
 \let\problem@in@item@current\problem@in@item}
 \newcommand\problem@itemy[1]{%
-\item[\problem@format{#1}{}]\problem@label{#1}\setcounter{jeolmsubproblem}{0}}
+\item[\problem@format{#1}{}]\problem@label{#1}\resetsubproblem}
 \newcommand\problem@itemyx[2]{%
-\item[\problem@format{#1}{#2}]\problem@label{#1}\setcounter{jeolmsubproblem}{0}}
+\item[\problem@format{#1}{#2}]\problem@label{#1}\resetsubproblem}
 %    \end{macrocode}
 %
 % \subsection{Statements}
@@ -473,48 +493,26 @@
 % \begin{macro}{\claim}
 %    \begin{macrocode}
 \newcommand\claim[1]{\claim@format{#1}}
-\newcommand\claim@format[1]{\noindent\textbf{#1.\ }\ignorespaces}
+\newcommand\claim@format[1]{\noindent\textbf{#1.\enspace}\ignorespaces}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\theorem}
 % \begin{macro}{\theoremof}
-% \begin{macro}{\theoremnum}
 %    \begin{macrocode}
 \newcommand\theorem{\claim{Теорема}}
 \newcommand\theoremof[1]{\claim{Теорема #1}}
-\newcounter{theorem}
-\newcommand\theoremnum{\refstepcounter{theorem}\claim{Теорема \thetheorem}}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\definition}
 % \begin{macro}{\lemma}
 % \begin{macro}{\statement}
-% \begin{macro}{\proposition}
-% \begin{macro}{\corollary}
 %    \begin{macrocode}
 \newcommand\definition{\claim{Определение}}
 \newcommand\lemma{\claim{Лемма}}
 \newcommand\statement{\claim{Утверждение}}
-\newcommand\proposition{\claim{Предложение}}
-\newcommand\corollary{\claim{Следствие}}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\observation}
-% \begin{macro}{\example}
-% \begin{macro}{\solution}
-%    \begin{macrocode}
-\newcommand\observation{\claim{Замечание}}
-\newcommand\example{\claim{Пример}}
-\newcommand\solution{\claim{Решение}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}

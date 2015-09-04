@@ -19,8 +19,7 @@ miscellany: !!omap
 
 - ru:
     $style:
-    - ..
-    - /language/ru
+    - ..[russian]
     $delegate[-problems,-complete,-solutions]:
     - .[problems]
     - .[complete]
@@ -28,23 +27,23 @@ miscellany: !!omap
     - .[no-header]
     $matter:
     - verbatim:
-        '\title{Многоборье 2011-2013}\date{}\author{}\maketitle'
+        '\title{Многоборье 2011-2014}\date{}\author{}\maketitle'
       condition: problems
     - verbatim:
-        '\title{Многоборье 2011-2013 (с решениями)}\date{}\author{}\maketitle'
+        '\title{Многоборье 2011-2014 (с решениями)}\date{}\author{}\maketitle'
       condition: complete
     - verbatim:
-        '\title{Многоборье 2011-2013 (решения)}\date{}\author{}\maketitle'
+        '\title{Многоборье 2011-2014 (решения)}\date{}\author{}\maketitle'
       condition: solutions
     - verbatim: '\tableofcontents'
     - /2011/ru[contained]
     - /2012/ru[contained]
     - /2013/ru[contained]
+    - /2014/ru[contained]
 
 - en:
     $style:
-    - ..
-    - /language/en
+    - ..[english]
     $delegate[-problems,-complete,-solutions]:
     - .[problems]
     #- .[complete]
@@ -52,10 +51,11 @@ miscellany: !!omap
     - .[no-header]
     $matter:
     - verbatim:
-        '\title{Многоборье 2011-2013 (English)}\date{}\author{}\maketitle'
+        '\title{Многоборье 2011-2014 (English)}\date{}\author{}\maketitle'
       condition: problems
     - verbatim: '\tableofcontents'
     - /2011/en[contained]
     - /2012/en[contained]
     - /2013/en[contained]
+    - /2014/en[contained]
 

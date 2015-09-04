@@ -1,39 +1,23 @@
 \ProvidesPackage{language-en}
 
-\usepackage[english]{babel}
-
 \newcommand\regattablankcaption{%
 \regattablankcaptiontemplate{Team name}{Score}{Maximum}}
 
-\newcommand\writtenpostword{\jeolmpostword{%
+\newcommand\writtenbriefing{\jeolmbriefing{%
 Individual written contest.  Time allowed: 240~minutes.\\
 Each completely solved problem is~worth 7~points.}}
 
-\newcommand\oralpostword{\jeolmpostword{%
+\newcommand\oralbriefing{\jeolmbriefing{%
 Individual oral contest.  Time allowed: 240~minutes.\\
 Each completely solved problem is~worth 1~point.
 Incomplete solutions are~worth 0~points.\\
 Three attempts are allowed for each problem.}}
 
-\newcommand\teampostword{\jeolmpostword{%
+\newcommand\teambriefing{\jeolmbriefing{%
 Team oral contest.  Time allowed: 240~minutes.\\
 The maximum score for each problem is~shown in~parentheses.
 The maximum total score is~\problemscoresum.\\
 An~unsuccessful attempt to~present a~solution decreases the~maximum score
 on~that problem by~1.\\
 Each participant can present solutions to~at~most~3 different problems.}}
-
-\providecommand\jeolmheader{
-{\Large\vspace{4ex}}\par%
-\begingroup\small\sffamily
-\strut\hfill%
-{\bfseries Командно-личный турнир <<Математическое многоборье>>}%
-\hfill\strut\\[0.3ex]%
-\strut\hfill
-{\itshape г.\,Москва}%
-\hfill\strut{\large\bfseries\\[0.3ex]
-\rule[0.5ex]{\textwidth}{0.5pt}}
-\endgroup
-\vspace{-\parskip}
-\@ifnextchar*{\@gobble}{{\Large\vspace{-4ex}}}}
 

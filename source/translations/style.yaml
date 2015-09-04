@@ -1,0 +1,18 @@
+$target$able: off
+
+$style[russian]:
+- delegate: common
+- delegate: russian
+
+$style[english]:
+- delegate: common
+- delegate: english
+
+$style[serbian-cyrillic]:
+- delegate: common
+- delegate: serbian-cyrillic
+
+$style[serbian-latin]:
+- delegate: common
+- delegate: serbian-latin
+
